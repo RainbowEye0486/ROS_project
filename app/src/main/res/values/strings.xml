@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TemiProject</string>
+    <string name="set_done">設定地點完成</string>
+    <string name="home">放棄拍照</string>
+    <string name="set_robot_text">帶領並且設置</string>
+    <string name="todo">TODO</string>
+</resources>
