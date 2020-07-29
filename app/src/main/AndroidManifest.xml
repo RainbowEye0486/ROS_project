@@ -9,10 +9,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectPointActivity"></activity>
-        <activity android:name=".CameraActivity" />
-        <activity android:name=".ArrivalActivity" />
-        <activity android:name=".MovingActivity" />
+        <activity android:name=".MapActivity"></activity>
+        <activity
+            android:name=".BrandSearchActivity"
+            android:launchMode="singleTop"></activity>
+        <activity
+            android:name=".GuildPointActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".SelectPointActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".CameraActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".ArrivalActivity"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".MovingActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".HomeActivity"
             android:launchMode="singleTop">

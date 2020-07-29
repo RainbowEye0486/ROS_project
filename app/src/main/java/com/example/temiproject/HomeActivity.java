@@ -34,6 +34,8 @@ public class HomeActivity extends AppCompatActivity {
         lead_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, GuildPointActivity.class);
+                startActivity(intent);
                 Log.d(TAG, "onClick: search button");
             }
         });

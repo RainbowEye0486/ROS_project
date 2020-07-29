@@ -24,7 +24,7 @@ public class SelectPointActivity extends ActivityController {
     ViewPager viewPager;
     Adapter adapter;
     List<Model> models;
-    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
