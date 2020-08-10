@@ -40,7 +40,19 @@ public class BrandSearchActivity extends ActivityController {
         });
 
         lstBrand = new ArrayList<>();
-        lstBrand.add(new Branditem("cosmed", "brabrabra", ))
+        lstBrand.add(new Branditem("Perngyuh", "brabrabra",R.drawable.Thumbnail_PerngYuh ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
+        lstBrand.add(new Branditem("wolsley", "brabrabra",R.drawable.Thumbnail_wolsey ));
+        lstBrand.add(new Branditem("miamia", "brabrabra",R.drawable.Thumbnail_miamia ));
+        lstBrand.add(new Branditem("coach", "brabrabra",R.drawable.Thumbnail_coach ));
+        lstBrand.add(new Branditem("poloRalphLauren", "brabrabra",R.drawable.Thumbnail_poloRalphLauren ));
+        lstBrand.add(new Branditem("roots", "brabrabra",R.drawable.Thumbnail_roots ));
+        lstBrand.add(new Branditem("lacoste", "brabrabra",R.drawable.Thumbnail_lacoste ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_lanew ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_b ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
 
 
 
