@@ -1,7 +1,8 @@
 package com.example.temiproject;
 
 import androidx.annotation.CallSuper;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -40,20 +41,23 @@ public class BrandSearchActivity extends ActivityController {
         });
 
         lstBrand = new ArrayList<>();
-        lstBrand.add(new Branditem("Perngyuh", "brabrabra",R.drawable.Thumbnail_PerngYuh ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
-        lstBrand.add(new Branditem("wolsley", "brabrabra",R.drawable.Thumbnail_wolsey ));
-        lstBrand.add(new Branditem("miamia", "brabrabra",R.drawable.Thumbnail_miamia ));
-        lstBrand.add(new Branditem("coach", "brabrabra",R.drawable.Thumbnail_coach ));
-        lstBrand.add(new Branditem("poloRalphLauren", "brabrabra",R.drawable.Thumbnail_poloRalphLauren ));
-        lstBrand.add(new Branditem("roots", "brabrabra",R.drawable.Thumbnail_roots ));
-        lstBrand.add(new Branditem("lacoste", "brabrabra",R.drawable.Thumbnail_lacoste ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_lanew ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_b ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.Thumbnail_cosmed ));
+        lstBrand.add(new Branditem("Perngyuh", "brabrabra",R.drawable.thumbnail_perngyuh));
+        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.thumbnail_cosmed));
+        lstBrand.add(new Branditem("wolsley", "brabrabra",R.drawable.thumbnail_wolsey));
+        lstBrand.add(new Branditem("miamia", "brabrabra",R.drawable.thumbnail_miamia));
+        lstBrand.add(new Branditem("coach", "brabrabra",R.drawable.thumbnail_coach));
+        lstBrand.add(new Branditem("poloRalphLauren", "brabrabra",R.drawable.thumbnail_poloRalphLauren));
+        lstBrand.add(new Branditem("roots", "brabrabra",R.drawable.thumbnail_roots));
+        lstBrand.add(new Branditem("lacoste", "brabrabra",R.drawable.thumbnail_lacoste));
+        lstBrand.add(new Branditem("lanew", "brabrabra",R.drawable.thumbnail_lanew));
+        //lstBrand.add(new Branditem("blueway", "brabrabra", R.drawable.Th));
+        lstBrand.add(new Branditem("edwin", "brabrabra",R.drawable.thumbnail_edwin));
+        lstBrand.add(new Branditem("poya", "brabrabra",R.drawable.thumbnail_poya));
 
+        RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
+        BranditemAdapter myAdapter = new BranditemAdapter(this, lstBrand);
+        myrycle.setLayoutManager(new GridLayoutManager(this, 4));
+        myrycle.setAdapter(myAdapter);
 
 
     }

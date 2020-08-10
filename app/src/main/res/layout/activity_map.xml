@@ -130,7 +130,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="50dp"
-        android:background="@drawable/map_B2B1"
+        android:background="@drawable/map_b2b1"
         app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
