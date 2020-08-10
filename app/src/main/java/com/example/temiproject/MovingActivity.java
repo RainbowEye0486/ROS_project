@@ -25,6 +25,10 @@ public class MovingActivity extends ActivityController {
             }else if (next_job == 'p'){ //帶領到合適拍照位置
                 Intent intent2 = new Intent(MovingActivity.this, ArrivalActivity.class);
                 startActivity(intent2);
+            }else if (next_job == 'l'){ //品牌設施導覽 前往中
+                Intent intent2 = new Intent(MovingActivity.this, ThanksLeadingActivity.class);
+            }else if (next_job == 'b'){ //導覽完畢，回去原位
+                Intent intent2 = new Intent(MovingActivity.this, HomeActivity.class);
             }
 
         }
@@ -41,8 +45,12 @@ public class MovingActivity extends ActivityController {
             next_job = 'p';
         }else if (task.equals("takePhoto")){
             next_job = 's';
+        }else if (task.equals("lead")){
+            next_job = 'l';
+        }else if (task.equals("back")){
+            next_job = 'b';
         }
         setContentView(R.layout.activity_moving);
-        timer.schedule(count, 3000);//三秒後執行task
+        timer.schedule(count, 3000);//三秒後執行task，改成監聽器觸發
     }
 }

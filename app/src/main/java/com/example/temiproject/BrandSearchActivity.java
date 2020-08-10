@@ -14,9 +14,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BrandSearchActivity extends ActivityController {
 
     private static final String TAG = "BrandSearchActivity";
+
+    List<Branditem> lstBrand;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +38,9 @@ public class BrandSearchActivity extends ActivityController {
                 startActivity(intent);
             }
         });
+
+        lstBrand = new ArrayList<>();
+        lstBrand.add(new Branditem("cosmed", "brabrabra", ))
 
 
 
