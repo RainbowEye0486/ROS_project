@@ -1,0 +1,61 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:background="#D6D6D6"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintHeight_percent="0.85"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintStart_toStartOf="@+id/left_guideline"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintWidth_percent="0.65"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/separate_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.63"
+        />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/card_perngyuh"
+        app:layout_constraintBottom_toBottomOf="@id/separate_guideline"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/card_cancel_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/cancel_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/card_text"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:text="Wolsey創於西元1755年至今已有近250年歷史，為歐洲仍活躍於紡織業界，最古老的公司之一，Wolsey有其獨特的歷史和傳統。西元1897年Wolsey商標正式問世，是英國商標註冊的先驅之一。
+        高爾夫球的發源地在蘇格蘭，西元1885年至1900年間，高爾夫球運動蔚為風潮。Wolsey開始跨進運動服領域，而成為高爾夫球裝乃至其他運動服飾的領導廠商。
+        西元1935年Wolsey獲英皇喬治五世頒皇家御用委任狀。成為皇室御用針織供應廠商，1959年再獲伊麗莎白女皇頒皇家御用委任狀，皇家御用委任狀是為表彰人們為皇室服務而頒發，代表著商業與工業技術結合的最佳典範。"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/separate_guideline"
+        app:layout_constraintWidth_percent="0.9" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

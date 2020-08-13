@@ -3,25 +3,26 @@ package com.example.temiproject;
 public class Branditem {
 
     private String Title;
-    private String description;
-
+    private int description;
+    int insideGraph;
     int thumbnail;
 
 
     public Branditem() {
     }
 
-    public Branditem(String title, String description, int thumbnail) {
+    public Branditem(String title, int description, int thumbnail, int insideGraph) {
         Title = title;
         this.description = description;
         this.thumbnail = thumbnail;
+        this.insideGraph = insideGraph;
     }
 
     public String getTitle() {
         return Title;
     }
 
-    public String getDescription() {
+    public int getDescription() {
         return description;
     }
 
@@ -33,7 +34,7 @@ public class Branditem {
         Title = title;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(int description) {
         this.description = description;
     }
 

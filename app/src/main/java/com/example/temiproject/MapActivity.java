@@ -7,16 +7,22 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends ActivityController {
 
     private static final String TAG = "MapActivity";
+    private String[] order= {"edwin", "lanew", "miamia", "poya", null};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         Button goLead = (Button)findViewById(R.id.map_go);
+        ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
         goLead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -25,5 +31,12 @@ public class MapActivity extends ActivityController {
                 intent.putExtra("task", "lead");
             }
         });
+
+        List<mapView> brandIdem = new ArrayList<>();
+        for(int i = 0; i < order.length; i++){
+
+        }
+
+
     }
 }

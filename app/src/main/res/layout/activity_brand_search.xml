@@ -1,4 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
@@ -10,7 +11,7 @@ tools:context=".BrandSearchActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.09" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline"
@@ -50,7 +51,6 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintRight_toRightOf="parent"
         android:clickable="true"
         android:focusable="true">
-
     </ImageView>
 
 
@@ -60,28 +60,34 @@ tools:context=".BrandSearchActivity">
         android:layout_height="0dp"
         android:background="@drawable/sign"
         android:contentDescription="TODO"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintLeft_toLeftOf="@id/right_guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintWidth_percent="0.15"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        />
 
     <Button
         android:id="@+id/beacon1_cancel"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/cancel_img"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/beacon1"
         app:layout_constraintStart_toEndOf="@+id/beacon1"
         app:layout_constraintTop_toTopOf="@+id/beacon1" />
+
+
 
     <ImageView
         android:id="@+id/beacon2"
         android:background="@drawable/sign"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="invisible"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintVertical_bias="0.3"
@@ -96,15 +102,31 @@ tools:context=".BrandSearchActivity">
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/cancel_img"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/beacon2"
         app:layout_constraintStart_toEndOf="@+id/beacon2"
         app:layout_constraintTop_toTopOf="@+id/beacon2" />
+
+    <TextView
+        android:id="@+id/beacon2_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon2"
+        app:layout_constraintRight_toRightOf="@+id/beacon2"
+        app:layout_constraintLeft_toLeftOf="@id/beacon2"
+        app:layout_constraintTop_toTopOf="@+id/beacon2"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/beacon3"
         android:background="@drawable/sign"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="invisible"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintVertical_bias="0.5"
@@ -119,15 +141,46 @@ tools:context=".BrandSearchActivity">
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/cancel_img"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/beacon3"
         app:layout_constraintStart_toEndOf="@+id/beacon3"
         app:layout_constraintTop_toTopOf="@+id/beacon3" />
+
+
+    <TextView
+        android:id="@+id/beacon3_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon3"
+        app:layout_constraintRight_toRightOf="@+id/beacon3"
+        app:layout_constraintLeft_toLeftOf="@id/beacon3"
+        app:layout_constraintTop_toTopOf="@+id/beacon3"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon1_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon1"
+        app:layout_constraintRight_toRightOf="@+id/beacon1"
+        app:layout_constraintLeft_toLeftOf="@id/beacon1"
+        app:layout_constraintTop_toTopOf="@+id/beacon1"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/beacon4"
         android:background="@drawable/sign"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="invisible"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintVertical_bias="0.7"
@@ -142,6 +195,7 @@ tools:context=".BrandSearchActivity">
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/cancel_img"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/beacon4"
         app:layout_constraintStart_toEndOf="@+id/beacon4"
         app:layout_constraintTop_toTopOf="@+id/beacon4" />
@@ -151,6 +205,7 @@ tools:context=".BrandSearchActivity">
         android:background="@drawable/sign"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="invisible"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintWidth_percent="0.15"
         app:layout_constraintVertical_bias="0.9"
@@ -165,18 +220,57 @@ tools:context=".BrandSearchActivity">
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/cancel_img"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/beacon5"
         app:layout_constraintStart_toEndOf="@+id/beacon5"
         app:layout_constraintTop_toTopOf="@+id/beacon5" />
 
+    <TextView
+        android:id="@+id/beacon4_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon4"
+        app:layout_constraintRight_toRightOf="@+id/beacon4"
+        app:layout_constraintLeft_toLeftOf="@id/beacon4"
+        app:layout_constraintTop_toTopOf="@+id/beacon4"
+        tools:ignore="MissingConstraints" />
+
     <Button
+        android:id="@+id/brandtomap_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="查詢地圖"
+        android:enabled="false"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/right_guideline"
         />
+    <Button
+        android:id="@+id/brand_search_btn"
+        android:layout_width="50dp"
+        android:layout_height="0dp"
+        android:background="@drawable/search_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/editText"
+        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintTop_toTopOf="@+id/editText" />
+
+    <TextView
+        android:id="@+id/beacon5_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon5"
+        app:layout_constraintRight_toRightOf="@+id/beacon5"
+        app:layout_constraintLeft_toLeftOf="@id/beacon5"
+        app:layout_constraintTop_toTopOf="@+id/beacon5"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editText"
@@ -190,16 +284,8 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintWidth_percent="0.5"/>
+        app:layout_constraintWidth_percent="0.57"/>
 
-    <Button
-        android:id="@+id/brand_search_btn"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:background="@drawable/search_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/brand_recycleView"
@@ -210,9 +296,7 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toTopOf="@+id/card_guideline">
-
     </androidx.recyclerview.widget.RecyclerView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

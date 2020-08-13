@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ public class BrandSearchActivity extends ActivityController {
     private static final String TAG = "BrandSearchActivity";
 
     List<Branditem> lstBrand;
-
+    List<Beacon> lstbeacon;
 
 
     @Override
@@ -31,36 +33,168 @@ public class BrandSearchActivity extends ActivityController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
-        brandSearch.setOnClickListener(new View.OnClickListener() {
+        Button goMap = (Button)findViewById(R.id.brandtomap_btn);
+        goMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: brand search button");
                 Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
+                String[] order = new String[5];
+                for(int m=0;m<lstbeacon.size();m++){
+                    order[m] = lstbeacon.get(m).title;
+                }
+                for (int b =0; b<5; b++){
+                    Log.d(TAG, "onClick: " + order[b]);
+                }
+                intent.putExtra("order", order);
                 startActivity(intent);
             }
         });
 
         lstBrand = new ArrayList<>();
-        lstBrand.add(new Branditem("Perngyuh", "brabrabra",R.drawable.thumbnail_perngyuh));
-        lstBrand.add(new Branditem("cosmed", "brabrabra",R.drawable.thumbnail_cosmed));
-        lstBrand.add(new Branditem("wolsley", "brabrabra",R.drawable.thumbnail_wolsey));
-        lstBrand.add(new Branditem("miamia", "brabrabra",R.drawable.thumbnail_miamia));
-        lstBrand.add(new Branditem("coach", "brabrabra",R.drawable.thumbnail_coach));
-        lstBrand.add(new Branditem("poloRalphLauren", "brabrabra",R.drawable.thumbnail_poloRalphLauren));
-        lstBrand.add(new Branditem("roots", "brabrabra",R.drawable.thumbnail_roots));
-        lstBrand.add(new Branditem("lacoste", "brabrabra",R.drawable.thumbnail_lacoste));
-        lstBrand.add(new Branditem("lanew", "brabrabra",R.drawable.thumbnail_lanew));
-        //lstBrand.add(new Branditem("blueway", "brabrabra", R.drawable.Th));
-        lstBrand.add(new Branditem("edwin", "brabrabra",R.drawable.thumbnail_edwin));
-        lstBrand.add(new Branditem("poya", "brabrabra",R.drawable.thumbnail_poya));
+        lstbeacon = new ArrayList<>();
+        lstBrand.add(new Branditem("Perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh));
+        lstBrand.add(new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed));
+        lstBrand.add(new Branditem("wolsley", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey));
+        lstBrand.add(new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia));
+        lstBrand.add(new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach));
+        lstBrand.add(new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren));
+        lstBrand.add(new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots));
+        lstBrand.add(new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste));
+        lstBrand.add(new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew));
+        lstBrand.add(new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway));
+        lstBrand.add(new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin));
+        lstBrand.add(new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya));
 
         RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
-        BranditemAdapter myAdapter = new BranditemAdapter(this, lstBrand);
-        myrycle.setLayoutManager(new GridLayoutManager(this, 4));
+        BranditemAdapter myAdapter = new BranditemAdapter(this, BrandSearchActivity.this, lstBrand, lstbeacon);
+        Log.d(TAG, "onCreate: lstbeacon" + lstbeacon);
+        myrycle.setLayoutManager(new GridLayoutManager(this, 5));
         myrycle.setAdapter(myAdapter);
 
+        //處理詳細的顯示
 
+        Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
+        Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
+        Button beacon3_btn = (Button)findViewById(R.id.beacon3_cancel);
+        Button beacon4_btn = (Button)findViewById(R.id.beacon4_cancel);
+        Button beacon5_btn = (Button)findViewById(R.id.beacon5_cancel);
+
+        beacon1_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: delete beacon1");
+                lstbeacon.remove(lstbeacon.get(0));
+                flushBeacon();
+                Log.d(TAG, "onClick: "+lstbeacon);
+            }
+        });
+        beacon2_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: delete beacon2");
+                lstbeacon.remove(lstbeacon.get(1));
+                flushBeacon();
+                Log.d(TAG, "onClick: "+lstbeacon);
+            }
+        });
+        beacon3_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: delete beacon3");
+                lstbeacon.remove(lstbeacon.get(2));
+                flushBeacon();
+                Log.d(TAG, "onClick: "+lstbeacon);
+            }
+        });
+        beacon4_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: delete beacon4");
+                lstbeacon.remove(lstbeacon.get(3));
+                flushBeacon();
+                Log.d(TAG, "onClick: "+lstbeacon);
+            }
+        });
+        beacon5_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: delete beacon5");
+                lstbeacon.remove(lstbeacon.get(4));
+                flushBeacon();
+                Log.d(TAG, "onClick: "+lstbeacon);
+            }
+        });
     }
+
+    public void flushBeacon(){
+        int length = lstbeacon.size();
+        Log.d(TAG, "flushBeacon: length" + length);
+        Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
+        Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
+        Button beacon3_btn = (Button)findViewById(R.id.beacon3_cancel);
+        Button beacon4_btn = (Button)findViewById(R.id.beacon4_cancel);
+        Button beacon5_btn = (Button)findViewById(R.id.beacon5_cancel);
+        Button schedule_btn = (Button)findViewById(R.id.brandtomap_btn);
+        ImageView beacon1 = (ImageView)findViewById(R.id.beacon1);
+        ImageView beacon2 = (ImageView)findViewById(R.id.beacon2);
+        ImageView beacon3 = (ImageView)findViewById(R.id.beacon3);
+        ImageView beacon4 = (ImageView)findViewById(R.id.beacon4);
+        ImageView beacon5 = (ImageView)findViewById(R.id.beacon5);
+        TextView beacon1_txt = (TextView)findViewById(R.id.beacon1_txt);
+        TextView beacon2_txt = (TextView)findViewById(R.id.beacon2_txt);
+        TextView beacon3_txt = (TextView)findViewById(R.id.beacon3_txt);
+        TextView beacon4_txt = (TextView)findViewById(R.id.beacon4_txt);
+        TextView beacon5_txt = (TextView)findViewById(R.id.beacon5_txt);
+        if (length == 0){
+            schedule_btn.setEnabled(false);
+        }
+        else{
+            schedule_btn.setEnabled(true);
+        }
+        beacon1_btn.setVisibility(View.INVISIBLE);
+        beacon2_btn.setVisibility(View.INVISIBLE);
+        beacon3_btn.setVisibility(View.INVISIBLE);
+        beacon4_btn.setVisibility(View.INVISIBLE);
+        beacon5_btn.setVisibility(View.INVISIBLE);
+        beacon1.setVisibility(View.INVISIBLE);
+        beacon2.setVisibility(View.INVISIBLE);
+        beacon3.setVisibility(View.INVISIBLE);
+        beacon4.setVisibility(View.INVISIBLE);
+        beacon5.setVisibility(View.INVISIBLE);
+        beacon1_txt.setVisibility(View.INVISIBLE);
+        beacon2_txt.setVisibility(View.INVISIBLE);
+        beacon3_txt.setVisibility(View.INVISIBLE);
+        beacon4_txt.setVisibility(View.INVISIBLE);
+        beacon5_txt.setVisibility(View.INVISIBLE);
+        if(length == 0)return;
+
+        beacon1.setVisibility(View.VISIBLE);
+        beacon1_txt.setVisibility(View.VISIBLE);
+        beacon1_txt.setText(lstbeacon.get(0).title);
+        beacon1_btn.setVisibility(View.VISIBLE);
+        if(length == 1)return;
+        beacon2.setVisibility(View.VISIBLE);
+        beacon2_txt.setVisibility(View.VISIBLE);
+        beacon2_txt.setText(lstbeacon.get(1).title);
+        beacon2_btn.setVisibility(View.VISIBLE);
+        if(length == 2)return;
+        beacon3.setVisibility(View.VISIBLE);
+        beacon3_txt.setVisibility(View.VISIBLE);
+        beacon3_txt.setText(lstbeacon.get(2).title);
+        beacon3_btn.setVisibility(View.VISIBLE);
+        if(length == 3)return;
+        beacon4.setVisibility(View.VISIBLE);
+        beacon4_txt.setVisibility(View.VISIBLE);
+        beacon4_txt.setText(lstbeacon.get(3).title);
+        beacon4_btn.setVisibility(View.VISIBLE);
+        if(length == 4)return;
+        beacon5.setVisibility(View.VISIBLE);
+        beacon5_txt.setVisibility(View.VISIBLE);
+        beacon5_txt.setText(lstbeacon.get(4).title);
+        beacon5_btn.setVisibility(View.VISIBLE);
+    }
+
 
     @CallSuper
     @Override
@@ -96,6 +230,15 @@ public class BrandSearchActivity extends ActivityController {
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             manager.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+}
+
+class Beacon{
+    String title;
+    int textSize;
+    public Beacon (String title, int textSize){
+        this.title = title;
+        this.textSize = textSize;
     }
 
 }
