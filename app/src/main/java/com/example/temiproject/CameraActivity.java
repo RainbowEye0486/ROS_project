@@ -23,6 +23,7 @@ public class CameraActivity extends ActivityController {
         public void run() {
             Log.d(TAG, "run: shot");
             //相機拍攝
+
         }
     };
     

@@ -53,9 +53,9 @@ public class BrandSearchActivity extends ActivityController {
 
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
-        lstBrand.add(new Branditem("Perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh));
+        lstBrand.add(new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh));
         lstBrand.add(new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed));
-        lstBrand.add(new Branditem("wolsley", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey));
+        lstBrand.add(new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey));
         lstBrand.add(new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia));
         lstBrand.add(new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach));
         lstBrand.add(new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren));
@@ -127,7 +127,7 @@ public class BrandSearchActivity extends ActivityController {
         });
     }
 
-    public void flushBeacon(){
+    public void flushBeacon(){ //重新整理預排清單
         int length = lstbeacon.size();
         Log.d(TAG, "flushBeacon: length" + length);
         Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
