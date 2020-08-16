@@ -272,12 +272,13 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintTop_toTopOf="@+id/beacon5"
         tools:ignore="MissingConstraints" />
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:id="@+id/editText"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:background="@drawable/edittext"
         android:padding="5dp"
+
         android:hint="請輸入品牌名稱或是關鍵字..."
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/top_guideline"

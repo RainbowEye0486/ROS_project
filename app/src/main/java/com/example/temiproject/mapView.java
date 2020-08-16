@@ -28,18 +28,13 @@ public class mapView {
         return floor;
     }
 
-    public Bitmap combineGraph(ImageView image, Drawable drawableBack, Drawable drawableFore){
-
+    public Drawable combineGraph(Drawable drawableBack){
         Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
         Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
-
-        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 35, 35, true);
-        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 45, 45, true);
-
+        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 900 , 550 , true);
+        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 900 , 550 , true);
         Bitmap combineImages = overlay(scaledBitmapBack, scaledBitmapFore);
-
-        image.setImageBitmap(combineImages);
-        return combineImages;
+        return new BitmapDrawable(combineImages);
     }
 
     public int getOrder() {

@@ -46,6 +46,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/sign"
+        android:visibility="invisible"
         android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
@@ -60,6 +61,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/sign"
+        android:visibility="invisible"
         android:contentDescription="TODO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
@@ -76,6 +78,7 @@
         android:layout_height="0dp"
         android:background="@drawable/sign"
         android:contentDescription="TODO"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintLeft_toLeftOf="@id/right_guideline"
@@ -91,6 +94,7 @@
         android:layout_height="0dp"
         android:background="@drawable/sign"
         android:contentDescription="TODO"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintLeft_toLeftOf="@id/right_guideline"
@@ -106,6 +110,7 @@
         android:layout_height="0dp"
         android:background="@drawable/sign"
         android:contentDescription="TODO"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintLeft_toLeftOf="@id/right_guideline"
@@ -113,6 +118,77 @@
         app:layout_constraintVertical_bias="0.9"
         app:layout_constraintWidth_percent="0.15"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon1_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon1"
+        app:layout_constraintRight_toRightOf="@+id/beacon1"
+        app:layout_constraintLeft_toLeftOf="@id/beacon1"
+        app:layout_constraintTop_toTopOf="@+id/beacon1"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon2_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon2"
+        app:layout_constraintRight_toRightOf="@+id/beacon2"
+        app:layout_constraintLeft_toLeftOf="@id/beacon2"
+        app:layout_constraintTop_toTopOf="@+id/beacon2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon3_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon3"
+        app:layout_constraintRight_toRightOf="@+id/beacon3"
+        app:layout_constraintLeft_toLeftOf="@id/beacon3"
+        app:layout_constraintTop_toTopOf="@+id/beacon3"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon4_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon4"
+        app:layout_constraintRight_toRightOf="@+id/beacon4"
+        app:layout_constraintLeft_toLeftOf="@id/beacon4"
+        app:layout_constraintTop_toTopOf="@+id/beacon4"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/beacon5_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="40sp"
+        android:text="title"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/beacon5"
+        app:layout_constraintRight_toRightOf="@+id/beacon5"
+        app:layout_constraintLeft_toLeftOf="@id/beacon5"
+        app:layout_constraintTop_toTopOf="@+id/beacon5"
+        tools:ignore="MissingConstraints" />
+
 
     <Button
         android:id="@+id/map_go"
@@ -130,11 +206,21 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="50dp"
-        android:background="@drawable/map_b2b1"
         app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toTopOf="@+id/top_guideline" />
+
+    <TextView
+        android:id="@+id/floor_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="B1-B1"
+        android:textSize="50sp"
+        app:layout_constraintStart_toStartOf="@+id/bigMap"
+        app:layout_constraintTop_toTopOf="@+id/bigMap"
+        tools:ignore="MissingConstraints" />
+
 
     <ImageButton
         android:id="@+id/up"
@@ -177,14 +263,14 @@
         app:layout_constraintTop_toTopOf="@+id/top_guideline" />
 
     <ImageView
-        android:id="@+id/small_map"
+        android:id="@+id/minimap"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/cancel_img"
+        app:layout_constraintWidth_percent="0.4"
+        app:layout_constraintHeight_percent="0.32"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/right_mapguideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bigMap" />
+         />
 
 
 

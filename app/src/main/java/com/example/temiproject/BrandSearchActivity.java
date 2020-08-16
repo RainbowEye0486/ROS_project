@@ -53,18 +53,31 @@ public class BrandSearchActivity extends ActivityController {
 
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
-        lstBrand.add(new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh));
-        lstBrand.add(new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed));
-        lstBrand.add(new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey));
-        lstBrand.add(new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia));
-        lstBrand.add(new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach));
-        lstBrand.add(new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren));
-        lstBrand.add(new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots));
-        lstBrand.add(new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste));
-        lstBrand.add(new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew));
-        lstBrand.add(new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway));
-        lstBrand.add(new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin));
-        lstBrand.add(new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya));
+        Branditem perngyuh = new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cosmed = new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem miamia = new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lacoste = new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem lanew = new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+
+        lstBrand.add(perngyuh);
+        lstBrand.add(cosmed);
+        lstBrand.add(wolsey);
+        lstBrand.add(miamia);
+        lstBrand.add(coach);
+        lstBrand.add(polo);
+        lstBrand.add(roots);
+        lstBrand.add(lacoste);
+        lstBrand.add(lanew);
+        lstBrand.add(blueway);
+        lstBrand.add(edwin);
+        lstBrand.add(poya);
 
         RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
         BranditemAdapter myAdapter = new BranditemAdapter(this, BrandSearchActivity.this, lstBrand, lstbeacon);
@@ -73,6 +86,7 @@ public class BrandSearchActivity extends ActivityController {
         myrycle.setAdapter(myAdapter);
 
         //處理詳細的顯示
+
 
         Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
         Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
