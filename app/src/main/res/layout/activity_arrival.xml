@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ArrivalActivity">
+    tools:context=".ArrivalActivity"
+    android:background="@drawable/bachground_arrival">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"
@@ -40,14 +41,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
+        app:layout_constraintGuide_percent="0.29" />
 
     <TextView
         android:id="@+id/arrival_text"
         android:text="請站在最佳位置"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="75dp"
+        android:textSize="50dp"
+        android:textColor="#C6C6C6"
         app:layout_constraintBottom_toTopOf="@+id/text_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

@@ -4,21 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MovingActivity">
+    tools:context=".MovingActivity"
+    android:background="@drawable/bachground_moving"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/text_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.42" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <TextView
         android:id="@+id/moving_text"
         android:text="運行中..."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="100dp"
+        android:textSize="70sp"
+        android:textColor="#aaa"
         app:layout_constraintBottom_toTopOf="@+id/text_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
