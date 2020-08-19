@@ -21,9 +21,9 @@ public class GuildPointActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guild_point);
-        ImageButton guildBrand = (ImageButton) findViewById(R.id.guild_brand);
-        ImageButton guildToilet = (ImageButton)findViewById(R.id.guild_toilet);
-        ImageButton guildElevator = (ImageButton)findViewById(R.id.guild_elevator);
+        Button guildBrand = (Button) findViewById(R.id.select_brand_btn);
+        Button guildToilet = (Button)findViewById(R.id.select_toilet_btn);
+        Button guildElevator = (Button)findViewById(R.id.select_elevator_btn);
         guildBrand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

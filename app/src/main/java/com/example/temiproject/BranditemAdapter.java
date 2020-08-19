@@ -43,6 +43,7 @@ public class BranditemAdapter extends RecyclerView.Adapter<BranditemAdapter.MyVi
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.brandText.setText(mData.get(position).getTitle());
+
         holder.brandThumbnail.setImageResource(mData.get(position).getThumbnail());
         holder.brandButton.setOnClickListener(new View.OnClickListener() {
             @Override

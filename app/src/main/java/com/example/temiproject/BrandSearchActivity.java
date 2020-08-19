@@ -85,6 +85,7 @@ public class BrandSearchActivity extends ActivityController {
         myrycle.setLayoutManager(new GridLayoutManager(this, 5));
         myrycle.setAdapter(myAdapter);
 
+        
         //處理詳細的顯示
 
 

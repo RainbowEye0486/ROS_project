@@ -15,6 +15,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ActionBar actionbar	= getSupportActionBar();
@@ -26,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this, SelectPointActivity.class);
+                Intent intent = new Intent(HomeActivity.this, InformationActivity.class);
                 startActivity(intent);
                 Log.d(TAG, "onClick: photo button");
             }

@@ -27,8 +27,10 @@ public class MovingActivity extends ActivityController {
                 startActivity(intent2);
             }else if (next_job == 'l'){ //品牌設施導覽 前往中
                 Intent intent2 = new Intent(MovingActivity.this, ThanksLeadingActivity.class);
+                startActivity(intent2);
             }else if (next_job == 'b'){ //導覽完畢，回去原位
                 Intent intent2 = new Intent(MovingActivity.this, HomeActivity.class);
+                startActivity(intent2);
             }
 
         }
@@ -41,7 +43,7 @@ public class MovingActivity extends ActivityController {
         String task	= intent.getStringExtra("task");
         assert task != null;
         Log.d(TAG, "on create" + task);
-        if (task.equals("0") || task.equals("1") || task.equals("2")){
+        if (task.equals("picture")){
             next_job = 'p';
         }else if (task.equals("takePhoto")){
             next_job = 's';

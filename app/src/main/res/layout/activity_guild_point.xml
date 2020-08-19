@@ -4,21 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GuildPointActivity">
+    tools:context=".GuildPointActivity"
+    android:background="@drawable/bachground_selectguild"
+    >
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1"/>
+        app:layout_constraintGuide_percent="0.2"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/right_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.8" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/top_guideline"
@@ -32,36 +48,72 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.78" />
+        app:layout_constraintGuide_percent="0.88 " />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/guild_toilet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/sticker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/select_toilet"
         app:layout_constraintRight_toRightOf="@id/right_guideline"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
+        app:layout_constraintWidth_percent="0.17"
+        app:layout_constraintHeight_percent="0.45"
         tools:ignore="MissingConstraints"
         />
 
-    <ImageButton
-        android:id="@+id/guild_brand"
+    <Button
+        android:id="@+id/select_brand_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/sticker"
+        android:text="品牌查詢"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/select_elevator_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="最近電梯"
+
+        app:layout_constraintEnd_toStartOf="@+id/left"
+        app:layout_constraintStart_toStartOf="@+id/left_guideline"
+        app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/select_toilet_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="最近廁所"
+        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintStart_toStartOf="@+id/right"
+        app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+        tools:ignore="MissingConstraints" />
+    <ImageView
+        android:id="@+id/guild_brand"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/select_brand"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
+        app:layout_constraintWidth_percent="0.17"
+        app:layout_constraintHeight_percent="0.45"
         tools:ignore="MissingConstraints"
          />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/guild_elevator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/sticker"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/select_serve"
         app:layout_constraintLeft_toLeftOf="@id/left_guideline"
         app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
+        app:layout_constraintWidth_percent="0.17"
+        app:layout_constraintHeight_percent="0.45"
         tools:ignore="MissingConstraints"
          />
 </androidx.constraintlayout.widget.ConstraintLayout>
