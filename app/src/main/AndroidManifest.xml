@@ -25,7 +25,8 @@
         <activity android:name=".MapActivity" />
         <activity
             android:name=".BrandSearchActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".GuildPointActivity"
             android:launchMode="singleTop" />

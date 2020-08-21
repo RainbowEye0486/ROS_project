@@ -84,7 +84,7 @@ public class BranditemAdapter extends RecyclerView.Adapter<BranditemAdapter.MyVi
 
         TextView brandText;
         ImageView brandThumbnail;
-        ImageButton brandButton;
+        Button brandButton;
 
         CardView cardView;
 
@@ -92,7 +92,7 @@ public class BranditemAdapter extends RecyclerView.Adapter<BranditemAdapter.MyVi
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             brandText = (TextView) itemView.findViewById(R.id.brand_title);
-            brandButton = (ImageButton) itemView.findViewById(R.id.brand_add_btn);
+            brandButton = (Button) itemView.findViewById(R.id.brand_add_btn);
             brandThumbnail = (ImageView) itemView.findViewById(R.id.brand_img);
             cardView = (CardView) itemView.findViewById(R.id.cardview_id);
         }

@@ -6,6 +6,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -41,7 +46,12 @@ public class BrandSearchActivity extends ActivityController {
                 Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
                 String[] order = new String[5];
                 for(int m=0;m<lstbeacon.size();m++){
-                    order[m] = lstbeacon.get(m).title;
+                    if (lstbeacon.size()>5){
+                        break;
+                    }
+                    else {
+                        order[m] = lstbeacon.get(m).title;
+                    }
                 }
                 for (int b =0; b<5; b++){
                     Log.d(TAG, "onClick: " + order[b]);
@@ -246,6 +256,7 @@ public class BrandSearchActivity extends ActivityController {
             manager.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
 }
 
 class Beacon{

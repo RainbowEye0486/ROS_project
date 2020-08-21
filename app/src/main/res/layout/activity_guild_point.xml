@@ -64,30 +64,45 @@
 
     <Button
         android:id="@+id/select_brand_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btn"
         android:text="品牌查詢"
+        android:textColor="#F8E7CD"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+        app:layout_constraintHeight_percent="0.09"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+        app:layout_constraintWidth_percent="0.18"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/select_elevator_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/btn"
         android:text="最近電梯"
-
+        android:textColor="#F8E7CD"
+        android:textSize="30sp"
         app:layout_constraintEnd_toStartOf="@+id/left"
+        app:layout_constraintHeight_percent="0.09"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/left_guideline"
         app:layout_constraintTop_toTopOf="@id/bottom_guideline"
+        app:layout_constraintWidth_percent="0.18"
         tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/select_toilet_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="最近廁所"
+        android:textSize="30sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        app:layout_constraintWidth_percent="0.18"
+        app:layout_constraintHeight_percent="0.09"
         app:layout_constraintEnd_toStartOf="@+id/right_guideline"
         app:layout_constraintStart_toStartOf="@+id/right"
         app:layout_constraintTop_toTopOf="@id/bottom_guideline"

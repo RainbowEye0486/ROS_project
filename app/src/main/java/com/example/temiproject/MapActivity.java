@@ -4,7 +4,12 @@ import androidx.annotation.RequiresApi;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,7 +25,7 @@ import java.util.List;
 public class MapActivity extends ActivityController {
 
     private static final String TAG = "MapActivity";
-    private String[] order= {"edwin", "lanew", "miamia", "poya"};
+    private String[] order= {"poya", "blueway", "lanew", "miamia" };
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -31,9 +36,6 @@ public class MapActivity extends ActivityController {
 
         //右邊的排序結果
         flush();
-
-
-
 
         Button goLead = (Button)findViewById(R.id.map_go);
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
@@ -58,63 +60,63 @@ public class MapActivity extends ActivityController {
             //}
             switch (brandName) {
                 case "cosmed": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_cosmed);
+                    Drawable drawableFore = getDrawable(R.drawable.map_cosmed);
                     brandIdem.add(new mapView("b2b1", "cosmed", drawableFore, i));
                     break;
                 }
                 case "miamia": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_miamia);
+                    Drawable drawableFore = getDrawable(R.drawable.map_miamia);
                     brandIdem.add(new mapView("b2b1", "miamia", drawableFore, i));
                     break;
                 }
                 case "wolsey": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_wolsey);
+                    Drawable drawableFore = getDrawable(R.drawable.map_wolsey);
                     brandIdem.add(new mapView("b2b1", "wolsey", drawableFore, i));
                     break;
                 }
                 case "perngyuh": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_perngyuh);
+                    Drawable drawableFore = getDrawable(R.drawable.map_perngyuh);
                     brandIdem.add(new mapView("b2b1", "perngyuh", drawableFore, i));
                     break;
                 }
                 case "coach": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_coach);
+                    Drawable drawableFore = getDrawable(R.drawable.map_coach);
                     brandIdem.add(new mapView("b2lb", "coach", drawableFore, i));
                     break;
                 }
                 case "roots": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_roots);
+                    Drawable drawableFore = getDrawable(R.drawable.map_roots);
                     brandIdem.add(new mapView("b2lb", "roots", drawableFore, i));
                     break;
                 }
                 case "poloRalphLauren": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_polo);
+                    Drawable drawableFore = getDrawable(R.drawable.map_polo);
                     brandIdem.add(new mapView("b2lb", "poloRalphLauren", drawableFore, i));
                     break;
                 }
                 case "lacoste": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_lacoste);
+                    Drawable drawableFore = getDrawable(R.drawable.map_lacoste);
                     brandIdem.add(new mapView("b2lb", "lacoste", drawableFore, i));
                     break;
                 }
                 case "edwin": {
                     Log.d(TAG, "onCreate: into edwin");
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_edwin);
+                    Drawable drawableFore = getDrawable(R.drawable.map_edwin);
                     brandIdem.add(new mapView("b1b1", "edwin", drawableFore, i));
                     break;
                 }
                 case "lanew": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_lanew);
+                    Drawable drawableFore = getDrawable(R.drawable.map_lanew);
                     brandIdem.add(new mapView("b1b1", "lanew", drawableFore, i));
                     break;
                 }
                 case "blueway": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_blueway);
+                    Drawable drawableFore = getDrawable(R.drawable.map_blueway);
                     brandIdem.add(new mapView("b1b1", "blueway", drawableFore, i));
                     break;
                 }
                 case "poya": {
-                    Drawable drawableFore = getResources().getDrawable(R.drawable.map_poya);
+                    Drawable drawableFore = getDrawable(R.drawable.map_poya);
                     brandIdem.add(new mapView("ab1", "poya", drawableFore, i));
                     break;
                 }
@@ -133,7 +135,7 @@ public class MapActivity extends ActivityController {
             Log.d(TAG, "onCreate: foldgraph item " + i + " floor " + floor);
             switch (floor) {
                 case "b2b1":
-                    b2b1 = brandIdem.get(i).combineGraph(b2b1);
+                    b2b1 = combineGraph(brandIdem.get(i).drawableFore,b2b1);
                     if (i == 1) {
                         current_map = floor;
                         mapImage.setImageDrawable(b2b1);
@@ -141,7 +143,7 @@ public class MapActivity extends ActivityController {
                     }
                     break;
                 case "b2lb":
-                    b2lb = brandIdem.get(i).combineGraph(b2lb);
+                    b2lb = combineGraph(brandIdem.get(i).drawableFore,b2lb);
                     if (i == 1) {
                         current_map = floor;
                         mapImage.setImageDrawable(b2lb);
@@ -149,7 +151,7 @@ public class MapActivity extends ActivityController {
                     }
                     break;
                 case "b1b1":
-                    b1b1 = brandIdem.get(i).combineGraph(b1b1);
+                    b1b1 = combineGraph(brandIdem.get(i).drawableFore,b1b1);
                     if (i == 1) {
                         current_map = floor;
                         mapImage.setImageDrawable(b1b1);
@@ -157,7 +159,7 @@ public class MapActivity extends ActivityController {
                     }
                     break;
                 case "ab1":
-                    a_b1 = brandIdem.get(i).combineGraph(a_b1);
+                    a_b1 = combineGraph(brandIdem.get(i).drawableFore,a_b1);
                     if (i == 1) {
                         current_map = floor;
                         mapImage.setImageDrawable(a_b1);
@@ -167,11 +169,14 @@ public class MapActivity extends ActivityController {
             }
         }
 
-        ImageButton up = (ImageButton)findViewById(R.id.up);
-        ImageButton down = (ImageButton)findViewById(R.id.down);
-        ImageButton left = (ImageButton)findViewById(R.id.left);
-        ImageButton right = (ImageButton)findViewById(R.id.right);
 
+
+
+        //設定上下左右及縮圖
+       Button up = (Button)findViewById(R.id.up);
+       Button down = (Button)findViewById(R.id.down);
+       Button left = (Button)findViewById(R.id.left);
+       Button right = (Button)findViewById(R.id.right);
 
         final Drawable finalB2lb = b2lb;
         final Drawable finalB2b1 = b2b1;
@@ -203,13 +208,12 @@ public class MapActivity extends ActivityController {
             minimap.setImageResource(R.drawable.minimap_lb2);
         }
 
-
         up.setOnClickListener(new View.OnClickListener() {
-            ImageButton up = (ImageButton)findViewById(R.id.up);
-            ImageButton down = (ImageButton)findViewById(R.id.down);
-            ImageButton left = (ImageButton)findViewById(R.id.left);
-            ImageButton right = (ImageButton)findViewById(R.id.right);
-            ImageView mapImage = findViewById(R.id.bigMap);
+            Button up = (Button)findViewById(R.id.up);
+            Button down = (Button)findViewById(R.id.down);
+            Button left = (Button)findViewById(R.id.left);
+            Button right = (Button)findViewById(R.id.right);
+            ImageView mapImage = (ImageView) findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
             @Override
@@ -228,10 +232,10 @@ public class MapActivity extends ActivityController {
         });
 
         down.setOnClickListener(new View.OnClickListener(){
-            ImageButton up = (ImageButton)findViewById(R.id.up);
-            ImageButton down = (ImageButton)findViewById(R.id.down);
-            ImageButton left = (ImageButton)findViewById(R.id.left);
-            ImageButton right = (ImageButton)findViewById(R.id.right);
+            Button up = (Button)findViewById(R.id.up);
+            Button down = (Button)findViewById(R.id.down);
+           Button left = (Button)findViewById(R.id.left);
+           Button right = (Button)findViewById(R.id.right);
             ImageView mapImage = findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
@@ -251,10 +255,10 @@ public class MapActivity extends ActivityController {
         });
 
         left.setOnClickListener(new View.OnClickListener(){
-            ImageButton up = (ImageButton)findViewById(R.id.up);
-            ImageButton down = (ImageButton)findViewById(R.id.down);
-            ImageButton left = (ImageButton)findViewById(R.id.left);
-            ImageButton right = (ImageButton)findViewById(R.id.right);
+           Button up = (Button)findViewById(R.id.up);
+           Button down = (Button)findViewById(R.id.down);
+           Button left = (Button)findViewById(R.id.left);
+           Button right = (Button)findViewById(R.id.right);
             ImageView mapImage = findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
@@ -282,10 +286,10 @@ public class MapActivity extends ActivityController {
             }
         });
         right.setOnClickListener(new View.OnClickListener(){
-            ImageButton up = (ImageButton)findViewById(R.id.up);
-            ImageButton down = (ImageButton)findViewById(R.id.down);
-            ImageButton left = (ImageButton)findViewById(R.id.left);
-            ImageButton right = (ImageButton)findViewById(R.id.right);
+           Button up = (Button)findViewById(R.id.up);
+           Button down = (Button)findViewById(R.id.down);
+           Button left = (Button)findViewById(R.id.left);
+           Button right = (Button)findViewById(R.id.right);
             ImageView mapImage = findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
@@ -313,6 +317,26 @@ public class MapActivity extends ActivityController {
             }
         });
     }
+
+    public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
+        Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
+        Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
+        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 900 , 550 , true);
+        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 900 , 550 , true);
+        Bitmap combineImages = overlay(scaledBitmapBack, scaledBitmapFore);
+        return new BitmapDrawable(this.getResources(), combineImages);
+    }
+
+    public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2)//疊圖用
+    {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, 0, 0, null);
+        return bmOverlay;
+
+    }
+
 
     public void flush(){
         int length = order.length;
