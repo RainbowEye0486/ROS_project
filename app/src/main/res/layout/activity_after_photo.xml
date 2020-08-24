@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bachground_selectguild"
+    android:background="@drawable/background_afterphoto"
     tools:context=".AfterPhotoActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -12,14 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/bottom_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.8" />
 
 
     <ImageView
@@ -27,10 +27,15 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintHeight_percent="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/top_guideline"
-        app:layout_constraintWidth_percent="0.5" />
+        app:layout_constraintWidth_percent="0.45" />
+
+    <ImageView
+        android:background="@drawable/movie_afterphoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/frame1_btn"
@@ -74,4 +79,16 @@
         app:layout_constraintStart_toEndOf="@+id/frame4_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
 
+
+    <Button
+        android:id="@+id/qrcode_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="產生 QRcode"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/preview_img"
+        app:layout_constraintStart_toStartOf="@+id/preview_img"
+        app:layout_constraintTop_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintVertical_bias="0.5"
+        tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>

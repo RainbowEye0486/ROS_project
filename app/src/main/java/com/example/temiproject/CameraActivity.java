@@ -185,7 +185,6 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         try {
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
-
             mCamera.startFaceDetection(); // re-start face detection feature
 
         } catch (Exception e){

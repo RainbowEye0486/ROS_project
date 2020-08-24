@@ -14,6 +14,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,7 +39,7 @@ public class MapActivity extends ActivityController {
         //右邊的排序結果
         flush();
 
-        Button goLead = (Button)findViewById(R.id.map_go);
+        final Button goLead = (Button)findViewById(R.id.map_go);
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
         String current_map = "";
         goLead.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,9 @@ public class MapActivity extends ActivityController {
                 Log.d(TAG, "onClick: goLead button");
                 Intent intent = new Intent(MapActivity.this, MovingActivity.class);
                 intent.putExtra("task", "lead");
+                Animation bounce = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bounce_animation);
+                goLead.startAnimation(bounce);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
 
@@ -219,6 +224,8 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: up button");
+
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 if (floorText.getText().equals("B2-B1")){
                     floorText.setText("B2-LB");
                     mapImage.setImageDrawable(finalB2lb);
@@ -234,14 +241,15 @@ public class MapActivity extends ActivityController {
         down.setOnClickListener(new View.OnClickListener(){
             Button up = (Button)findViewById(R.id.up);
             Button down = (Button)findViewById(R.id.down);
-           Button left = (Button)findViewById(R.id.left);
-           Button right = (Button)findViewById(R.id.right);
+            Button left = (Button)findViewById(R.id.left);
+            Button right = (Button)findViewById(R.id.right);
             ImageView mapImage = findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: down button");
+
                 if (floorText.getText().equals("B2-LB")){
                     floorText.setText("B2-B1");
                     mapImage.setImageDrawable(finalB2b1);
@@ -255,16 +263,17 @@ public class MapActivity extends ActivityController {
         });
 
         left.setOnClickListener(new View.OnClickListener(){
-           Button up = (Button)findViewById(R.id.up);
-           Button down = (Button)findViewById(R.id.down);
-           Button left = (Button)findViewById(R.id.left);
-           Button right = (Button)findViewById(R.id.right);
+            Button up = (Button)findViewById(R.id.up);
+            Button down = (Button)findViewById(R.id.down);
+            Button left = (Button)findViewById(R.id.left);
+            Button right = (Button)findViewById(R.id.right);
             ImageView mapImage = findViewById(R.id.bigMap);
             TextView floorText = (TextView)findViewById(R.id.floor_text);
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: left button");
+
                 if (floorText.getText().equals("B1-B1")){
                     floorText.setText("A-B1");
                     mapImage.setImageDrawable(finalA_b1);
@@ -296,6 +305,7 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: right button");
+
                 if (floorText.getText().equals("A-B1")){
                     floorText.setText("B1-B1");
                     mapImage.setImageDrawable(finalB1b1);

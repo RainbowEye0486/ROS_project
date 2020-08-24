@@ -16,6 +16,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,11 +40,13 @@ public class BrandSearchActivity extends ActivityController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
-        Button goMap = (Button)findViewById(R.id.brandtomap_btn);
+        final Button goMap = (Button)findViewById(R.id.brandtomap_btn);
         goMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: brand search button");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                goMap.startAnimation(bounce);
                 Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
                 String[] order = new String[5];
                 for(int m=0;m<lstbeacon.size();m++){
@@ -99,16 +103,18 @@ public class BrandSearchActivity extends ActivityController {
         //處理詳細的顯示
 
 
-        Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
-        Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
-        Button beacon3_btn = (Button)findViewById(R.id.beacon3_cancel);
-        Button beacon4_btn = (Button)findViewById(R.id.beacon4_cancel);
-        Button beacon5_btn = (Button)findViewById(R.id.beacon5_cancel);
+        final Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
+        final Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
+        final Button beacon3_btn = (Button)findViewById(R.id.beacon3_cancel);
+        final Button beacon4_btn = (Button)findViewById(R.id.beacon4_cancel);
+        final Button beacon5_btn = (Button)findViewById(R.id.beacon5_cancel);
 
         beacon1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon1");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                beacon1_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(0));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -118,6 +124,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon2");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                beacon2_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(1));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -127,6 +135,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon3");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                beacon3_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(2));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -136,6 +146,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon4");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                beacon4_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(3));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -145,6 +157,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon5");
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                beacon5_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(4));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);

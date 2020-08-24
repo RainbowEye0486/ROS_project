@@ -3,6 +3,8 @@ package com.example.temiproject;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,8 +17,14 @@ public class ActivityController extends AppCompatActivity {
         if	(actionbar	!=	null)	{
             actionbar.hide();
         }
+
+
     }
-    //public void delay(int delayTime){
+
+
+
+
+        //public void delay(int delayTime){
     //    handler.postDelayed(new Runnable(){
 //
     //        @Override
