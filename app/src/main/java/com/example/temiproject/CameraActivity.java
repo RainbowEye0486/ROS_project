@@ -1,6 +1,8 @@
 package com.example.temiproject;
 
+import android.Manifest;
 import android.content.Intent;//
+import android.content.pm.PackageManager;
 import android.graphics.ImageFormat;//
 import android.hardware.Camera;//
 import android.os.Bundle;//
@@ -10,6 +12,8 @@ import android.view.SurfaceHolder;//
 import android.view.SurfaceView;//
 import android.view.View;//
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,6 +56,8 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+        getPermissionCamera();
+        getPermissionStorage();
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 
         CountDownTimer countDownTimer = new CountDownTimer(10000, 1000) {
@@ -200,6 +206,26 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         releaseCamera();//若預覽介面銷毀則釋放相機
     }
 
+    public void getPermissionCamera(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        }else {
+            Log.d(TAG, "getPermissionCamera: has permission");
+        }
 
+
+    }
+
+    public void getPermissionStorage(){
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }else{
+            Log.d(TAG, "getPermissionStorage: has permission");
+        }
+
+
+    }
 
 }

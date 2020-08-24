@@ -34,6 +34,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'me.weyye.hipermission:library:1.0.7'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.1.17'
+    // for upload image
+    implementation "com.squareup.okio:okio:2.8.0"
+    implementation "com.squareup.okhttp3:okhttp:4.8.1"
+    // for QRcode
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
    // implementation 'com.robotemi:sdk:0.10.65'
 
 
