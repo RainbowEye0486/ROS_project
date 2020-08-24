@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +47,8 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: goLead button");
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
                 Intent intent = new Intent(MapActivity.this, MovingActivity.class);
                 intent.putExtra("task", "lead");
                 Animation bounce = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bounce_animation);
@@ -224,7 +227,8 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: up button");
-
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 if (floorText.getText().equals("B2-B1")){
                     floorText.setText("B2-LB");
@@ -248,6 +252,8 @@ public class MapActivity extends ActivityController {
             ImageView minimap = (ImageView)findViewById(R.id.minimap);
             @Override
             public void onClick(View view) {
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
                 Log.d(TAG, "onClick: down button");
 
                 if (floorText.getText().equals("B2-LB")){
@@ -273,7 +279,8 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: left button");
-
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
                 if (floorText.getText().equals("B1-B1")){
                     floorText.setText("A-B1");
                     mapImage.setImageDrawable(finalA_b1);
@@ -305,7 +312,8 @@ public class MapActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: right button");
-
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
                 if (floorText.getText().equals("A-B1")){
                     floorText.setText("B1-B1");
                     mapImage.setImageDrawable(finalB1b1);

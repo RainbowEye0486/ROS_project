@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -45,6 +46,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: brand search button");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 goMap.startAnimation(bounce);
                 Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
@@ -113,6 +116,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon1");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 beacon1_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(0));
@@ -124,6 +129,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon2");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 beacon2_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(1));
@@ -135,6 +142,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon3");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 beacon3_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(2));
@@ -146,6 +155,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon4");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 beacon4_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(3));
@@ -157,6 +168,8 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: delete beacon5");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 beacon5_btn.startAnimation(bounce);
                 lstbeacon.remove(lstbeacon.get(4));

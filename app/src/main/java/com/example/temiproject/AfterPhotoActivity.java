@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 
 public class AfterPhotoActivity extends ActivityController {
+
+    Bitmap photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +47,14 @@ public class AfterPhotoActivity extends ActivityController {
 
 
         //photo folded
-        final Drawable frame1 = new BitmapDrawable(bitmap);
+        Drawable frame1 = new BitmapDrawable(bitmap);
         imageview.setImageDrawable(frame1);
         final Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
         final Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
         final Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
         final Button frame4_btn = (Button)findViewById(R.id.frame4_btn);
         final Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
+
 
         frame1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +64,7 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 frame1 = combineGraph(frame1, frame1);
                 imageview.setImageDrawable(frame1);
+                photo = overlay(bitmap, bitmap);
             }
         });
 
@@ -71,6 +77,7 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame2 = getDrawable(R.drawable.frame_1);
                 frame2 = combineGraph(frame2, frame1);
                 imageview.setImageDrawable(frame2);
+                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_1));
             }
         });
 
@@ -83,6 +90,7 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame3 = getDrawable(R.drawable.frame_2);
                 frame3 = combineGraph(frame3, frame1);
                 imageview.setImageDrawable(frame3);
+                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_2));
             }
         });
 
@@ -95,6 +103,7 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame4 = getDrawable(R.drawable.frame_3);
                 frame4 = combineGraph(frame4, frame1);
                 imageview.setImageDrawable(frame4);
+                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_3));
             }
         });
 
@@ -107,8 +116,11 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame5 = getDrawable(R.drawable.frame_4);
                 frame5 = combineGraph(frame5, frame1);
                 imageview.setImageDrawable(frame5);
+                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_4));
             }
         });
+
+
 
     }
 

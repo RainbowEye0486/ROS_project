@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +21,14 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "Home_page";
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
         ActionBar actionbar	= getSupportActionBar();
         if	(actionbar	!=	null)	{
             actionbar.hide();
@@ -35,6 +39,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Animation bounce = AnimationUtils.loadAnimation(HomeActivity.this, R.anim.bounce_animation);
+                MediaPlayer click = MediaPlayer.create(HomeActivity.this, R.raw.click);
+                click.start();
                 photo_button.startAnimation(bounce);
                 Intent intent = new Intent(HomeActivity.this, InformationActivity.class);
                 startActivity(intent);
@@ -46,9 +52,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(HomeActivity.this, GuildPointActivity.class);
-                startActivity(intent);
+
+                MediaPlayer click = MediaPlayer.create(HomeActivity.this, R.raw.click);
+                click.start();
                 Animation bounce = AnimationUtils.loadAnimation(HomeActivity.this, R.anim.bounce_animation);
                 lead_button.startAnimation(bounce);
+                startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 Log.d(TAG, "onClick: search button");
             }

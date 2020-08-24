@@ -3,6 +3,7 @@ package com.example.temiproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,8 @@ public class ArrivalActivity extends ActivityController {
         arrival_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                MediaPlayer click = MediaPlayer.create(ArrivalActivity.this, R.raw.click);
+                click.start();
                 Intent intent = new Intent(ArrivalActivity.this, MovingActivity.class);
                 intent.putExtra("task", "takePhoto");
                 startActivity(intent);

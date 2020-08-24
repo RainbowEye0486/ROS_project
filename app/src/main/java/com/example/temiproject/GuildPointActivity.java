@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
@@ -50,6 +51,8 @@ public class GuildPointActivity extends ActivityController {
                 Intent intent = new Intent(GuildPointActivity.this, BrandSearchActivity.class);
                 Animation bounce = AnimationUtils.loadAnimation(GuildPointActivity.this, R.anim.bounce_animation);
                 guildBrand.startAnimation(bounce);
+                MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
+                click.start();
                 startActivity(intent);
             }
         });
@@ -59,8 +62,8 @@ public class GuildPointActivity extends ActivityController {
                 Log.d(TAG, "onClick: guildToilet");
                 Animation bounce = AnimationUtils.loadAnimation(GuildPointActivity.this, R.anim.bounce_animation);
                 guildToilet.startAnimation(bounce);
-                int click = soundPool.load(GuildPointActivity.this, R.raw.click, 1);
-                soundPool.play(click, 100, 100, 0, 0, 1);
+                MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
+                click.start();
             }
         });
         guildElevator.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +72,8 @@ public class GuildPointActivity extends ActivityController {
                 Log.d(TAG, "onClick: guildElevator");
                 Animation bounce = AnimationUtils.loadAnimation(GuildPointActivity.this, R.anim.bounce_animation);
                 guildElevator.startAnimation(bounce);
-                int click = soundPool.load(GuildPointActivity.this, R.raw.click, 1);
-                soundPool.play(click, 1, 1, 0, 0, 1);
+                MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
+                click.start();
             }
         });
 
