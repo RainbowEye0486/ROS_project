@@ -26,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class BrandSearchActivity extends ActivityController {
@@ -64,45 +66,66 @@ public class BrandSearchActivity extends ActivityController {
                     Log.d(TAG, "onClick: " + order[b]);
                 }
                 intent.putExtra("order", order);
+                intent.putExtra("task", "brand");
                 startActivity(intent);
             }
         });
 
+        final Button home_btn = (Button)findViewById(R.id.home_btn);
+        final Button return_btn = (Button)findViewById(R.id.return_btn);
+        home_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
+                home_btn.startAnimation(bounce);
+                Intent intent = new Intent(BrandSearchActivity.this, HomeActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+                Log.d(TAG, "onClick: Home button");
+            }
+        });
+        return_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BrandSearchActivity.this, GuildPointActivity.class);
+
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                return_btn.startAnimation(bounce);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                Log.d(TAG, "onClick: Return button");
+            }
+        });
+
+
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
-        Branditem perngyuh = new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
-        Branditem cosmed = new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
-        Branditem wolsey = new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
-        Branditem miamia = new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
-        Branditem coach = new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
-        Branditem roots = new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
-        Branditem lacoste = new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
-        Branditem lanew = new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
-        Branditem edwin = new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
-        Branditem poya = new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+        List<String> stringBrand = new ArrayList<>();
+        String[] strelement={"perngyuh", "cosmed", "wolsey", "miamia", "coach", "polo", "roots", "lacoste", "lanew", "blueway", "edwin", "poya"};
+        for (int i=0;i<strelement.length;i++){
+            stringBrand.add(strelement[i]);
+        }
+        flushicon(stringBrand, lstBrand);
 
-        lstBrand.add(perngyuh);
-        lstBrand.add(cosmed);
-        lstBrand.add(wolsey);
-        lstBrand.add(miamia);
-        lstBrand.add(coach);
-        lstBrand.add(polo);
-        lstBrand.add(roots);
-        lstBrand.add(lacoste);
-        lstBrand.add(lanew);
-        lstBrand.add(blueway);
-        lstBrand.add(edwin);
-        lstBrand.add(poya);
+        brandSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //change string array when onclick
+                List<String> stringBrand = new ArrayList<>();
+                String[] strelement={"perngyuh", "cosmed", "wolsey", "miamia", "coach", "polo", "roots", "lacoste", "lanew", "blueway", "edwin", "poya"};
+                for (int i=0;i<strelement.length;i++){
+                    stringBrand.add(strelement[i]);
+                }
+                flushicon(stringBrand, lstBrand);
 
-        RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
-        BranditemAdapter myAdapter = new BranditemAdapter(this, BrandSearchActivity.this, lstBrand, lstbeacon);
-        Log.d(TAG, "onCreate: lstbeacon" + lstbeacon);
-        myrycle.setLayoutManager(new GridLayoutManager(this, 5));
-        myrycle.setAdapter(myAdapter);
+            }
+        });
 
-        
+
         //處理詳細的顯示
 
 
@@ -118,8 +141,7 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: delete beacon1");
                 MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
                 click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                beacon1_btn.startAnimation(bounce);
+
                 lstbeacon.remove(lstbeacon.get(0));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -131,8 +153,7 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: delete beacon2");
                 MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
                 click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                beacon2_btn.startAnimation(bounce);
+
                 lstbeacon.remove(lstbeacon.get(1));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -144,8 +165,7 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: delete beacon3");
                 MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
                 click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                beacon3_btn.startAnimation(bounce);
+
                 lstbeacon.remove(lstbeacon.get(2));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -157,8 +177,7 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: delete beacon4");
                 MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
                 click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                beacon4_btn.startAnimation(bounce);
+
                 lstbeacon.remove(lstbeacon.get(3));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -170,8 +189,7 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: delete beacon5");
                 MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
                 click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                beacon5_btn.startAnimation(bounce);
+
                 lstbeacon.remove(lstbeacon.get(4));
                 flushBeacon();
                 Log.d(TAG, "onClick: "+lstbeacon);
@@ -179,29 +197,28 @@ public class BrandSearchActivity extends ActivityController {
         });
     }
 
-    public void flushBeacon(){ //重新整理預排清單
+    public void flushBeacon() { //重新整理預排清單
         int length = lstbeacon.size();
         Log.d(TAG, "flushBeacon: length" + length);
-        Button beacon1_btn = (Button)findViewById(R.id.beacon1_cancel);
-        Button beacon2_btn = (Button)findViewById(R.id.beacon2_cancel);
-        Button beacon3_btn = (Button)findViewById(R.id.beacon3_cancel);
-        Button beacon4_btn = (Button)findViewById(R.id.beacon4_cancel);
-        Button beacon5_btn = (Button)findViewById(R.id.beacon5_cancel);
-        Button schedule_btn = (Button)findViewById(R.id.brandtomap_btn);
-        ImageView beacon1 = (ImageView)findViewById(R.id.beacon1);
-        ImageView beacon2 = (ImageView)findViewById(R.id.beacon2);
-        ImageView beacon3 = (ImageView)findViewById(R.id.beacon3);
-        ImageView beacon4 = (ImageView)findViewById(R.id.beacon4);
-        ImageView beacon5 = (ImageView)findViewById(R.id.beacon5);
-        TextView beacon1_txt = (TextView)findViewById(R.id.beacon1_txt);
-        TextView beacon2_txt = (TextView)findViewById(R.id.beacon2_txt);
-        TextView beacon3_txt = (TextView)findViewById(R.id.beacon3_txt);
-        TextView beacon4_txt = (TextView)findViewById(R.id.beacon4_txt);
-        TextView beacon5_txt = (TextView)findViewById(R.id.beacon5_txt);
-        if (length == 0){
+        Button beacon1_btn = (Button) findViewById(R.id.beacon1_cancel);
+        Button beacon2_btn = (Button) findViewById(R.id.beacon2_cancel);
+        Button beacon3_btn = (Button) findViewById(R.id.beacon3_cancel);
+        Button beacon4_btn = (Button) findViewById(R.id.beacon4_cancel);
+        Button beacon5_btn = (Button) findViewById(R.id.beacon5_cancel);
+        Button schedule_btn = (Button) findViewById(R.id.brandtomap_btn);
+        ImageView beacon1 = (ImageView) findViewById(R.id.beacon1);
+        ImageView beacon2 = (ImageView) findViewById(R.id.beacon2);
+        ImageView beacon3 = (ImageView) findViewById(R.id.beacon3);
+        ImageView beacon4 = (ImageView) findViewById(R.id.beacon4);
+        ImageView beacon5 = (ImageView) findViewById(R.id.beacon5);
+        TextView beacon1_txt = (TextView) findViewById(R.id.beacon1_txt);
+        TextView beacon2_txt = (TextView) findViewById(R.id.beacon2_txt);
+        TextView beacon3_txt = (TextView) findViewById(R.id.beacon3_txt);
+        TextView beacon4_txt = (TextView) findViewById(R.id.beacon4_txt);
+        TextView beacon5_txt = (TextView) findViewById(R.id.beacon5_txt);
+        if (length == 0) {
             schedule_btn.setEnabled(false);
-        }
-        else{
+        } else {
             schedule_btn.setEnabled(true);
         }
         beacon1_btn.setVisibility(View.INVISIBLE);
@@ -219,32 +236,105 @@ public class BrandSearchActivity extends ActivityController {
         beacon3_txt.setVisibility(View.INVISIBLE);
         beacon4_txt.setVisibility(View.INVISIBLE);
         beacon5_txt.setVisibility(View.INVISIBLE);
-        if(length == 0)return;
-
+        if (length == 0) return;
         beacon1.setVisibility(View.VISIBLE);
         beacon1_txt.setVisibility(View.VISIBLE);
         beacon1_txt.setText(lstbeacon.get(0).title);
         beacon1_btn.setVisibility(View.VISIBLE);
-        if(length == 1)return;
+        if (length == 1) return;
         beacon2.setVisibility(View.VISIBLE);
         beacon2_txt.setVisibility(View.VISIBLE);
         beacon2_txt.setText(lstbeacon.get(1).title);
         beacon2_btn.setVisibility(View.VISIBLE);
-        if(length == 2)return;
+        if (length == 2) return;
         beacon3.setVisibility(View.VISIBLE);
         beacon3_txt.setVisibility(View.VISIBLE);
         beacon3_txt.setText(lstbeacon.get(2).title);
         beacon3_btn.setVisibility(View.VISIBLE);
-        if(length == 3)return;
+        if (length == 3) return;
         beacon4.setVisibility(View.VISIBLE);
         beacon4_txt.setVisibility(View.VISIBLE);
         beacon4_txt.setText(lstbeacon.get(3).title);
         beacon4_btn.setVisibility(View.VISIBLE);
-        if(length == 4)return;
+        if (length == 4) return;
         beacon5.setVisibility(View.VISIBLE);
         beacon5_txt.setVisibility(View.VISIBLE);
         beacon5_txt.setText(lstbeacon.get(4).title);
         beacon5_btn.setVisibility(View.VISIBLE);
+    }
+
+    public void flushicon(List<String> stringBrand, List<Branditem> lstBrand){
+        Branditem perngyuh = new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cosmed = new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem miamia = new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lacoste = new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem lanew = new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+
+
+            if (stringBrand.contains("blueway")){
+                lstBrand.add(blueway);
+            }
+            if (stringBrand.contains("cosmed")){
+              lstBrand.add(cosmed);
+            }
+            if (stringBrand.contains("coach")){
+                lstBrand.add(coach);
+            }
+            if (stringBrand.contains("edwin")){
+                lstBrand.add(edwin);
+            }
+            if (stringBrand.contains("miamia")){
+                lstBrand.add(miamia);
+            }
+            if (stringBrand.contains("lacoste")){
+                lstBrand.add(lacoste);
+            }
+            if (stringBrand.contains("lanew")){
+                lstBrand.add(lanew);
+            }
+            if (stringBrand.contains("perngyuh")){
+                lstBrand.add(perngyuh);
+            }
+            if (stringBrand.contains("polo")){
+                lstBrand.add(polo);
+            }
+            if (stringBrand.contains("poya")){
+                lstBrand.add(poya);
+            }
+            if (stringBrand.contains("roots")){
+                lstBrand.add(roots);
+            }
+            if (stringBrand.contains("wolsey")){
+                lstBrand.add(wolsey);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
+        BranditemAdapter myAdapter = new BranditemAdapter(this, BrandSearchActivity.this, lstBrand, lstbeacon);
+        Log.d(TAG, "onCreate: lstbeacon" + lstbeacon);
+        myrycle.setLayoutManager(new GridLayoutManager(this, 5));
+        myrycle.setAdapter(myAdapter);
+
+
     }
 
 

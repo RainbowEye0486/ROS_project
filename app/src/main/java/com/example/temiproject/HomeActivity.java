@@ -20,7 +20,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "Home_page";
-
+    private int click_num = 0;
 
 
     @Override
@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         }
         final Button photo_button = (Button)findViewById(R.id.home_photo_btn);
         final Button lead_button = (Button)findViewById(R.id.home_lead_btn);
+        Button develop_btn = (Button)findViewById(R.id.develop_btn);
         photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +63,18 @@ public class HomeActivity extends AppCompatActivity {
                 Log.d(TAG, "onClick: search button");
             }
         });
+
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    //top bar open
+                }
+            }
+        });
+
 
         GifImageView ImageView = findViewById(R.id.imageView);
         try{

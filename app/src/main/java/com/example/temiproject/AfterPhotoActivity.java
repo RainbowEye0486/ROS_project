@@ -8,6 +8,8 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,33 +18,54 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class AfterPhotoActivity extends ActivityController {
 
     Bitmap photo;
+    ImageView ivQRcode;
+    final String TAG = "AfterPhotoActivity";
+    Button btQRcode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_photo);
-        String path=getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
-        final ImageView imageview=findViewById(R.id.preview_img);
+        findView();
+        addListener();
+        String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
+        final ImageView imageview = findViewById(R.id.preview_img);
         try{
             FileInputStream fis=new FileInputStream(path);//通過path把照片讀到文件輸入流中
             Bitmap bitmap= BitmapFactory.decodeStream(fis);//將輸入流解碼為bitmap
             Matrix matrix=new Matrix();//新建一個矩陣對象
-            matrix.setRotate(180);//矩陣旋轉操作讓照片可以正對你。但仍存在左右對稱的問題
+            matrix.setRotate(360);//矩陣旋轉操作讓照片可以正對你。但仍存在左右對稱的問題
             //新建位圖，第2個参數至第5個参數表示位圖的大小，matrix中是旋轉後的位圖信息，並使bitmap變量指向新的位圖對象
             bitmap=Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
             //將位圖展示在imageview上
             imageview.setImageBitmap(bitmap);}
         catch (FileNotFoundException e){e.printStackTrace();}
-        final Bitmap bitmap=BitmapFactory.decodeFile(path);
+        final Bitmap bitmap = BitmapFactory.decodeFile(path);
 
 
 
@@ -122,6 +145,7 @@ public class AfterPhotoActivity extends ActivityController {
 
 
 
+
     }
 
 
@@ -142,6 +166,95 @@ public class AfterPhotoActivity extends ActivityController {
         canvas.drawBitmap(bmp2, 0, 0, null);
         return bmOverlay;
 
+    }
+
+    private void findView(){
+        btQRcode = findViewById(R.id.qrcode_btn);
+        ivQRcode = findViewById(R.id.qrcode_imv);
+    }
+    private void addListener(){
+        btQRcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: btQRcode");
+                Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                String imageBase64 = encodeImage(photo);
+                sendImage(imageBase64);
+            }
+        });
+    }
+
+    public String encodeImage(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        //讀取圖片到ByteArrayOutputStream
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos); //引數如果為100那麼就不壓縮
+        byte[] bytes = baos.toByteArray();
+        int image_size = (int)bytes.length/1048576*4/3;
+        Log.d(TAG, "encodeImage: size: "+String.valueOf(image_size));
+        final String base64_str = Base64.encodeToString(bytes,Base64.NO_WRAP);
+//        //test
+//        Bitmap converted = base64ToBitmap(base64_str);
+//        imageView.setImageBitmap(converted);
+//        Log.d(TAG, "encodeImage: "+base64_str);
+
+        return base64_str;
+    }
+
+    private void sendImage(final String data){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Log.d(TAG, "run: OKHttp starts");
+                    OkHttpClient client	= new OkHttpClient();
+                    RequestBody requestBody	= new FormBody.Builder()
+                            .add("image",	data)
+                            .add("test",	"success")
+                            .build();
+                    Request request	= new Request.Builder()
+                            .url("https://chendin.ml/temi/upload")
+                            .post(requestBody)
+                            .build();
+                    Response response = client.newCall(request).execute();
+                    String responseData = response.body().string();
+                    showQRcode(responseData);
+                    Log.d(TAG, "run: base64: " + data);
+                }catch (Exception e){
+                    showUploadFail();
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    // 顯示QRcode
+    private void showQRcode(final String rt_url){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "run: showQRcode:"+rt_url);
+                // generate QRcode
+                BarcodeEncoder encoder = new BarcodeEncoder();
+                try {
+                    Bitmap bit = encoder.encodeBitmap(rt_url, BarcodeFormat.QR_CODE,
+                            100, 100);
+                    ivQRcode.setImageBitmap(bit);
+                } catch (WriterException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    // 顯示上傳失敗
+    private void showUploadFail(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(AfterPhotoActivity.this, "上傳失敗", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "run: showUploadFail");
+            }
+        });
     }
 
 

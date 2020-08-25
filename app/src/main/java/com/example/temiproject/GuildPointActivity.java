@@ -35,6 +35,37 @@ public class GuildPointActivity extends ActivityController {
         final Button guildBrand = (Button) findViewById(R.id.select_brand_btn);
         final Button guildToilet = (Button)findViewById(R.id.select_toilet_btn);
         final Button guildElevator = (Button)findViewById(R.id.select_elevator_btn);
+        final Button home_btn = (Button)findViewById(R.id.home_btn);
+        final Button return_btn = (Button)findViewById(R.id.return_btn);
+        home_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation bounce = AnimationUtils.loadAnimation(GuildPointActivity.this, R.anim.bounce_animation);
+                MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
+                click.start();
+                home_btn.startAnimation(bounce);
+                Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+                Log.d(TAG, "onClick: Home button");
+            }
+        });
+        return_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+
+                MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
+                click.start();
+                Animation bounce = AnimationUtils.loadAnimation(GuildPointActivity.this, R.anim.bounce_animation);
+                return_btn.startAnimation(bounce);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                Log.d(TAG, "onClick: Return button");
+            }
+        });
+
+
 
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -64,6 +95,9 @@ public class GuildPointActivity extends ActivityController {
                 guildToilet.startAnimation(bounce);
                 MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
                 click.start();
+                Intent intent = new Intent(GuildPointActivity.this, MapActivity.class);
+                intent.putExtra("task", "toilet");
+                startActivity(intent);
             }
         });
         guildElevator.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +108,9 @@ public class GuildPointActivity extends ActivityController {
                 guildElevator.startAnimation(bounce);
                 MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
                 click.start();
+                Intent intent = new Intent(GuildPointActivity.this, MapActivity.class);
+                intent.putExtra("task", "elevator");
+                startActivity(intent);
             }
         });
 
