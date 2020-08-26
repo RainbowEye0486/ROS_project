@@ -1,5 +1,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bachground_home">
@@ -80,7 +81,9 @@
         android:id="@+id/imageView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/light_home" />
+        android:background="@drawable/light_home"
+        tools:layout_editor_absoluteX="92dp"
+        tools:layout_editor_absoluteY="-160dp" />
 
     <Button
         android:id="@+id/develop_btn"
@@ -94,9 +97,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75"/>
 
-    <pl.droidsonroids.gif.GifImageView
+    <Button
+        android:id="@+id/update_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/update"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bottom_guideline"
+        app:layout_constraintVertical_bias="0.8"/>
 
-        android:id="@+id/imageView"
+    <ImageButton
+        android:id="@+id/mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/mask"
+        android:visibility="visible"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="TODO" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading"
         android:layout_width='wrap_content'
         android:layout_height='wrap_content'
         android:visibility="gone"
@@ -105,7 +128,8 @@
         app:layout_constraintStart_toStartOf='parent'
         app:layout_constraintTop_toTopOf='parent'
         app:layout_constraintVertical_bias='0.161'
-        app:srcCompat='@drawable/test1'
+        app:srcCompat='@drawable/loading'
         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

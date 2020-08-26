@@ -13,14 +13,16 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends ActivityController {
 
     private static final String TAG = "Home_page";
     private int click_num = 0;
+    private int click_update = 0;
 
 
     @Override
@@ -29,13 +31,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ActionBar actionbar	= getSupportActionBar();
-        if	(actionbar	!=	null)	{
-            actionbar.hide();
-        }
+
         final Button photo_button = (Button)findViewById(R.id.home_photo_btn);
         final Button lead_button = (Button)findViewById(R.id.home_lead_btn);
         Button develop_btn = (Button)findViewById(R.id.develop_btn);
+        Button update_btn = (Button)findViewById(R.id.update_btn);
         photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
                 photo_button.startAnimation(bounce);
                 Intent intent = new Intent(HomeActivity.this, InformationActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 Log.d(TAG, "onClick: photo button");
             }
         });
@@ -70,19 +70,34 @@ public class HomeActivity extends AppCompatActivity {
                 click_num ++;
                 if (click_num>=10){
                     Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
                     //top bar open
                 }
             }
         });
 
+        update_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_update ++;
+                if (click_update>=10){
+                    Log.d(TAG, "update database! ");
+                    click_update = 0;
+                    //update
+                }
+            }
+        });
 
-        GifImageView ImageView = findViewById(R.id.imageView);
-        try{
-            GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.test1);
-            ImageView.setImageDrawable(gifDrawable);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        //ImageView mask = (ImageView)findViewById(R.id.mask);
+        //mask.setVisibility(View.VISIBLE);
+        //GifImageView ImageView = findViewById(R.id.loading);
+        //try{
+        //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+        //    ImageView.setImageDrawable(gifDrawable);
+        //    ImageView.setVisibility(View.VISIBLE);
+        //}catch (Exception e){
+        //    e.printStackTrace();
+        //}
 
     }
 

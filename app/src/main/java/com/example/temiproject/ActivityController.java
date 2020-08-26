@@ -22,7 +22,9 @@ public class ActivityController extends AppCompatActivity {
     }
 
 
-
+    public void speak (String sentence){
+        //
+    }
 
         //public void delay(int delayTime){
     //    handler.postDelayed(new Runnable(){

@@ -214,9 +214,8 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         }else {
             Log.d(TAG, "getPermissionCamera: has permission");
         }
-
-
     }
+
 
     public void getPermissionStorage(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -225,8 +224,6 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         }else{
             Log.d(TAG, "getPermissionStorage: has permission");
         }
-
-
     }
 
 }
