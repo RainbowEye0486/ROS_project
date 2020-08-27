@@ -19,20 +19,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -200,17 +196,17 @@ public class AfterPhotoActivity extends ActivityController {
                 String imageBase64 = encodeImage(photo);
 
                 //loading-------------------------
-                ImageView mask = (ImageView)findViewById(R.id.mask);
-                mask.setVisibility(View.VISIBLE);
-                GifImageView ImageView = findViewById(R.id.loading);
-                try{
-                    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-                    ImageView.setImageDrawable(gifDrawable);
-                    ImageView.setVisibility(View.VISIBLE);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                //-----------------------------
+                //ImageView mask = (ImageView)findViewById(R.id.mask);
+                //mask.setVisibility(View.VISIBLE);
+                //GifImageView ImageView = findViewById(R.id.loading);
+                //try{
+                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+                //    ImageView.setImageDrawable(gifDrawable);
+                //    ImageView.setVisibility(View.VISIBLE);
+                //}catch (Exception e){
+                //    e.printStackTrace();
+                //}
+                ////-----------------------------
 
                 sendImage(imageBase64);
             }
@@ -277,16 +273,16 @@ public class AfterPhotoActivity extends ActivityController {
                 }
 
                 //loading-------------------------
-                ImageView mask = (ImageView)findViewById(R.id.mask);
-                mask.setVisibility(View.GONE);
-                GifImageView ImageView = findViewById(R.id.loading);
-                try{
-                    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-                    ImageView.setImageDrawable(gifDrawable);
-                    ImageView.setVisibility(View.GONE);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                //ImageView mask = (ImageView)findViewById(R.id.mask);
+                //mask.setVisibility(View.GONE);
+                //GifImageView ImageView = findViewById(R.id.loading);
+                //try{
+                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+                //    ImageView.setImageDrawable(gifDrawable);
+                //    ImageView.setVisibility(View.GONE);
+                //}catch (Exception e){
+                //    e.printStackTrace();
+                //}
                 //-----------------------------
 
 
