@@ -19,25 +19,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
 
 
 public class AfterPhotoActivity extends ActivityController {
@@ -65,11 +63,14 @@ public class AfterPhotoActivity extends ActivityController {
             //將位圖展示在imageview上
             imageview.setImageBitmap(bitmap);}
         catch (FileNotFoundException e){e.printStackTrace();}
-        final Bitmap bitmap = BitmapFactory.decodeFile(path);
+        final Bitmap bitmap = spin(BitmapFactory.decodeFile(path));
 
 
 
         //photo folded
+
+        //rotate
+
         Drawable frame1 = new BitmapDrawable(bitmap);
         imageview.setImageDrawable(frame1);
         final Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
@@ -87,7 +88,8 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 frame1 = combineGraph(frame1, frame1);
                 imageview.setImageDrawable(frame1);
-                photo = overlay(bitmap, bitmap);
+                Drawable photoplus = combineGraph(frame1, frame1);
+                photo = ((BitmapDrawable)photoplus).getBitmap();
             }
         });
 
@@ -100,7 +102,8 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame2 = getDrawable(R.drawable.frame_1);
                 frame2 = combineGraph(frame2, frame1);
                 imageview.setImageDrawable(frame2);
-                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_1));
+                Drawable photoplus = combineGraph(frame2, frame1);
+                photo = ((BitmapDrawable)photoplus).getBitmap();
             }
         });
 
@@ -113,7 +116,8 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame3 = getDrawable(R.drawable.frame_2);
                 frame3 = combineGraph(frame3, frame1);
                 imageview.setImageDrawable(frame3);
-                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_2));
+                Drawable photoplus = combineGraph(frame3, frame1);
+                photo = ((BitmapDrawable)photoplus).getBitmap();
             }
         });
 
@@ -126,7 +130,8 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame4 = getDrawable(R.drawable.frame_3);
                 frame4 = combineGraph(frame4, frame1);
                 imageview.setImageDrawable(frame4);
-                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_3));
+                Drawable photoplus = combineGraph(frame4, frame1);
+                photo = ((BitmapDrawable)photoplus).getBitmap();
             }
         });
 
@@ -139,12 +144,10 @@ public class AfterPhotoActivity extends ActivityController {
                 Drawable frame5 = getDrawable(R.drawable.frame_4);
                 frame5 = combineGraph(frame5, frame1);
                 imageview.setImageDrawable(frame5);
-                photo = overlay(bitmap, BitmapFactory.decodeResource(getResources(), R.drawable.frame_4));
+                Drawable photoplus = combineGraph(frame5, frame1);
+                photo = ((BitmapDrawable)photoplus).getBitmap();
             }
         });
-
-
-
 
     }
 
@@ -152,8 +155,8 @@ public class AfterPhotoActivity extends ActivityController {
     public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
         Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
         Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
-        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 900 , 550 , true);
-        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 900 , 550 , true);
+        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 1600 , 1200 , true);
+        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 1600 , 1200 , true);
         Bitmap combineImages = overlay(scaledBitmapBack, scaledBitmapFore);
         return new BitmapDrawable(this.getResources(), combineImages);
     }
@@ -168,10 +171,22 @@ public class AfterPhotoActivity extends ActivityController {
 
     }
 
+    public static Bitmap spin(Bitmap bmp1){
+        Bitmap bmp = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmp);
+        canvas.drawBitmap(bmp, 0, 0, null);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(180);
+        Bitmap desbmp = Bitmap.createBitmap(bmp1, 0,0,bmp.getWidth(), bmp.getHeight(), matrix, true);
+        canvas.drawBitmap(desbmp, 0, 0, null);
+        return desbmp;
+    }
+
     private void findView(){
         btQRcode = findViewById(R.id.qrcode_btn);
         ivQRcode = findViewById(R.id.qrcode_imv);
     }
+
     private void addListener(){
         btQRcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,6 +194,20 @@ public class AfterPhotoActivity extends ActivityController {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
                 String imageBase64 = encodeImage(photo);
+
+                //loading-------------------------
+                //ImageView mask = (ImageView)findViewById(R.id.mask);
+                //mask.setVisibility(View.VISIBLE);
+                //GifImageView ImageView = findViewById(R.id.loading);
+                //try{
+                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+                //    ImageView.setImageDrawable(gifDrawable);
+                //    ImageView.setVisibility(View.VISIBLE);
+                //}catch (Exception e){
+                //    e.printStackTrace();
+                //}
+                ////-----------------------------
+
                 sendImage(imageBase64);
             }
         });
@@ -242,6 +271,21 @@ public class AfterPhotoActivity extends ActivityController {
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
+
+                //loading-------------------------
+                //ImageView mask = (ImageView)findViewById(R.id.mask);
+                //mask.setVisibility(View.GONE);
+                //GifImageView ImageView = findViewById(R.id.loading);
+                //try{
+                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+                //    ImageView.setImageDrawable(gifDrawable);
+                //    ImageView.setVisibility(View.GONE);
+                //}catch (Exception e){
+                //    e.printStackTrace();
+                //}
+                //-----------------------------
+
+
             }
         });
     }

@@ -32,6 +32,8 @@ public class ActivityController extends AppCompatActivity {
 
     protected void closeDB(){
         DH.close();
+    public void speak (String sentence){
+        //
     }
 
         //public void delay(int delayTime){
