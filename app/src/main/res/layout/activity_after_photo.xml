@@ -117,6 +117,7 @@
         android:focusable="true"
         android:contentDescription="TODO" />
 
+    //loading 進度條被button蓋住
     <ProgressBar
         android:id="@+id/progressBar1"
         style="@android:style/Widget.ProgressBar.Large"

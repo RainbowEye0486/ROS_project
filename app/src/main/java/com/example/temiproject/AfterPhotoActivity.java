@@ -202,7 +202,7 @@ public class AfterPhotoActivity extends ActivityController {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
-                spinner.bringToFront();
+                spinner.bringToFront();//用了還是會被蓋住
                 spinner.setVisibility(View.VISIBLE);
 
 
