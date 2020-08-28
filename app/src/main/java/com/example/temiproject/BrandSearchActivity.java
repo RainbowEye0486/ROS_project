@@ -1,11 +1,18 @@
 package com.example.temiproject;
 
 import androidx.annotation.CallSuper;
+import androidx.appcompat.widget.SearchView;
+import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -14,12 +21,17 @@ import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.BaseColumns;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,11 +49,19 @@ public class BrandSearchActivity extends ActivityController {
     List<Branditem> lstBrand;
     List<Beacon> lstbeacon;
 
+    private SearchView svBrand;
+    private AutoCompleteTextView actvSearch;
+    CursorAdapter suggAdapter;
+    Cursor mCursor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
+        openDB();
+        initAutoComplete();
+//        initSearchView();
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
         final Button goMap = (Button)findViewById(R.id.brandtomap_btn);
         goMap.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +217,12 @@ public class BrandSearchActivity extends ActivityController {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDB();
+    }
+
     public void flushBeacon() { //重新整理預排清單
         int length = lstbeacon.size();
         Log.d(TAG, "flushBeacon: length" + length);
@@ -337,6 +363,121 @@ public class BrandSearchActivity extends ActivityController {
 
     }
 
+    private void initAutoComplete(){
+        ArrayList<String> storeList = getStores();
+        String[] stores = new String[storeList.size()];
+        storeList.toArray(stores);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_dropdown_item_1line, stores);
+        AutoCompleteTextView textView = (AutoCompleteTextView)
+                findViewById(R.id.actvBrand);
+        textView.setAdapter(adapter);
+        textView.setImeActionLabel("GO", KeyEvent.KEYCODE_ENTER);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String query = (String) adapterView.getItemAtPosition(i);
+                Log.d(TAG, "onItemClick: query"+query);
+            }
+        });
+    }
+    private ArrayList<String> getStores(){
+        ArrayList<String> result = new ArrayList<String>();
+        SQLiteDatabase db	=	DH.getWritableDatabase();
+        Cursor dbCursor = db.rawQuery("SELECT cn_name FROM Store", null);
+        while (dbCursor.moveToNext()) {
+            result.add(dbCursor.getString(0));
+        }
+        return result;
+    }
+    private void initSearchView(){
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        svBrand = (SearchView)findViewById(R.id.svBrand) ;
+        // Assumes current activity is the searchable activity
+        svBrand.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        svBrand.setSubmitButtonEnabled(true);
+        mCursor = null;
+        // Defines a list of View IDs that will receive the Cursor columns for each row
+        int [] viewIds = { android.R.id.text1 };
+        // Defines a list of columns to retrieve from the Cursor and load into an output row
+        String [] columNames = { SearchManager.SUGGEST_COLUMN_TEXT_1 };
+        // Creates a new SimpleCursorAdapter
+        suggAdapter = new SimpleCursorAdapter(
+                getApplicationContext(),               // The application's Context object
+                android.R.layout.simple_list_item_1,                  // A layout in XML for one row in the ListView
+                mCursor,                               // The result from the query
+                columNames,                      // A string array of column names in the cursor
+                viewIds,                        // An integer array of view IDs in the row layout
+                0);                                    // Flags (usually none are needed)
+
+        // Sets the adapter for the ListView
+        svBrand.setSuggestionsAdapter(suggAdapter);
+        svBrand.setOnSuggestionListener(new SearchView.OnSuggestionListener(){
+
+            @Override
+            public boolean onSuggestionSelect(int position) {
+                Log.d(TAG, "onSuggestionSelect: ");
+                return false;
+            }
+
+            @Override
+            public boolean onSuggestionClick(int position) {
+                // true if the listener handles the event and
+                // wants to override the default behavior of launching any intent or
+                // submitting a search query specified on that item.
+                Log.d(TAG, "onSuggestionClick: "+String.valueOf(position));
+                String query = null;
+                handleSearch(query);
+                return true;
+            }
+        });
+        svBrand.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //true if the query has been handled by the listener
+                handleSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //false if the SearchView should perform the default action of
+                //showing any suggestions if available
+                Log.d(TAG, "onQueryTextChange: ");
+                updateCursorAdapter(suggAdapter, newText);
+                return true;
+            }
+        });
+
+    }
+    // When Query text change, update suggesstion
+    private void updateCursorAdapter(CursorAdapter adapter, String newText){
+//        ArrayList info = new ArrayList();
+        Log.d(TAG, "updateCursorAdapter: ");
+        SQLiteDatabase db	=	DH.getWritableDatabase();
+        Cursor dbCursor = db.rawQuery("SELECT rowid _id, cn_name FROM Store WHERE cn_name LIKE ?",
+                new String[]{newText+"%"});
+        Log.d(TAG, "updateCursorAdapter: "+dbCursor.getColumnName(0));
+        Log.d(TAG, "updateCursorAdapter: "+dbCursor.getColumnName(1));
+        MatrixCursor mCursor = new MatrixCursor(
+                new String[] {BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1}
+        );
+        while (dbCursor.moveToNext()) {
+            mCursor.newRow()
+                    .add("_id", dbCursor.getString(0))
+                    .add("name", dbCursor.getString(1));
+            String name = dbCursor.getString(1);
+            Log.d(TAG, "updateCursorAdapter: "+name);
+        }
+        adapter.swapCursor(mCursor);
+    }
+
+    // when user submit or click on a suggestion
+    private void handleSearch(String query){
+        Log.d(TAG, "handleSearch: "+query);
+    }
 
     @CallSuper
     @Override
