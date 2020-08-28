@@ -40,7 +40,6 @@ public class HomeActivity extends ActivityController {
 
     // Database
     private Button btUpdateDB;
-    private DBHelper DH = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,8 @@ public class HomeActivity extends ActivityController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         findView();
-        addListener();
         openDB();
+        addListener();
         // need?
         ActionBar actionbar	= getSupportActionBar();
         if	(actionbar	!=	null)	{
@@ -240,5 +239,6 @@ public class HomeActivity extends ActivityController {
         values.put("small_pic", small_pic);
         db.insert("Store", null, values);
     }
+
 
 }

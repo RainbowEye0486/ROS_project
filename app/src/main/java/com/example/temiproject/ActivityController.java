@@ -30,9 +30,10 @@ public class ActivityController extends AppCompatActivity {
         Log.d(TAG, "openDB: success");
     }
 
-    protected void closeDB(){
+    protected void closeDB() {
         DH.close();
-    public void speak (String sentence){
+    }
+    public void speak(String sentence){
         //
     }
 

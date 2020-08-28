@@ -28,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,10 +50,12 @@ public class BrandSearchActivity extends ActivityController {
     List<Branditem> lstBrand;
     List<Beacon> lstbeacon;
 
-    private SearchView svBrand;
+
     private AutoCompleteTextView actvSearch;
-    CursorAdapter suggAdapter;
-    Cursor mCursor;
+    private Button goMap;
+//    private SearchView svBrand;
+//    CursorAdapter suggAdapter;
+//    Cursor mCursor;
 
 
     @Override
@@ -60,37 +63,9 @@ public class BrandSearchActivity extends ActivityController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
         openDB();
-        initAutoComplete();
-//        initSearchView();
+        findView();
+        addListener();
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
-        final Button goMap = (Button)findViewById(R.id.brandtomap_btn);
-        goMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: brand search button");
-                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
-                click.start();
-                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
-                goMap.startAnimation(bounce);
-                Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
-                String[] order = new String[5];
-                for(int m=0;m<lstbeacon.size();m++){
-                    if (lstbeacon.size()>5){
-                        break;
-                    }
-                    else {
-                        order[m] = lstbeacon.get(m).title;
-                    }
-                }
-                for (int b =0; b<5; b++){
-                    Log.d(TAG, "onClick: " + order[b]);
-                }
-                intent.putExtra("order", order);
-                intent.putExtra("task", "brand");
-                startActivity(intent);
-            }
-        });
-
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
@@ -310,7 +285,7 @@ public class BrandSearchActivity extends ActivityController {
             if (stringBrand.contains("cosmed")){
               lstBrand.add(cosmed);
             }
-            if (stringBrand.contains("coach")){
+            if (stringBrand.contains("COACH FACTORY")){
                 lstBrand.add(coach);
             }
             if (stringBrand.contains("edwin")){
@@ -363,24 +338,76 @@ public class BrandSearchActivity extends ActivityController {
 
     }
 
+    private void findView(){
+        actvSearch = (AutoCompleteTextView)findViewById(R.id.actvBrand);
+        goMap = (Button)findViewById(R.id.brandtomap_btn);
+    }
+
+    private void addListener(){
+        initAutoComplete();
+        goMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: brand search button");
+                MediaPlayer click = MediaPlayer.create(BrandSearchActivity.this, R.raw.click);
+                click.start();
+                Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
+                goMap.startAnimation(bounce);
+                //
+                Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
+                String[] order = new String[5];
+                /*
+                for(int m=0;m<lstbeacon.size();m++){
+                    if (lstbeacon.size()>5){
+                        break;
+                    }
+                    else {
+                        order[m] = lstbeacon.get(m).title;
+                    }
+                }
+
+
+                for (int b =0; b<5; b++){
+                    Log.d(TAG, "onClick: " + order[b]);
+                }
+                */
+                intent.putExtra("order", order);
+                intent.putExtra("task", "brand");
+                startActivity(intent);
+            }
+        });
+    }
     private void initAutoComplete(){
+        Log.d(TAG, "initAutoComplete: ");
         ArrayList<String> storeList = getStores();
         String[] stores = new String[storeList.size()];
         storeList.toArray(stores);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, stores);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                findViewById(R.id.actvBrand);
-        textView.setAdapter(adapter);
-        textView.setImeActionLabel("GO", KeyEvent.KEYCODE_ENTER);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        actvSearch.setAdapter(adapter);
+        actvSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH /*|| EditorInfo.IME_ACTION_UNSPECIFIED==actionId*/) {
+                    // Do whatever you want here
+                    String query = actvSearch.getText().toString();
+                    handleSearch(query);
+                    return true;
+                }
+                return false;
+            }
+        });
+        actvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String query = (String) adapterView.getItemAtPosition(i);
-                Log.d(TAG, "onItemClick: query"+query);
+                Log.d(TAG, "onItemClick: query"+ query);
+                handleSearch(query);
             }
         });
     }
+
     private ArrayList<String> getStores(){
         ArrayList<String> result = new ArrayList<String>();
         SQLiteDatabase db	=	DH.getWritableDatabase();
@@ -390,6 +417,22 @@ public class BrandSearchActivity extends ActivityController {
         }
         return result;
     }
+
+    // when user submit or click on a suggestion
+    private void handleSearch(String query){
+        Log.d(TAG, "handleSearch: " + query);
+        ArrayList<String> stores = new ArrayList<>();
+        SQLiteDatabase db = DH.getWritableDatabase();
+        Cursor dbCursor = db.rawQuery("SELECT cn_name FROM Store WHERE cn_name LIKE ?",
+                new String[]{query+"%"});
+        while (dbCursor.moveToNext()){
+            stores.add(dbCursor.getString(0));
+            Log.d(TAG, "handleSearch: result:"+dbCursor.getString(0));
+        }
+        flushicon(stores, lstBrand);
+    }
+/*
+    // should delete this block
     private void initSearchView(){
         // Get the SearchView and set the searchable configuration
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -473,11 +516,8 @@ public class BrandSearchActivity extends ActivityController {
         }
         adapter.swapCursor(mCursor);
     }
+*/
 
-    // when user submit or click on a suggestion
-    private void handleSearch(String query){
-        Log.d(TAG, "handleSearch: "+query);
-    }
 
     @CallSuper
     @Override
