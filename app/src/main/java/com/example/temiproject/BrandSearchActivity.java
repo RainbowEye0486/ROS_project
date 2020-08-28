@@ -22,6 +22,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.BaseColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -38,10 +39,15 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.opencsv.CSVReader;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class BrandSearchActivity extends ActivityController {
 
@@ -50,9 +56,12 @@ public class BrandSearchActivity extends ActivityController {
     List<Branditem> lstBrand;
     List<Beacon> lstbeacon;
 
-
+    private int weight;
+    private ArrayList<String> sequence;
+    final String start = "L4";
     private AutoCompleteTextView actvSearch;
     private Button goMap;
+    private List<Position> map;
 //    private SearchView svBrand;
 //    CursorAdapter suggAdapter;
 //    Cursor mCursor;
@@ -63,6 +72,7 @@ public class BrandSearchActivity extends ActivityController {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
         openDB();
+        loadMap();
         findView();
         addListener();
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
@@ -265,42 +275,42 @@ public class BrandSearchActivity extends ActivityController {
     }
 
     public void flushicon(List<String> stringBrand, List<Branditem> lstBrand){
-        Branditem perngyuh = new Branditem("perngyuh", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
-        Branditem cosmed = new Branditem("cosmed",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
-        Branditem wolsey = new Branditem("wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
-        Branditem miamia = new Branditem("miamia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
-        Branditem coach = new Branditem("coach", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("poloRalphLauren", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
-        Branditem roots = new Branditem("roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
-        Branditem lacoste = new Branditem("lacoste",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
-        Branditem lanew = new Branditem("lanew", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem("blueway", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
-        Branditem edwin = new Branditem("edwin", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
-        Branditem poya = new Branditem("poya", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+        Branditem perngyuh = new Branditem("Perng Yuh芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cosmed = new Branditem("康是美",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem("POLO RALPH LAUREN", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
 
 
-            if (stringBrand.contains("blueway")){
+            if (stringBrand.contains("BLUE WAY")){
                 lstBrand.add(blueway);
             }
-            if (stringBrand.contains("cosmed")){
+            if (stringBrand.contains("康是美")){
               lstBrand.add(cosmed);
             }
             if (stringBrand.contains("COACH FACTORY")){
                 lstBrand.add(coach);
             }
-            if (stringBrand.contains("edwin")){
+            if (stringBrand.contains("EDWIN")){
                 lstBrand.add(edwin);
             }
-            if (stringBrand.contains("miamia")){
+            if (stringBrand.contains("mia mia")){
                 lstBrand.add(miamia);
             }
-            if (stringBrand.contains("lacoste")){
+            if (stringBrand.contains("LACOSTE")){
                 lstBrand.add(lacoste);
             }
-            if (stringBrand.contains("lanew")){
+            if (stringBrand.contains("La new")){
                 lstBrand.add(lanew);
             }
-            if (stringBrand.contains("perngyuh")){
+            if (stringBrand.contains("Perng Yuh芃諭名品")){
                 lstBrand.add(perngyuh);
             }
             if (stringBrand.contains("polo")){
@@ -353,30 +363,36 @@ public class BrandSearchActivity extends ActivityController {
                 click.start();
                 Animation bounce = AnimationUtils.loadAnimation(BrandSearchActivity.this, R.anim.bounce_animation);
                 goMap.startAnimation(bounce);
-                //
+                // lstbeacon to Position
+                String[] stores = new String[lstbeacon.size()];
+                for(int i=0;i<lstbeacon.size();i++){
+                    stores[i] = lstbeacon.get(i).title;
+                    Log.d(TAG, "onClick: store-"+stores[i]);
+                }
+                ArrayList<Position> positions = mapToPos(stores);
+
+                // plan the route
+                positions = routePlan(positions);
+
+                // test
+
+                for(Position pos: positions){
+                    Log.d(TAG, "onClick: "+ pos.getName());
+                    Log.d(TAG, "onClick: "+ pos.getStores());
+                    Log.d(TAG, "onClick: "+ pos.getLoc());
+                }
+
+
+                // intent
                 Intent intent = new Intent(BrandSearchActivity.this, MapActivity.class);
-                String[] order = new String[5];
-                /*
-                for(int m=0;m<lstbeacon.size();m++){
-                    if (lstbeacon.size()>5){
-                        break;
-                    }
-                    else {
-                        order[m] = lstbeacon.get(m).title;
-                    }
-                }
-
-
-                for (int b =0; b<5; b++){
-                    Log.d(TAG, "onClick: " + order[b]);
-                }
-                */
-                intent.putExtra("order", order);
+                intent.putParcelableArrayListExtra("route",positions);
                 intent.putExtra("task", "brand");
                 startActivity(intent);
             }
         });
     }
+
+    // initialize autocompletetextview
     private void initAutoComplete(){
         Log.d(TAG, "initAutoComplete: ");
         ArrayList<String> storeList = getStores();
@@ -408,6 +424,7 @@ public class BrandSearchActivity extends ActivityController {
         });
     }
 
+    // get all stores name from DB
     private ArrayList<String> getStores(){
         ArrayList<String> result = new ArrayList<String>();
         SQLiteDatabase db	=	DH.getWritableDatabase();
@@ -431,6 +448,256 @@ public class BrandSearchActivity extends ActivityController {
         }
         flushicon(stores, lstBrand);
     }
+
+    private void loadMap(){
+        String Tag = "Load";
+        if(map == null) {
+            map = new ArrayList<Position>();
+        }
+        try {
+            CSVReader reader = new CSVReader(new InputStreamReader(
+                    this.getAssets().open("location.csv")
+            ));
+            String[] next;
+            while ((next = reader.readNext()) != null) {
+                Log.d(Tag, next[0]);
+                Log.d(Tag, next[1]);
+                Log.d(Tag, next[2]);
+                Log.d(Tag, next[3]);
+                Log.d(Tag, next[4]);
+                map.add(new Position(next[0], next[1], next[2], next[3], next[4]));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Tag = "Pos";
+        for(Position node: map){
+            Log.d(Tag, node.getName());
+            Log.d(Tag, node.getAdjacency());
+            Log.d(Tag, node.lift);
+        }
+    }
+
+    // map a array of stores name to a list of distinct positions
+    private ArrayList mapToPos(String[] names){
+        List<String> stores = storeNameToID(names);
+        ArrayList<Position> positions = new ArrayList<Position>();
+        for(String store:stores){
+            Position found = toPos(store);
+            if(found!=null){
+                boolean add = false;
+                for(Position pos: positions){
+                    if(found.name.equals(pos.name)){
+                        pos.stores.add(store);
+                        add = true;
+                        break;
+                    }
+                }
+                if(!add){
+                    positions.add(new Position(found.name, store, found.zone, found.floor, found.lift, 0));
+                }
+            }
+        }
+        return positions;
+    }
+
+    private List<String> storeNameToID(String[] names){
+        List<String> result = new ArrayList<>();
+        SQLiteDatabase db = DH.getWritableDatabase();
+        String query = "SELECT id FROM Store"
+                + " WHERE cn_name IN (" + TextUtils.join(",", Collections.nCopies(names.length, "?"))  + ")";
+        Cursor cursor = db.rawQuery(query, names);
+        while (cursor.moveToNext()){
+            result.add(cursor.getString(0));
+            Log.d(TAG, "storeNameToID: "+cursor.getString(0));
+        }
+        return result;
+    }
+    // map a store ID to it's position
+    private Position toPos(String store){
+        if(map != null){
+            for(Position node : map){
+                if(node.stores.contains(store)){
+                    return node;
+                }
+            }
+            Log.d(TAG, "toPos: position not found ");
+            return null;
+        }
+        Log.d(TAG, "toPos: map is null");
+        return null;
+    }
+
+    private ArrayList routePlan(ArrayList<Position> positions){
+        int num = map.size();
+        int inf = 10000;
+        weight = inf;
+        int[][] edge = new int[num][num];
+        String[][] pred = new String[num][num]; // Store predecessor's name
+        // Floyd Warshall Algorithm
+        for(int i=0; i<num; i++){
+            for(int j=0; j<num; j++){
+                pred[i][j] = null;
+                if(i==j) edge[i][j] = 0;
+                else edge[i][j] = inf;
+            }
+            // convert adjacency list to adjacency matrix
+            for(Map.Entry<String, Integer> adj:map.get(i).adjacency.entrySet()){
+                try {
+                    int j = Integer.parseInt(adj.getKey().substring(1)) - 1;
+                    edge[i][j] = adj.getValue();
+                    pred[i][j] = map.get(i).name;
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "routePlan: ", e);
+                }
+            }
+        }
+        for(int k=0; k<num; k++){
+            for(int i=0; i<num; i++){
+                for(int j=0; j<num; j++){
+                    if(edge[i][j] > edge[i][k] + edge[k][j]){
+                        edge[i][j] = edge[i][k] + edge[k][j];
+                        pred[i][j] = pred[k][j];
+                    }
+                }
+            }
+        }
+
+        /*
+        // Test Floyd Warshall Algorithm
+        for(int i=0; i<num; i++){
+            String out = "";
+            for(int j=0; j<num; j++){
+                out += String.valueOf(edge[i][j]);
+                out += ", ";
+            }
+            Log.d(TAG, "routePlan: "+ out);
+        }
+        for(int i=0; i<num; i++){
+            String out = "";
+            for(int j=0; j<num; j++){
+                out += pred[i][j];
+                out += ", ";
+            }
+            Log.d(TAG, "routePlan: "+ out);
+        }
+        */
+
+        // Permutation: Heap's algorithm
+        ArrayList<String> pos_name = new ArrayList<String>();
+        for(Position pos: positions) { pos_name.add(pos.name); }
+        pos_name.remove(start); // if the start pos in the sequence, remove it when do permutations
+        getPermutation(pos_name.size(), pos_name, edge);
+
+        // test
+        Log.d(TAG, "routePlan: weig" + String.valueOf(weight));
+        String out = "";
+        for(String ele: sequence){ out += ele; }
+        Log.d(TAG, "routePlan: " + out);
+
+        positions = findRoute(positions, pred);
+        checkElevator(positions);
+
+
+        out = "";
+        for(Position pos: positions){ out += pos.name; }
+        Log.d(TAG, "routePlan: " + out);
+
+        return positions;
+    }
+
+    private void getPermutation(int n, ArrayList arr, int[][] edge){
+        if(n==1){
+            // get one permutation
+            getShortest(arr, edge);
+
+        }else{
+            getPermutation(n-1, arr, edge);
+            for(int i=0; i<n-1; i++){
+                if(n%2 == 0){
+                    Collections.swap(arr, i, n-1);
+                }else{
+                    Collections.swap(arr, 0, n-1);
+                }
+                getPermutation(n-1, arr, edge);
+            }
+        }
+
+    }
+
+    private void getShortest(ArrayList<String> arr, int[][] edge){
+        ArrayList<Integer> locs= new ArrayList<Integer>();
+
+        locs.add(Integer.parseInt(start.substring(1))-1);
+        for(String ele: arr){
+            int loc = Integer.parseInt(ele.substring(1)) -1;
+            locs.add(loc);
+        }
+        int temp_weight = 0;
+        for(int i=0; i<locs.size()-1; i++){
+            temp_weight += edge[locs.get(i)][locs.get(i+1)];
+        }
+        if(temp_weight < weight){
+            weight = temp_weight;
+            sequence = (ArrayList)arr.clone();
+            sequence.add(0, start);
+        }
+    }
+
+    private ArrayList<Position> findRoute(List<Position> positions, String[][] pred){
+        ArrayList<Position> route = new ArrayList<Position>();
+        for(String ele: sequence){
+            boolean added = false;
+            for(Position pos: positions){
+                if(ele.equals(pos.name)){
+                    route.add(pos);
+                    added = true;
+                    break;
+                }
+            }
+            if(!added){
+                for(Position node: map){
+                    if(start.equals(node.name)){
+                        Position pass_node = new Position(node.name, null, node.zone, node.floor, node.lift, 0);
+                        route.add(0, pass_node);
+                        break;
+                    }
+                }
+            }
+        }
+        int index = route.size() -1;
+        while(index>0){
+            int st = Integer.parseInt(route.get(index-1).name.substring(1)) - 1;
+            int end = Integer.parseInt(route.get(index).name.substring(1)) - 1;
+            String pass = pred[st][end];
+            if(!pass.equals(route.get(index-1).name)){
+                for(Position node: map){
+                    if(pass.equals(node.name)){
+                        Position pass_node = new Position(node.name, null, node.zone, node.floor, node.lift, 0);
+                        route.add(index, pass_node);
+                        break;
+                    }
+                }
+            }else{
+                index--;
+            }
+        }
+        return route;
+    }
+
+    private void checkElevator(List<Position> positions){
+        for(int i=0; i<positions.size()-1;i++){
+            String floor = positions.get(i).floor.substring(0,2);
+            String nextFloor = positions.get(i+1).floor.substring(0,2);
+            if(!floor.equals(nextFloor)){
+                Log.d(TAG, "checkElevator: "+positions.get(i).name);
+                Log.d(TAG, "checkElevator: "+positions.get(i).lift);
+                positions.get(i).stores.add(positions.get(i).lift);
+                positions.get(i+1).stores.add(positions.get(i+1).lift);
+            }
+        }
+    }
+
 /*
     // should delete this block
     private void initSearchView(){
