@@ -306,9 +306,9 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintWidth_percent="0.10"
 
 
-        app:layout_constraintBottom_toBottomOf="@+id/editText"
-        app:layout_constraintStart_toEndOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="@+id/editText" />
+        app:layout_constraintBottom_toBottomOf="@+id/actvBrand"
+        app:layout_constraintStart_toEndOf="@+id/actvBrand"
+        app:layout_constraintTop_toTopOf="@+id/actvBrand" />
 
     <TextView
         android:id="@+id/beacon5_txt"

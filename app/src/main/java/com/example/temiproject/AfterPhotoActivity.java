@@ -89,6 +89,9 @@ public class AfterPhotoActivity extends ActivityController {
         final Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
 
 
+        Drawable photoplus = combineGraph(frame1, frame1);
+        photo = ((BitmapDrawable)photoplus).getBitmap();
+
         frame1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

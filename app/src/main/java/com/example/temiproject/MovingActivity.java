@@ -32,6 +32,7 @@ public class MovingActivity extends ActivityController implements
     char next_job = ' ';
     private Robot robot;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

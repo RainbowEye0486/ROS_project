@@ -49,12 +49,7 @@ public class HomeActivity extends ActivityController {
         findView();
         openDB();
         addListener();
-        // need?
-        ActionBar actionbar	= getSupportActionBar();
-        if	(actionbar	!=	null)	{
-            actionbar.hide();
-        }
-        //
+
         final Button photo_button = (Button)findViewById(R.id.home_photo_btn);
         final Button lead_button = (Button)findViewById(R.id.home_lead_btn);
         Button develop_btn = (Button)findViewById(R.id.develop_btn);
