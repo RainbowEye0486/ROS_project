@@ -51,6 +51,8 @@ public class MapActivity extends ActivityController {
         sequence = posToStoreId(route);
         order = storeIDToName(sequence);
 
+
+
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
@@ -163,10 +165,7 @@ public class MapActivity extends ActivityController {
             for (int i = 0; i < order.length; i++) {
                 String brandName = order[i];
                 Log.d(TAG, "onCreate: brandName " + brandName);
-                //if (brandName.length() == 0){
-                //    Log.d(TAG, "onCreate: is null");
-                //    continue;
-                //}
+
                 switch (brandName) {
                     case "cosmed": {
                         Drawable drawableFore = getDrawable(R.drawable.map_cosmed);

@@ -38,9 +38,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.opencsv.CSVReader;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -75,6 +73,8 @@ public class BrandSearchActivity extends ActivityController {
         loadMap();
         findView();
         addListener();
+
+
         Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
@@ -110,24 +110,19 @@ public class BrandSearchActivity extends ActivityController {
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
         List<String> stringBrand = new ArrayList<>();
-        String[] strelement={"perngyuh", "cosmed", "wolsey", "miamia", "coach", "polo", "roots", "lacoste", "lanew", "blueway", "edwin", "poya"};
+        String[] strelement={"Perng Yuh芃諭名品", "康是美", "Wolsey", "mia mia", "COACH FACTORY", "POLO RALPH LAUREN "
+                , "Roots", "LACOSTE", "La new", "BLUE WAY", "EDWIN", "寶雅生活館"};
         for (int i=0;i<strelement.length;i++){
             stringBrand.add(strelement[i]);
         }
         flushicon(stringBrand, lstBrand);
+        //flush first time when onCreat
+
 
         brandSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //change string array when onclick
-                List<String> stringBrand = new ArrayList<>();
-                String[] strelement={"perngyuh", "cosmed", "wolsey", "miamia", "coach", "polo", "roots", "lacoste", "lanew", "blueway", "edwin", "poya"};
-
-                for (int i=0;i<strelement.length;i++){
-                    stringBrand.add(strelement[i]);
-                }
-                flushicon(stringBrand, lstBrand);
-
+                //search button , onClick flush brand
             }
         });
 
@@ -281,7 +276,7 @@ public class BrandSearchActivity extends ActivityController {
         Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
         Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
         Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("POLO RALPH LAUREN", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem polo = new Branditem("POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
         Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
         Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
         Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
@@ -314,31 +309,18 @@ public class BrandSearchActivity extends ActivityController {
             if (stringBrand.contains("Perng Yuh芃諭名品")){
                 lstBrand.add(perngyuh);
             }
-            if (stringBrand.contains("polo")){
+            if (stringBrand.contains("POLO RALPH LAUREN ")){
                 lstBrand.add(polo);
             }
-            if (stringBrand.contains("poya")){
+            if (stringBrand.contains("寶雅生活館")){
                 lstBrand.add(poya);
             }
-            if (stringBrand.contains("roots")){
+            if (stringBrand.contains("Roots")){
                 lstBrand.add(roots);
             }
-            if (stringBrand.contains("wolsey")){
+            if (stringBrand.contains("Wolsey")){
                 lstBrand.add(wolsey);
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         RecyclerView myrycle = (RecyclerView) findViewById(R.id.brand_recycleView);
         BranditemAdapter myAdapter = new BranditemAdapter(this, BrandSearchActivity.this, lstBrand, lstbeacon);
@@ -699,92 +681,6 @@ public class BrandSearchActivity extends ActivityController {
         }
     }
 
-/*
-    // should delete this block
-    private void initSearchView(){
-        // Get the SearchView and set the searchable configuration
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        svBrand = (SearchView)findViewById(R.id.svBrand) ;
-        // Assumes current activity is the searchable activity
-        svBrand.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        svBrand.setSubmitButtonEnabled(true);
-        mCursor = null;
-        // Defines a list of View IDs that will receive the Cursor columns for each row
-        int [] viewIds = { android.R.id.text1 };
-        // Defines a list of columns to retrieve from the Cursor and load into an output row
-        String [] columNames = { SearchManager.SUGGEST_COLUMN_TEXT_1 };
-        // Creates a new SimpleCursorAdapter
-        suggAdapter = new SimpleCursorAdapter(
-                getApplicationContext(),               // The application's Context object
-                android.R.layout.simple_list_item_1,                  // A layout in XML for one row in the ListView
-                mCursor,                               // The result from the query
-                columNames,                      // A string array of column names in the cursor
-                viewIds,                        // An integer array of view IDs in the row layout
-                0);                                    // Flags (usually none are needed)
-
-        // Sets the adapter for the ListView
-        svBrand.setSuggestionsAdapter(suggAdapter);
-        svBrand.setOnSuggestionListener(new SearchView.OnSuggestionListener(){
-
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                Log.d(TAG, "onSuggestionSelect: ");
-                return false;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                // true if the listener handles the event and
-                // wants to override the default behavior of launching any intent or
-                // submitting a search query specified on that item.
-                Log.d(TAG, "onSuggestionClick: "+String.valueOf(position));
-                String query = null;
-                handleSearch(query);
-                return true;
-            }
-        });
-        svBrand.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                //true if the query has been handled by the listener
-                handleSearch(query);
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                //false if the SearchView should perform the default action of
-                //showing any suggestions if available
-                Log.d(TAG, "onQueryTextChange: ");
-                updateCursorAdapter(suggAdapter, newText);
-                return true;
-            }
-        });
-
-    }
-    // When Query text change, update suggesstion
-    private void updateCursorAdapter(CursorAdapter adapter, String newText){
-//        ArrayList info = new ArrayList();
-        Log.d(TAG, "updateCursorAdapter: ");
-        SQLiteDatabase db	=	DH.getWritableDatabase();
-        Cursor dbCursor = db.rawQuery("SELECT rowid _id, cn_name FROM Store WHERE cn_name LIKE ?",
-                new String[]{newText+"%"});
-        Log.d(TAG, "updateCursorAdapter: "+dbCursor.getColumnName(0));
-        Log.d(TAG, "updateCursorAdapter: "+dbCursor.getColumnName(1));
-        MatrixCursor mCursor = new MatrixCursor(
-                new String[] {BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1}
-        );
-        while (dbCursor.moveToNext()) {
-            mCursor.newRow()
-                    .add("_id", dbCursor.getString(0))
-                    .add("name", dbCursor.getString(1));
-            String name = dbCursor.getString(1);
-            Log.d(TAG, "updateCursorAdapter: "+name);
-        }
-        adapter.swapCursor(mCursor);
-    }
-*/
 
 
     @CallSuper

@@ -49,16 +49,11 @@ public class HomeActivity extends ActivityController {
         findView();
         openDB();
         addListener();
-        // need?
-        ActionBar actionbar	= getSupportActionBar();
-        if	(actionbar	!=	null)	{
-            actionbar.hide();
-        }
-        //
+
         final Button photo_button = (Button)findViewById(R.id.home_photo_btn);
         final Button lead_button = (Button)findViewById(R.id.home_lead_btn);
         Button develop_btn = (Button)findViewById(R.id.develop_btn);
-        Button update_btn = (Button)findViewById(R.id.update_btn);
+
         photo_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,17 +94,7 @@ public class HomeActivity extends ActivityController {
             }
         });
 
-        update_btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                click_update ++;
-                if (click_update>=10){
-                    Log.d(TAG, "update database! ");
-                    click_update = 0;
-                    //update
-                }
-            }
-        });
+
 
         //ImageView mask = (ImageView)findViewById(R.id.mask);
         //mask.setVisibility(View.VISIBLE);
@@ -131,17 +116,17 @@ public class HomeActivity extends ActivityController {
     }
 
     private void findView(){
-//        btUpdateDB = findViewById(R.id.DB_btn);
+        btUpdateDB = findViewById(R.id.update_btn);
     }
 
     private void addListener(){
-//        btUpdateDB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(HomeActivity.this, "send", Toast.LENGTH_SHORT).show();
-//                loadEDAapi();
-//            }
-//        });
+        btUpdateDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(HomeActivity.this, "send", Toast.LENGTH_SHORT).show();
+                loadEDAapi();
+            }
+        });
     }
 
     private void loadEDAapi(){
