@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 
+import com.robotemi.sdk.Robot;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,6 +30,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     java.util.Timer timer = new java.util.Timer(true);
     int count_num = 5;
     boolean countOver = false;
+    private Robot robot; //
     private Camera mCamera;
     private SurfaceView mPreview;
     private SurfaceHolder mHolder;
@@ -56,8 +59,10 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        getPermissionCamera();
-        getPermissionStorage();
+        robot = Robot.getInstance();
+        getPermission();
+        robot.tiltAngle(20);//相機傾角-25~55
+
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 
 
@@ -74,6 +79,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
             @Override
             public void onFinish() {
                 textView.setVisibility(View.INVISIBLE);
+
                 capture();
             }
         }.start();
@@ -207,23 +213,18 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         releaseCamera();//若預覽介面銷毀則釋放相機
     }
 
-    public void getPermissionCamera(){
+    public void getPermission(){
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
-        }else {
-            Log.d(TAG, "getPermissionCamera: has permission");
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            //ActivityCompat.requestPermissions(this,},1);
+        }
+        else {
+            Log.d(TAG, "getPermission: has permission");
         }
     }
 
 
-    public void getPermissionStorage(){
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }else{
-            Log.d(TAG, "getPermissionStorage: has permission");
-        }
-    }
 
 }

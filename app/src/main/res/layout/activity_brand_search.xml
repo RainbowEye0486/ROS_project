@@ -324,21 +324,38 @@ tools:context=".BrandSearchActivity">
         app:layout_constraintTop_toTopOf="@+id/beacon5"
         tools:ignore="MissingConstraints" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:background="@drawable/searchbar"
-        android:imeOptions="flagNoExtractUi"
-        android:padding="5dp"
-        android:hint="請輸入品牌名稱或是關鍵字..."
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/top_guideline"
-        app:layout_constraintEnd_toStartOf="@+id/right_guideline"
-        app:layout_constraintHorizontal_bias="0.03"
-        app:layout_constraintStart_toStartOf="@+id/left_guideline"
-        app:layout_constraintWidth_percent="0.57"
-        />
+    <AutoCompleteTextView
+            android:id="@+id/actvBrand"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/searchbar"
+            android:inputType="text"
+            android:imeOptions="flagNoExtractUi|actionSearch"
+            android:padding="6dp"
+            android:hint="請輸入品牌名稱或是關鍵字..."
+            android:completionThreshold="1"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/top_guideline"
+            app:layout_constraintEnd_toStartOf="@+id/right_guideline"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="@+id/left_guideline"
+            app:layout_constraintWidth_percent="0.57"/>
+
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/svBrand"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@drawable/searchbar"-->
+<!--        android:imeOptions="flagNoExtractUi"-->
+<!--        android:padding="5dp"-->
+<!--        android:hint="請輸入品牌名稱或是關鍵字..."-->
+<!--        android:textSize="30sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/top_guideline"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/right_guideline"-->
+<!--        app:layout_constraintHorizontal_bias="0.03"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/left_guideline"-->
+<!--        app:layout_constraintWidth_percent="0.57"-->
+<!--        />-->
 
 
     <androidx.recyclerview.widget.RecyclerView

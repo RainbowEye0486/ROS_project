@@ -10,7 +10,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityController extends AppCompatActivity {
+    final String TAG = "ActivityController";
     Handler handler = new Handler();
+
+    protected DBHelper DH = null;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionbar	= getSupportActionBar();
@@ -22,7 +25,15 @@ public class ActivityController extends AppCompatActivity {
     }
 
 
-    public void speak (String sentence){
+    protected void openDB(){
+        DH = new DBHelper(this, "StoreList.db", null, 1);
+        Log.d(TAG, "openDB: success");
+    }
+
+    protected void closeDB() {
+        DH.close();
+    }
+    public void speak(String sentence){
         //
     }
 

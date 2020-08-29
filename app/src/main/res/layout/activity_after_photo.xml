@@ -117,16 +117,18 @@
         android:focusable="true"
         android:contentDescription="TODO" />
 
-    <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/loading"
-        android:layout_width='150dp'
-        android:layout_height='150dp'
+    //loading 進度條被button蓋住
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf='parent'
-        app:layout_constraintEnd_toEndOf='parent'
-        app:layout_constraintStart_toStartOf='parent'
-        app:layout_constraintTop_toTopOf='parent'
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toTopOf="@+id/qrcode_btn"/>
 
-        app:srcCompat='@drawable/loading'
-        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

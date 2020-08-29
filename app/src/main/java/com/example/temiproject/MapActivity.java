@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -13,6 +15,7 @@ import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,12 +26,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MapActivity extends ActivityController {
 
     private static final String TAG = "MapActivity";
-    private String[] order= {"blueway", "poya", "lanew", "miamia" };
+    private String[] order;
+    private String[] sequence; // IDs
+    String des; // the ID to move
     private String task;//from last activity
     private String target;//past destination to moving activity
     List<mapView> brandIdem = new ArrayList<>();
@@ -38,8 +44,12 @@ public class MapActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        openDB();
         Intent intent = getIntent();
         task = intent.getStringExtra("task");
+        ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
+        sequence = posToStoreId(route);
+        order = storeIDToName(sequence);
 
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
@@ -509,5 +519,73 @@ public class MapActivity extends ActivityController {
         beacon5_txt.setVisibility(View.VISIBLE);
         beacon5_txt.setText(order[4]);
 
+    }
+
+    private String[] posToStoreId(ArrayList<Position> route){
+        ArrayList<String> sequence = new ArrayList();
+        for(Position pos: route){
+//            Log.d(TAG, "onStart: "+ pos.getName());
+//            Log.d(TAG, "onStart: "+ pos.getStores());
+            List<String> stores = pos.stores;
+            for(String store: stores){
+                sequence.add(store);
+                Log.d(TAG, "posToStoreId: "+store);
+            }
+        }
+        return sequence.toArray(new String[0]);
+    }
+
+    private String[] storeIDToName(String[] IDs){
+        List<String> result = new ArrayList<>();
+        SQLiteDatabase db = DH.getWritableDatabase();
+        String query = "SELECT cn_name FROM Store"
+                + " WHERE id IN (" + TextUtils.join(",", Collections.nCopies(IDs.length, "?"))  + ")";
+        Cursor cursor = db.rawQuery(query, IDs);
+        while (cursor.moveToNext()){
+            result.add(cursor.getString(0));
+            Log.d(TAG, "storeIDToName: "+cursor.getString(0));
+        }
+        return result.toArray(new String[0]);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(sequence.length>0){
+            des = sequence[0];
+            String des_name = null;
+//            des_name = checkInLocations(des);
+            if(des_name!=null){
+                Log.d(TAG, "onStart: 帶領前往");
+            }
+        }
+
+    }
+
+//    private String checkInLocations(String des){
+//        String result =null;
+//        for (String location : robot.getLocations()) {
+//            if (location.equals(des)) {
+//                result = order[0];
+//                return result;
+//            }
+//        }
+//        return result;
+//    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDB();
+    }
+
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);//must store the new intent unless getIntent() will return the old one
+
+        ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
+        sequence = posToStoreId(route);
+        order = storeIDToName(sequence);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.temiproject;
 
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +38,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
+import android.widget.ProgressBar;
+
 
 
 public class AfterPhotoActivity extends ActivityController {
@@ -44,11 +48,15 @@ public class AfterPhotoActivity extends ActivityController {
     ImageView ivQRcode;
     final String TAG = "AfterPhotoActivity";
     Button btQRcode;
+    private ProgressBar spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_photo);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner.setVisibility(View.GONE);
+
         findView();
         addListener();
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
@@ -155,6 +163,7 @@ public class AfterPhotoActivity extends ActivityController {
     }
 
 
+
     public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
         Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
         Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
@@ -184,7 +193,7 @@ public class AfterPhotoActivity extends ActivityController {
         canvas.drawBitmap(desbmp, 0, 0, null);
         return desbmp;
     }
-
+///////////////////////////////////////////////////////////////////////////////////
     private void findView(){
         btQRcode = findViewById(R.id.qrcode_btn);
         ivQRcode = findViewById(R.id.qrcode_imv);
@@ -196,25 +205,31 @@ public class AfterPhotoActivity extends ActivityController {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                spinner.bringToFront();//用了還是會被蓋住
+                spinner.setVisibility(View.VISIBLE);
+
+
                 String imageBase64 = encodeImage(photo);
 
-                //loading-------------------------
-                //ImageView mask = (ImageView)findViewById(R.id.mask);
-                //mask.setVisibility(View.VISIBLE);
-                //GifImageView ImageView = findViewById(R.id.loading);
-                //try{
-                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-                //    ImageView.setImageDrawable(gifDrawable);
-                //    ImageView.setVisibility(View.VISIBLE);
-                //}catch (Exception e){
-                //    e.printStackTrace();
-                //}
-                ////-----------------------------
+
+//                //loading-------------------------
+//                ImageView mask = (ImageView)findViewById(R.id.mask);
+//                mask.setVisibility(View.VISIBLE);
+//                GifImageView ImageView = findViewById(R.id.loading);
+//                try{
+//                    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
+//                    ImageView.setImageDrawable(gifDrawable);
+//                    ImageView.setVisibility(View.VISIBLE);
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                ////-----------------------------
 
                 sendImage(imageBase64);
             }
         });
     }
+
 
     public String encodeImage(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -249,6 +264,7 @@ public class AfterPhotoActivity extends ActivityController {
                             .build();
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
+                    //mLoadingBar.setVisibility((View.GONE));//loading
                     showQRcode(responseData);
                     Log.d(TAG, "run: base64: " + data);
                 }catch (Exception e){
@@ -264,7 +280,9 @@ public class AfterPhotoActivity extends ActivityController {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                spinner.setVisibility(View.GONE);
                 Log.d(TAG, "run: showQRcode:"+rt_url);
+
                 // generate QRcode
                 BarcodeEncoder encoder = new BarcodeEncoder();
                 try {
@@ -274,6 +292,8 @@ public class AfterPhotoActivity extends ActivityController {
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
+
+
 
                 //loading-------------------------
                 //ImageView mask = (ImageView)findViewById(R.id.mask);

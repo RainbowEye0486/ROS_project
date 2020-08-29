@@ -10,6 +10,9 @@ import android.util.Log;
 import java.util.TimerTask;
 
 public class MovingActivity extends ActivityController {
+
+
+
     private static final String TAG = "MovingActivity";
     char next_job = ' ';
     java.util.Timer timer = new java.util.Timer(true);//for test usage
@@ -40,6 +43,7 @@ public class MovingActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        //toNextActivity();
         String task	= intent.getStringExtra("task");
         assert task != null;
         Log.d(TAG, "on create" + task);
@@ -55,4 +59,6 @@ public class MovingActivity extends ActivityController {
         setContentView(R.layout.activity_moving);
         timer.schedule(count, 3000);//三秒後執行task，改成監聽器觸發
     }
+
+
 }
