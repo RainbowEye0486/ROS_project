@@ -24,7 +24,8 @@ public class ArrivalActivity extends ActivityController {
                 MediaPlayer click = MediaPlayer.create(ArrivalActivity.this, R.raw.click);
                 click.start();
                 Intent intent = new Intent(ArrivalActivity.this, MovingActivity.class);
-                intent.putExtra("task", "takePhoto");
+
+                intent.putExtra("task", "takePhoto");//takePhoto
                 startActivity(intent);
                 Animation bounce = AnimationUtils.loadAnimation(ArrivalActivity.this, R.anim.bounce_animation);
                 arrival_btn.startAnimation(bounce);
