@@ -32,30 +32,34 @@
             android:name="com.robotemi.sdk.metadata.SKILL"
             android:value="TemiProject" />
 
-        <activity android:name=".ThanksLeadingActivity" />
-        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".ThanksLeadingActivity"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".MapActivity"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".BrandSearchActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".GuildPointActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
         <activity
             android:name=".SelectPointActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
         <activity
             android:name=".CameraActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
         <activity
             android:name=".ArrivalActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
         <activity
             android:name=".MovingActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleInstance" />
         <activity
             android:name=".HomeActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -28,4 +28,5 @@ public class InformationActivity extends ActivityController {
         setContentView(R.layout.activity_information);
         timer.schedule(count, 3000);
     }
+
 }

@@ -280,7 +280,7 @@ public class BrandSearchActivity extends ActivityController {
         Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
         Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
         Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("POLO RALPH LAUREN", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem polo = new Branditem("POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
         Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
         Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
         Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);

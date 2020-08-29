@@ -2,6 +2,7 @@ package com.example.temiproject;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -319,6 +320,12 @@ public class AfterPhotoActivity extends ActivityController {
                 Log.d(TAG, "run: showUploadFail");
             }
         });
+    }
+
+    private void goNextActivity(){
+        Intent intent = new Intent(AfterPhotoActivity.this, MovingActivity.class);
+        intent.putExtra("task", "back");
+        startActivity(intent);
     }
 
 
