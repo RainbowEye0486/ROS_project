@@ -32,9 +32,9 @@ public class MovingActivity extends ActivityController {
                 Intent intent2 = new Intent(MovingActivity.this, HomeActivity.class);
                 startActivity(intent2);
             }
-
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

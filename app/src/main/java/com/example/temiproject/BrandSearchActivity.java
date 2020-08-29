@@ -117,6 +117,7 @@ public class BrandSearchActivity extends ActivityController {
                 //change string array when onclick
                 List<String> stringBrand = new ArrayList<>();
                 String[] strelement={"perngyuh", "cosmed", "wolsey", "miamia", "coach", "polo", "roots", "lacoste", "lanew", "blueway", "edwin", "poya"};
+
                 for (int i=0;i<strelement.length;i++){
                     stringBrand.add(strelement[i]);
                 }
