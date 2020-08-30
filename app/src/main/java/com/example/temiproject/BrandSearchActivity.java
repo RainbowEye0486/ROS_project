@@ -59,6 +59,7 @@ public class BrandSearchActivity extends ActivityController {
     private ArrayList<String> sequence;
     final String start = "L4";
     private AutoCompleteTextView actvSearch;
+    private Button btSearch;
     private Button goMap;
     private List<Position> map;
 //    private SearchView svBrand;
@@ -76,7 +77,7 @@ public class BrandSearchActivity extends ActivityController {
         addListener();
 
 
-        Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
+//        Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
@@ -120,12 +121,12 @@ public class BrandSearchActivity extends ActivityController {
         //flush first time when onCreat
 
 
-        brandSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //search button , onClick flush brand
-            }
-        });
+//        brandSearch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //search button , onClick flush brand
+//            }
+//        });
 
 
         //處理詳細的顯示
@@ -284,7 +285,7 @@ public class BrandSearchActivity extends ActivityController {
         Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
         Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
         Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
-
+        lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){
                 lstBrand.add(blueway);
@@ -335,10 +336,18 @@ public class BrandSearchActivity extends ActivityController {
     private void findView(){
         actvSearch = (AutoCompleteTextView)findViewById(R.id.actvBrand);
         goMap = (Button)findViewById(R.id.brandtomap_btn);
+        btSearch = (Button)findViewById(R.id.brand_search_btn);
     }
 
     private void addListener(){
         initAutoComplete();
+        btSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String query = actvSearch.getText().toString();
+                handleSearch(query);
+            }
+        });
         goMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

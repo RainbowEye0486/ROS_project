@@ -23,9 +23,6 @@ import java.util.List;
 public class GuildPointActivity extends ActivityController {
 
     private static final String TAG = "GuildPointActivity";
-    private SoundPool soundPool;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +62,6 @@ public class GuildPointActivity extends ActivityController {
             }
         });
 
-
-
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build();
-        soundPool = new SoundPool.Builder()
-                .setMaxStreams(1)
-                .build();
-
         guildBrand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +72,7 @@ public class GuildPointActivity extends ActivityController {
                 MediaPlayer click = MediaPlayer.create(GuildPointActivity.this, R.raw.click);
                 click.start();
                 startActivity(intent);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
             }
         });
         guildToilet.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +86,7 @@ public class GuildPointActivity extends ActivityController {
                 Intent intent = new Intent(GuildPointActivity.this, MapActivity.class);
                 intent.putExtra("task", "toilet");
                 startActivity(intent);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
             }
         });
         guildElevator.setOnClickListener(new View.OnClickListener() {
@@ -111,6 +100,7 @@ public class GuildPointActivity extends ActivityController {
                 Intent intent = new Intent(GuildPointActivity.this, MapActivity.class);
                 intent.putExtra("task", "elevator");
                 startActivity(intent);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
             }
         });
 

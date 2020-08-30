@@ -25,6 +25,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+//import com.robotemi.sdk.Robot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,25 +35,20 @@ public class MapActivity extends ActivityController {
 
     private static final String TAG = "MapActivity";
     private String[] order;
-    private String[] sequence; // IDs
     String des; // the ID to move
     private String task;//from last activity
     private String target;//past destination to moving activity
     List<mapView> brandIdem = new ArrayList<>();
-
+    private Button goLead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         openDB();
-        Intent intent = getIntent();
-        task = intent.getStringExtra("task");
-        ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
-        sequence = posToStoreId(route);
-        order = storeIDToName(sequence);
-
-
+        receiveIntent();
+//        findView();
+//        addListener();
 
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
@@ -104,26 +101,11 @@ public class MapActivity extends ActivityController {
                 Log.d(TAG, "onClick: goLead button");
                 MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
                 click.start();
-                Intent intent = new Intent(MapActivity.this, MovingActivity.class);
-                intent.putExtra("task", "lead");
                 Animation bounce = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bounce_animation);
                 goLead.startAnimation(bounce);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                if (task.equals("toilet")){
-                    target = "toilet";
-                }
-                else if (task.equals("elevator")){
-                    target = "elevator";
-                }
-                else if (task.equals("brand")){
-                    target = brandIdem.get(0).brandName;
-                }
-                else {
-                    Log.d(TAG, "onClick: task passing failed !");
-                }
-                intent.putExtra("task", target);
-                
-                startActivity(intent);
+                // send intent
+                toNextActivity();
             }
         });
 
@@ -520,57 +502,78 @@ public class MapActivity extends ActivityController {
 
     }
 
-    private String[] posToStoreId(ArrayList<Position> route){
+    private void receiveIntent(){
+        Intent intent = getIntent();
+        task = intent.getStringExtra("task");
+        Log.d(TAG, "receiveIntent: task:"+task);
+        if(task.equals("brand")){
+            Log.d(TAG, "receiveIntent: in brand");
+            ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
+            order = posToStoreName(route);
+        }else if(task.equals("elevator")){
+            Log.d(TAG, "receiveIntent: elevator");
+            String[] location = {"B1電梯"};
+            order = location;
+            target = "BB12L";
+        }else if(task.equals("toilet")){
+            Log.d(TAG, "receiveIntent: toilet");
+            String[] location = {"廁所"};
+            order = location;
+            target = "toilet";
+        }
+
+    }
+
+    private String[] posToStoreName(ArrayList<Position> route){
         ArrayList<String> sequence = new ArrayList();
+        ArrayList<String> names = new ArrayList<>();
         for(Position pos: route){
-//            Log.d(TAG, "onStart: "+ pos.getName());
-//            Log.d(TAG, "onStart: "+ pos.getStores());
             List<String> stores = pos.stores;
             for(String store: stores){
                 sequence.add(store);
-                Log.d(TAG, "posToStoreId: "+store);
+                names.add(storeIDToName(store));
+                Log.d(TAG, "posToStoreName: "+store);
             }
         }
-        return sequence.toArray(new String[0]);
+        if(sequence.size()>0){
+            target = sequence.get(0);
+            Log.d(TAG, "posToStoreName: target:"+target);
+        }
+        return names.toArray(new String[0]);
     }
 
-    private String[] storeIDToName(String[] IDs){
-        List<String> result = new ArrayList<>();
+    private String storeIDToName(String ID){
+        String result = null;
+        String[] IDs = new String[]{ID};
         SQLiteDatabase db = DH.getWritableDatabase();
         String query = "SELECT cn_name FROM Store"
-                + " WHERE id IN (" + TextUtils.join(",", Collections.nCopies(IDs.length, "?"))  + ")";
+                + " WHERE id = ?";
         Cursor cursor = db.rawQuery(query, IDs);
         while (cursor.moveToNext()){
-            result.add(cursor.getString(0));
+            result = cursor.getString(0);
             Log.d(TAG, "storeIDToName: "+cursor.getString(0));
         }
-        return result.toArray(new String[0]);
+        return result;
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        if(sequence.length>0){
-            des = sequence[0];
-            String des_name = null;
-//            des_name = checkInLocations(des);
-            if(des_name!=null){
-                Log.d(TAG, "onStart: 帶領前往");
-            }
-        }
-
+        Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
     }
 
-//    private String checkInLocations(String des){
-//        String result =null;
-//        for (String location : robot.getLocations()) {
+    /*
+    check if the target is in temi's location list
+    @param: (String) target(ID)
+    @return: true(in the list)/false
+    * */
+//    private boolean checkInLocations(String des){
+//        for (String location : Robot.getInstance().getLocations()) {
 //            if (location.equals(des)) {
-//                result = order[0];
-//                return result;
+//                return true;
 //            }
 //        }
-//        return result;
+//        return false;
 //    }
 
     @Override
@@ -583,8 +586,33 @@ public class MapActivity extends ActivityController {
         super.onNewIntent(intent);
         setIntent(intent);//must store the new intent unless getIntent() will return the old one
 
-        ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
-        sequence = posToStoreId(route);
-        order = storeIDToName(sequence);
+        receiveIntent();
+    }
+
+    private void toNextActivity(){
+        Intent intent = new Intent(MapActivity.this, MovingActivity.class);
+        intent.putExtra("task", "lead");
+        intent.putExtra("target", target);
+        Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
+        startActivity(intent);
+    }
+
+    private void findView(){
+        goLead = (Button)findViewById(R.id.map_go);
+    }
+    private void addListener(){
+        goLead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: goLead button");
+                MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
+                click.start();
+                Animation bounce = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bounce_animation);
+                goLead.startAnimation(bounce);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                // send intent
+                toNextActivity();
+            }
+        });
     }
 }

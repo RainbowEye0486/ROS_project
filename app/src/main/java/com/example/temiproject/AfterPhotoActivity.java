@@ -2,6 +2,7 @@ package com.example.temiproject;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -205,6 +206,28 @@ public class AfterPhotoActivity extends ActivityController {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
+
+                //make other button disappear
+
+                Animation fade = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.fade_out);
+                btQRcode.startAnimation(fade);
+                Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
+                Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
+                Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
+                Button frame4_btn = (Button)findViewById(R.id.frame4_btn);
+                Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
+                frame1_btn.startAnimation(fade);
+                frame2_btn.startAnimation(fade);
+                frame3_btn.startAnimation(fade);
+                frame4_btn.startAnimation(fade);
+                frame5_btn.startAnimation(fade);
+                frame1_btn.setVisibility(View.GONE);
+                frame2_btn.setVisibility(View.GONE);
+                frame3_btn.setVisibility(View.GONE);
+                frame4_btn.setVisibility(View.GONE);
+                frame5_btn.setVisibility(View.GONE);
+                btQRcode.setVisibility(View.GONE);
+
                 spinner.bringToFront();//用了還是會被蓋住
                 spinner.setVisibility(View.VISIBLE);
 
@@ -288,7 +311,8 @@ public class AfterPhotoActivity extends ActivityController {
                 try {
                     Bitmap bit = encoder.encodeBitmap(rt_url, BarcodeFormat.QR_CODE,
                             100, 100);
-                    ivQRcode.setImageBitmap(bit);
+                    ImageView imageView = (ImageView)findViewById(R.id.preview_img);
+                    imageView.setImageBitmap(bit);
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
@@ -323,4 +347,12 @@ public class AfterPhotoActivity extends ActivityController {
             }
         });
     }
+
+    private void goNextActivity(){
+        Intent intent = new Intent(AfterPhotoActivity.this, MovingActivity.class);
+        intent.putExtra("task", "back");
+        startActivity(intent);
+    }
+
+
 }

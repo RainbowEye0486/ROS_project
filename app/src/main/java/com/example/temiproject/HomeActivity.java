@@ -95,7 +95,6 @@ public class HomeActivity extends ActivityController {
         });
 
 
-
         //ImageView mask = (ImageView)findViewById(R.id.mask);
         //mask.setVisibility(View.VISIBLE);
         //GifImageView ImageView = findViewById(R.id.loading);
@@ -174,8 +173,6 @@ public class HomeActivity extends ActivityController {
                 Toast.makeText(HomeActivity.this, "received", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "run: show response");
                 initDB(response);
-
-//                tvResponse.setText(response);
             }
         });
     }
@@ -209,6 +206,13 @@ public class HomeActivity extends ActivityController {
                 }
                 addToDB(store_id, cn_name, en_name, big_pic, small_pic);
             }
+
+            // add toilet ,lift and escalator manually
+            addToDB("toilet", "廁所" , "toilet", "0", "0");
+            addToDB("BB12L", "B1電梯" , "lift", "0", "0");
+            addToDB("BB12E", "B1手扶梯" , "escalator", "0", "0");
+            addToDB("BLB2L", "LB電梯" , "lift", "0", "0");
+            addToDB("BLB2E", "LB手扶梯" , "escalator", "0", "0");
         } catch (JSONException e) {
             e.printStackTrace();
         }
