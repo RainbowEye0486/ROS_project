@@ -2,6 +2,7 @@ package com.example.temiproject;
 
 import androidx.annotation.CallSuper;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -390,6 +391,8 @@ public class BrandSearchActivity extends ActivityController {
         ArrayList<String> storeList = getStores();
         String[] stores = new String[storeList.size()];
         storeList.toArray(stores);
+        addRightCancelDrawable(actvSearch);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, stores);
 
@@ -406,6 +409,9 @@ public class BrandSearchActivity extends ActivityController {
                 return false;
             }
         });
+
+
+
         actvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -415,6 +421,44 @@ public class BrandSearchActivity extends ActivityController {
             }
         });
     }
+
+    private void addRightCancelDrawable(final EditText editText) {
+
+        Drawable cancel = ContextCompat.getDrawable(this,R.drawable.x);
+        Bitmap bitmap = ((BitmapDrawable) cancel).getBitmap();
+
+        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, cancel, null);
+//        //final  DRAWABLE_RIGHT dr;
+//        btn = (Button) findViewById(R.id.btn);
+//
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Set the first EditText empty
+//                et.setText("");
+//
+//                // Clear the second EditText
+//                et_city.getText().clear();
+//            }
+//        });
+
+        editText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 0;
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+
+                        // your action here
+                        actvSearch.setText("");
+
+                        return true;
+
+                }
+                return false;
+            }
+        });
+    }
+
 
     // get all stores name from DB
     private ArrayList<String> getStores(){
