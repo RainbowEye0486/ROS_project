@@ -284,7 +284,7 @@ public class BrandSearchActivity extends ActivityController {
         Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
         Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
         Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
-
+        lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){
                 lstBrand.add(blueway);

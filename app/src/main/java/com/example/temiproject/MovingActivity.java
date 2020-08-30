@@ -37,6 +37,7 @@ public class MovingActivity extends ActivityController /*implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moving);
+        openDB();
 //        robot = Robot.getInstance();
 //        setupTemi(robot);
 
@@ -147,19 +148,29 @@ public class MovingActivity extends ActivityController /*implements
         if (next_job == ' ') { //default go home
             Intent intent2 = new Intent(MovingActivity.this, HomeActivity.class);
             startActivity(intent2);
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         }else if (next_job == 's') { //指定地點完，準備去拍照點
             Intent intent2 = new Intent(MovingActivity.this, CameraActivity.class);
             startActivity(intent2);
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         }else if (next_job == 'p'){ //帶領到合適拍照位置
             Intent intent2 = new Intent(MovingActivity.this, ArrivalActivity.class);
             startActivity(intent2);
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         }else if (next_job == 'l'){ //品牌設施導覽 前往中
             Intent intent2 = new Intent(MovingActivity.this, ThanksLeadingActivity.class);
             startActivity(intent2);
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         }else if (next_job == 'b'){ //導覽完畢，回去原位
             Intent intent2 = new Intent(MovingActivity.this, HomeActivity.class);
             startActivity(intent2);
+            overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDB();
+    }
 }

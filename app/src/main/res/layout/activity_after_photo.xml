@@ -51,8 +51,14 @@
 
     <Button
         android:id="@+id/frame1_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        android:layout_margin="4dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintHeight_percent="0.06"
         android:text="NO.1"
         app:layout_constraintEnd_toStartOf="@+id/frame2_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
@@ -62,16 +68,28 @@
 
     <Button
         android:id="@+id/frame2_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        android:layout_margin="4dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintHeight_percent="0.06"
         android:text="NO.2"
         app:layout_constraintEnd_toStartOf="@+id/frame3_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
 
     <Button
         android:id="@+id/frame3_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        android:layout_margin="4dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintHeight_percent="0.06"
         android:text="NO.3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +97,14 @@
 
     <Button
         android:id="@+id/frame4_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        android:layout_margin="4dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintHeight_percent="0.06"
         android:text="NO.4"
 
         app:layout_constraintStart_toEndOf="@+id/frame3_btn"
@@ -88,8 +112,14 @@
 
     <Button
         android:id="@+id/frame5_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
+        android:layout_margin="4dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintHeight_percent="0.06"
         android:text="NO.5"
         app:layout_constraintStart_toEndOf="@+id/frame4_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
@@ -97,13 +127,19 @@
 
     <Button
         android:id="@+id/qrcode_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:text="產生 QRcode"
+        android:textSize="20sp"
+        android:textColor="#F8E7CD"
+        android:background="@drawable/btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/preview_img"
         app:layout_constraintStart_toStartOf="@+id/preview_img"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline"
+        android:layout_margin="5dp"
+        app:layout_constraintWidth_percent="0.15"
+        app:layout_constraintHeight_percent="0.08"
         app:layout_constraintVertical_bias="0.5"
         tools:ignore="MissingConstraints" />
 

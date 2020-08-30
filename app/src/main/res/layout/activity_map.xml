@@ -243,7 +243,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@drawable/btn"
-        android:enabled="false"
         android:text="帶位服務"
         android:textColor="#F8E7CD"
         android:textSize="20sp"
