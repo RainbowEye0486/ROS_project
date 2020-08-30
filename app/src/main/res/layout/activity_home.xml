@@ -125,15 +125,7 @@
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline"
         app:layout_constraintVertical_bias="0.8"/>
 
-    <ImageButton
-        android:id="@+id/mask"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/mask"
-        android:visibility="invisible"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="TODO" />
+
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/loading"

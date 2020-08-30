@@ -94,8 +94,6 @@ public class HomeActivity extends ActivityController {
             }
         });
 
-
-
         //ImageView mask = (ImageView)findViewById(R.id.mask);
         //mask.setVisibility(View.VISIBLE);
         //GifImageView ImageView = findViewById(R.id.loading);
