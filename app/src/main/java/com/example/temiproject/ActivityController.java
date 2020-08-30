@@ -9,8 +9,14 @@ import android.view.animation.AnimationUtils;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+//import com.robotemi.sdk.Robot;
+//import com.robotemi.sdk.TtsRequest;
+
 public class ActivityController extends AppCompatActivity {
     final String TAG = "ActivityController";
+    final String GUEST = "Guest";
+    final String CAMERA = "Camera";
+    final String HOME = "Home";
     Handler handler = new Handler();
 
     protected DBHelper DH = null;
@@ -33,9 +39,13 @@ public class ActivityController extends AppCompatActivity {
     protected void closeDB() {
         DH.close();
     }
-    public void speak(String sentence){
-        //
-    }
+
+//    protected void setupTemi(Robot robot){
+//        robot.toggleNavigationBillboard(true);
+//    }
+//    public void speak(String sentence){
+//        Robot.getInstance().speak(TtsRequest.create(sentence, false));
+//    }
 
         //public void delay(int delayTime){
     //    handler.postDelayed(new Runnable(){

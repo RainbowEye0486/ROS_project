@@ -37,8 +37,9 @@
         <activity
             android:name=".ThanksLeadingActivity"
             android:launchMode="singleInstance"/>
-        <activity android:name=".MapActivity"
-            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".MapActivity"
+            android:launchMode="singleInstance" />
         <activity
             android:name=".BrandSearchActivity"
             android:launchMode="singleInstance"
