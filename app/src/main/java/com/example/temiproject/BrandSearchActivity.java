@@ -8,6 +8,7 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -410,8 +411,6 @@ public class BrandSearchActivity extends ActivityController {
             }
         });
 
-
-
         actvSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -422,6 +421,7 @@ public class BrandSearchActivity extends ActivityController {
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void addRightCancelDrawable(final EditText editText) {
 
         Drawable cancel = ContextCompat.getDrawable(this,R.drawable.x);
@@ -447,12 +447,9 @@ public class BrandSearchActivity extends ActivityController {
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_RIGHT = 0;
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-
                         // your action here
                         actvSearch.setText("");
-
                         return true;
-
                 }
                 return false;
             }

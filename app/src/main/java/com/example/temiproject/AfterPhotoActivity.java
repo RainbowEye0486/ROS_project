@@ -209,18 +209,11 @@ public class AfterPhotoActivity extends ActivityController {
 
                 //make other button disappear
 
-                Animation fade = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.fade_out);
-                btQRcode.startAnimation(fade);
                 Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
                 Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
                 Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
                 Button frame4_btn = (Button)findViewById(R.id.frame4_btn);
                 Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
-                frame1_btn.startAnimation(fade);
-                frame2_btn.startAnimation(fade);
-                frame3_btn.startAnimation(fade);
-                frame4_btn.startAnimation(fade);
-                frame5_btn.startAnimation(fade);
                 frame1_btn.setVisibility(View.GONE);
                 frame2_btn.setVisibility(View.GONE);
                 frame3_btn.setVisibility(View.GONE);

@@ -40,20 +40,5 @@ public class ActivityController extends AppCompatActivity {
         DH.close();
     }
 
-//    protected void setupTemi(Robot robot){
-//        robot.toggleNavigationBillboard(true);
-//    }
-//    public void speak(String sentence){
-//        Robot.getInstance().speak(TtsRequest.create(sentence, false));
-//    }
-
-        //public void delay(int delayTime){
-    //    handler.postDelayed(new Runnable(){
-//
-    //        @Override
-    //        public void run() {
-    //        }}, delayTime);
-    //}
-    //控制聲音 動畫 如果沒有機器人測試時的function都放在這裡
 
 }
