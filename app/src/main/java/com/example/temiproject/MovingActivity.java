@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.robotemi.sdk.Robot;
-import com.robotemi.sdk.TtsRequest;
-import com.robotemi.sdk.listeners.OnGoToLocationStatusChangedListener;
+//import com.robotemi.sdk.Robot;
+//import com.robotemi.sdk.TtsRequest;
+//import com.robotemi.sdk.listeners.OnGoToLocationStatusChangedListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -21,8 +21,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimerTask;
 
-public class MovingActivity extends ActivityController implements
-        OnGoToLocationStatusChangedListener {
+public class MovingActivity extends ActivityController /*implements
+        OnGoToLocationStatusChangedListener*/ {
 
 
 
@@ -30,15 +30,15 @@ public class MovingActivity extends ActivityController implements
     String destination;
     String voice;
     char next_job = ' ';
-    private Robot robot;
+//    private Robot robot;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moving);
-        robot = Robot.getInstance();
-        setupTemi(robot);
+//        robot = Robot.getInstance();
+//        setupTemi(robot);
 
     }
 
@@ -70,7 +70,7 @@ public class MovingActivity extends ActivityController implements
         }
         Log.d(TAG, "onStart: des:"+destination);
 
-        robot.goTo(destination);
+//        robot.goTo(destination);
 
     }
 
@@ -87,47 +87,47 @@ public class MovingActivity extends ActivityController implements
     }
 
     protected void setTemiListener(){
-        Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
+//        Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
     }
 
     protected void removeTemiListener(){
-        Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
+//        Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
     }
 
-    @Override
-    public void onGoToLocationStatusChanged(@NotNull String location, @NotNull String status, int descriptionId, @NotNull String description) {
-        Log.d("GoToStatusChanged", "status=" + status + ", descriptionId=" + descriptionId + ", description=" + description);
-        switch (status) {
-            case "start":
-                Log.d(TAG, "onGoToLocationStatusChanged: voice"+voice);
-                robot.speak(TtsRequest.create("現在前往"+ voice, false));
-                break;
-
-            case "calculating":
-                break;
-            case "going":
-                try {
-                    if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
-                        robot.speak(TtsRequest.create("請跟著我", false));
-                    }
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                break;
-
-            case "complete":
-                robot.speak(TtsRequest.create("到達目的地", false));
-                toNextActivity();
-                break;
-
-            case "abort":
-                String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
-                robot.speak(TtsRequest.create("前進失敗", false));
-                // what is next?
-                Log.d(TAG, "onGoToLocationStatusChanged: 前進 abort");
-                break;
-        }
-    }
+//    @Override
+//    public void onGoToLocationStatusChanged(@NotNull String location, @NotNull String status, int descriptionId, @NotNull String description) {
+//        Log.d("GoToStatusChanged", "status=" + status + ", descriptionId=" + descriptionId + ", description=" + description);
+//        switch (status) {
+//            case "start":
+//                Log.d(TAG, "onGoToLocationStatusChanged: voice"+voice);
+//                robot.speak(TtsRequest.create("現在前往"+ voice, false));
+//                break;
+//
+//            case "calculating":
+//                break;
+//            case "going":
+//                try {
+//                    if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
+//                        robot.speak(TtsRequest.create("請跟著我", false));
+//                    }
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//                break;
+//
+//            case "complete":
+//                robot.speak(TtsRequest.create("到達目的地", false));
+//                toNextActivity();
+//                break;
+//
+//            case "abort":
+//                String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
+//                robot.speak(TtsRequest.create("前進失敗", false));
+//                // what is next?
+//                Log.d(TAG, "onGoToLocationStatusChanged: 前進 abort");
+//                break;
+//        }
+//    }
 
     private String storeIDToName(String ID){
         String result = null;
