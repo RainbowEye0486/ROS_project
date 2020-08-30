@@ -95,16 +95,6 @@ public class HomeActivity extends ActivityController {
         });
 
 
-        //ImageView mask = (ImageView)findViewById(R.id.mask);
-        //mask.setVisibility(View.VISIBLE);
-        //GifImageView ImageView = findViewById(R.id.loading);
-        //try{
-        //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-        //    ImageView.setImageDrawable(gifDrawable);
-        //    ImageView.setVisibility(View.VISIBLE);
-        //}catch (Exception e){
-        //    e.printStackTrace();
-        //}
 
     }
 
@@ -122,8 +112,14 @@ public class HomeActivity extends ActivityController {
         btUpdateDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HomeActivity.this, "send", Toast.LENGTH_SHORT).show();
-                loadEDAapi();
+                if (click_num>=10){
+                    Log.d(TAG, "update database ! ");
+                    click_num = 0;
+                    Toast.makeText(HomeActivity.this, "send", Toast.LENGTH_SHORT).show();
+                    loadEDAapi();
+                }
+
+
             }
         });
     }
