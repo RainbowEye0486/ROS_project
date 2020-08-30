@@ -29,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import android.widget.ImageView;
 
+import com.robotemi.sdk.Robot;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -46,6 +48,7 @@ public class HomeActivity extends ActivityController {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Robot.getInstance().hideTopBar();
         findView();
         openDB();
         addListener();
@@ -90,6 +93,7 @@ public class HomeActivity extends ActivityController {
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
+                    Robot.getInstance().showTopBar();
                 }
             }
         });
@@ -112,9 +116,11 @@ public class HomeActivity extends ActivityController {
         btUpdateDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (click_num>=10){
+                click_update++;
+                if (click_update>=10){
                     Log.d(TAG, "update database ! ");
-                    click_num = 0;
+
+                    click_update = 0;
                     Toast.makeText(HomeActivity.this, "send", Toast.LENGTH_SHORT).show();
                     loadEDAapi();
                 }
@@ -205,10 +211,10 @@ public class HomeActivity extends ActivityController {
 
             // add toilet ,lift and escalator manually
             addToDB("toilet", "廁所" , "toilet", "0", "0");
-            addToDB("BB12L", "B1電梯" , "lift", "0", "0");
-            addToDB("BB12E", "B1手扶梯" , "escalator", "0", "0");
-            addToDB("BLB2L", "LB電梯" , "lift", "0", "0");
-            addToDB("BLB2E", "LB手扶梯" , "escalator", "0", "0");
+            addToDB("bb12l", "B1電梯" , "lift", "0", "0");
+            addToDB("bb12e", "B1手扶梯" , "escalator", "0", "0");
+            addToDB("blb2l", "LB電梯" , "lift", "0", "0");
+            addToDB("blb2e", "LB手扶梯" , "escalator", "0", "0");
         } catch (JSONException e) {
             e.printStackTrace();
         }

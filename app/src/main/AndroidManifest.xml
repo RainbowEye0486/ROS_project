@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
@@ -17,7 +18,8 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/SkillTheme">
+        //AppTheme
         <activity android:name=".SearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -32,7 +34,11 @@
 
         <meta-data
             android:name="com.robotemi.sdk.metadata.SKILL"
-            android:value="TemiProject" />
+            android:value="TemiProject"
+            />
+        <meta-data
+            android:name = " com.robotemi.sdk.metadata.KIOSK "
+            android:value = " true " />
 
         <activity
             android:name=".ThanksLeadingActivity"

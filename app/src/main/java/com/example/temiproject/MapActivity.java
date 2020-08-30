@@ -25,7 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.Robot;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -514,7 +514,7 @@ public class MapActivity extends ActivityController {
             Log.d(TAG, "receiveIntent: elevator");
             String[] location = {"B1電梯"};
             order = location;
-            target = "BB12L";
+            target = "bb12l";
         }else if(task.equals("toilet")){
             Log.d(TAG, "receiveIntent: toilet");
             String[] location = {"廁所"};
@@ -532,7 +532,7 @@ public class MapActivity extends ActivityController {
             for(String store: stores){
                 sequence.add(store);
                 names.add(storeIDToName(store));
-                Log.d(TAG, "posToStoreName: "+store);
+                Log.d(TAG, "posToStoreName: "+storeIDToName(store));
             }
         }
         if(sequence.size()>0){
@@ -567,14 +567,14 @@ public class MapActivity extends ActivityController {
     @param: (String) target(ID)
     @return: true(in the list)/false
     * */
-//    private boolean checkInLocations(String des){
-//        for (String location : Robot.getInstance().getLocations()) {
-//            if (location.equals(des)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    private boolean checkInLocations(String des){
+        for (String location : Robot.getInstance().getLocations()) {
+            if (location.equals(des)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     protected void onDestroy() {

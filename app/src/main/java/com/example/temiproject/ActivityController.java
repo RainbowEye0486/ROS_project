@@ -9,14 +9,14 @@ import android.view.animation.AnimationUtils;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.robotemi.sdk.Robot;
-//import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
 
 public class ActivityController extends AppCompatActivity {
     final String TAG = "ActivityController";
-    final String GUEST = "Guest";
-    final String CAMERA = "Camera";
-    final String HOME = "Home";
+    final String GUEST = "guest";
+    final String CAMERA = "camera1";
+    final String HOME = "home";
     Handler handler = new Handler();
 
     protected DBHelper DH = null;
@@ -40,20 +40,14 @@ public class ActivityController extends AppCompatActivity {
         DH.close();
     }
 
-//    protected void setupTemi(Robot robot){
-//        robot.toggleNavigationBillboard(true);
-//    }
-//    public void speak(String sentence){
-//        Robot.getInstance().speak(TtsRequest.create(sentence, false));
-//    }
+    protected void setupTemi(Robot robot){
+        robot.toggleNavigationBillboard(true);
+    }
 
-        //public void delay(int delayTime){
-    //    handler.postDelayed(new Runnable(){
-//
-    //        @Override
-    //        public void run() {
-    //        }}, delayTime);
-    //}
-    //控制聲音 動畫 如果沒有機器人測試時的function都放在這裡
+    public void speak(String sentence){
+        Robot.getInstance().speak(TtsRequest.create(sentence, false));
+    }
+
+
 
 }
