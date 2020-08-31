@@ -447,12 +447,9 @@ public class BrandSearchActivity extends ActivityController {
             public boolean onTouch(View v, MotionEvent event) {
                 final int DRAWABLE_RIGHT = 0;
                 if(event.getAction() == MotionEvent.ACTION_UP) {
-
                         // your action here
                         actvSearch.setText("");
-
                         return true;
-
                 }
                 return false;
             }
