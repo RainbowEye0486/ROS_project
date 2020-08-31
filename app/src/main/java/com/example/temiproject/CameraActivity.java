@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.core.app.ActivityCompat;
 
 import com.robotemi.sdk.Robot;//and 33 62 64
+import com.robotemi.sdk.TtsRequest;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,7 +62,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         setContentView(R.layout.activity_camera);
         robot = Robot.getInstance();
         getPermission();
-        robot.tiltAngle(20);//相機傾角-25~55
+        robot.tiltAngle(15);//相機傾角-25~55
 
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 
@@ -70,8 +71,10 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
             @Override
             public void onTick(long l) {
                 if (l<=6000){
+                    long t = l/1000L;
                     textView.setVisibility(View.VISIBLE);
-                    textView.setText(String.format(Locale.getDefault(), "%d", l / 1000L));
+                    textView.setText(String.format(Locale.getDefault(), "%d", t));
+                    speak(String.valueOf(t));
                 }
 
             }
@@ -79,7 +82,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
             @Override
             public void onFinish() {
                 textView.setVisibility(View.INVISIBLE);
-
+                //robot.speak(TtsRequest.create("5 4 3 2 1", false));
                 capture();
             }
         }.start();

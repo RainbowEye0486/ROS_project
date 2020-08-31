@@ -26,6 +26,7 @@ public class InformationActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
+        speak("將帶領您至拍照地點");
 
     }
 
