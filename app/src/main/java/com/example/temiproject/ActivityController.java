@@ -14,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ActivityController extends AppCompatActivity {
     final String TAG = "ActivityController";
-    final String GUEST = "Guest";
-    final String CAMERA = "Camera";
-    final String HOME = "Home";
+    final String GUEST = "guest";
+    final String CAMERA = "camera1";
+    final String HOME = "home";
     Handler handler = new Handler();
 
     protected DBHelper DH = null;
@@ -39,6 +39,15 @@ public class ActivityController extends AppCompatActivity {
     protected void closeDB() {
         DH.close();
     }
+/*
+    protected void setupTemi(Robot robot){
+        robot.toggleNavigationBillboard(true);
+    }
+
+    public void speak(String sentence){
+        Robot.getInstance().speak(TtsRequest.create(sentence, false));
+    }
 
 
+*/
 }

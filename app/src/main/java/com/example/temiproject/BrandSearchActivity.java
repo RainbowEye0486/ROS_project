@@ -390,10 +390,11 @@ public class BrandSearchActivity extends ActivityController {
     private void initAutoComplete(){
         Log.d(TAG, "initAutoComplete: ");
         ArrayList<String> storeList = getStores();
-        String[] stores = new String[storeList.size()];
-        storeList.toArray(stores);
-        addRightCancelDrawable(actvSearch);
 
+//        String[] stores = new String[storeList.size()];
+//        storeList.toArray(stores);
+        addRightCancelDrawable(actvSearch);
+        String[] stores = {"a", "b", "c"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, stores);
 

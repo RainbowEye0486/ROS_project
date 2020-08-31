@@ -9,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -51,6 +52,7 @@ public class AfterPhotoActivity extends ActivityController {
     Button btQRcode;
     private ProgressBar spinner;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +62,20 @@ public class AfterPhotoActivity extends ActivityController {
 
         findView();
         addListener();
+        final Button home_btn = (Button)findViewById(R.id.home_btn);
+        home_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
+                MediaPlayer click = MediaPlayer.create(AfterPhotoActivity.this, R.raw.click);
+                click.start();
+                home_btn.startAnimation(bounce);
+                overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
+                Log.d(TAG, "onClick: Home button");
+                toNextActivity();
+            }
+        });
+
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         final ImageView imageview = findViewById(R.id.preview_img);
         try{
@@ -341,7 +357,7 @@ public class AfterPhotoActivity extends ActivityController {
         });
     }
 
-    private void goNextActivity(){
+    private void toNextActivity(){
         Intent intent = new Intent(AfterPhotoActivity.this, MovingActivity.class);
         intent.putExtra("task", "back");
         startActivity(intent);
