@@ -4,14 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class InformationActivity extends ActivityController {
-    Timer timer;
+
     count count;
+    Timer timer;
     char next_job = ' ';
 
     class count extends TimerTask {
@@ -27,26 +27,20 @@ public class InformationActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
+        speak("將帶領您至拍照地點");
         timer = new Timer();
         count = new count();
     }
 
     @Override
     protected void onStart() {
-
         super.onStart();
-        Log.d(TAG, "onStart: onstart");
-        Log.d(TAG, "onStart: " + timer);
-        count.cancel();
         cancelTimer();
-        Log.d(TAG, "onStart: " + timer);
+        count.cancel();
         timer = new Timer();
         count = new count();
-        Log.d(TAG, "onStart: " + timer);
         timer.schedule(count, 3000);
     }
-
-
 
     private void cancelTimer() {
         if (timer != null) {

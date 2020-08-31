@@ -8,9 +8,8 @@ import android.view.animation.AnimationUtils;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-//import com.robotemi.sdk.Robot;
-//import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
 
 public class ActivityController extends AppCompatActivity {
     final String TAG = "ActivityController";
@@ -39,9 +38,23 @@ public class ActivityController extends AppCompatActivity {
     protected void closeDB() {
         DH.close();
     }
-/*
-    protected void setupTemi(Robot robot){
+
+    protected void keepTemiSafe(Robot robot){
+        // disable the popup screen when moving
         robot.toggleNavigationBillboard(true);
+        // hardware button disable
+        if(!robot.isHardButtonsDisabled()){
+            robot.setHardButtonsDisabled(true);
+        }
+        // hide topbar
+        robot.hideTopBar();
+    }
+
+    protected void turnDevelopMode(Robot robot){
+        robot.showTopBar();
+        if(robot.isHardButtonsDisabled()) {
+            robot.setHardButtonsDisabled(false);
+        }
     }
 
     public void speak(String sentence){
@@ -49,5 +62,5 @@ public class ActivityController extends AppCompatActivity {
     }
 
 
-*/
+
 }

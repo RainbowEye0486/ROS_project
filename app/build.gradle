@@ -42,7 +42,7 @@ dependencies {
     // for QRcode
     implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
     // temi sdk
-    //implementation 'com.robotemi:sdk:0.10.65'
+    implementation 'com.robotemi:sdk:0.10.65'
 
 
 }

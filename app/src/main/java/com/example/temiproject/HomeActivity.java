@@ -30,6 +30,8 @@ import android.widget.ImageView;
 
 //import com.robotemi.sdk.Robot;
 
+import com.robotemi.sdk.Robot;
+
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -41,13 +43,14 @@ public class HomeActivity extends ActivityController {
 
     // Database
     private Button btUpdateDB;
+    private Robot robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-       // Robot.getInstance().hideTopBar();
+        keepTemiSafe(robot);
         findView();
         openDB();
         addListener();
@@ -63,7 +66,7 @@ public class HomeActivity extends ActivityController {
                 MediaPlayer click = MediaPlayer.create(HomeActivity.this, R.raw.click);
                 click.start();
                 photo_button.startAnimation(bounce);
-                Intent intent = new Intent(HomeActivity.this, AfterPhotoActivity.class);
+                Intent intent = new Intent(HomeActivity.this, InformationActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 Log.d(TAG, "onClick: photo button");
@@ -92,10 +95,13 @@ public class HomeActivity extends ActivityController {
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
-            //        Robot.getInstance().showTopBar();
+                    turnDevelopMode(robot);
+
                 }
             }
         });
+
+
 
     }
 
@@ -212,8 +218,6 @@ public class HomeActivity extends ActivityController {
             addToDB("bb12e", "B1手扶梯" , "escalator", "0", "0");
             addToDB("blb2l", "LB電梯" , "lift", "0", "0");
             addToDB("blb2e", "LB手扶梯" , "escalator", "0", "0");
-            Toast.makeText(HomeActivity.this, "資料庫完成", Toast.LENGTH_LONG).show();
-            Log.d(TAG, "initDB: success");
         } catch (JSONException e) {
             e.printStackTrace();
         }

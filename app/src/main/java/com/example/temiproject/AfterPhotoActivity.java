@@ -62,12 +62,12 @@ public class AfterPhotoActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_photo);
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
 
         findView();
         addListener();
-        final Button home_btn = (Button)findViewById(R.id.home_btn);
+        final Button home_btn = (Button) findViewById(R.id.home_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,8 +80,11 @@ public class AfterPhotoActivity extends ActivityController {
                 toNextActivity();
             }
         });
-        final ImageView imageview = findViewById(R.id.preview_img);
+    }
+    protected void onStart(){
+        super.onStart();
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
+        final ImageView imageview = findViewById(R.id.preview_img);
         try{
             FileInputStream fis=new FileInputStream(path);//通過path把照片讀到文件輸入流中
             Bitmap bitmap= BitmapFactory.decodeStream(fis);//將輸入流解碼為bitmap
@@ -99,15 +102,20 @@ public class AfterPhotoActivity extends ActivityController {
         //photo folded
 
         //rotate
-        //Drawable frame1 = getDrawable(R.drawable.bachground_arrival);
+
         Drawable frame1 = new BitmapDrawable(bitmap);
         imageview.setImageDrawable(frame1);
-        final Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
-        final Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
-        final Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
-        final Button frame4_btn = (Button)findViewById(R.id.frame4_btn);
-        final Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
-
+        frame1_btn = (Button)findViewById(R.id.frame1_btn);
+        frame2_btn = (Button)findViewById(R.id.frame2_btn);
+        frame3_btn = (Button)findViewById(R.id.frame3_btn);
+        frame4_btn = (Button)findViewById(R.id.frame4_btn);
+        frame5_btn = (Button)findViewById(R.id.frame5_btn);
+        btQRcode.setVisibility(View.VISIBLE);
+        frame1_btn.setVisibility(View.VISIBLE);
+        frame2_btn.setVisibility(View.VISIBLE);
+        frame3_btn.setVisibility(View.VISIBLE);
+        frame4_btn.setVisibility(View.VISIBLE);
+        frame5_btn.setVisibility(View.VISIBLE);
 
         Drawable photoplus = combineGraph(frame1, frame1);
         photo = ((BitmapDrawable)photoplus).getBitmap();
@@ -115,8 +123,7 @@ public class AfterPhotoActivity extends ActivityController {
         frame1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
-                frame1_btn.startAnimation(bounce);
+
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 frame1 = combineGraph(frame1, frame1);
                 imageview.setImageDrawable(frame1);
@@ -128,8 +135,7 @@ public class AfterPhotoActivity extends ActivityController {
         frame2_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
-                frame2_btn.startAnimation(bounce);
+
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame2 = getDrawable(R.drawable.frame_1);
                 frame2 = combineGraph(frame2, frame1);
@@ -142,8 +148,7 @@ public class AfterPhotoActivity extends ActivityController {
         frame3_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
-                frame3_btn.startAnimation(bounce);
+
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame3 = getDrawable(R.drawable.frame_2);
                 frame3 = combineGraph(frame3, frame1);
@@ -156,8 +161,7 @@ public class AfterPhotoActivity extends ActivityController {
         frame4_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
-                frame4_btn.startAnimation(bounce);
+
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame4 = getDrawable(R.drawable.frame_3);
                 frame4 = combineGraph(frame4, frame1);
@@ -170,8 +174,7 @@ public class AfterPhotoActivity extends ActivityController {
         frame5_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation bounce = AnimationUtils.loadAnimation(AfterPhotoActivity.this, R.anim.bounce_animation);
-                frame5_btn.startAnimation(bounce);
+
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame5 = getDrawable(R.drawable.frame_4);
                 frame5 = combineGraph(frame5, frame1);
@@ -226,19 +229,14 @@ public class AfterPhotoActivity extends ActivityController {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
+                speak("資料傳輸中 請稍候");
                 //make other button disappear
-                Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
-                Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
-                Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
-                Button frame4_btn = (Button)findViewById(R.id.frame4_btn);
-                Button frame5_btn = (Button)findViewById(R.id.frame5_btn);
-                frame1_btn.setVisibility(View.GONE);
-                frame2_btn.setVisibility(View.GONE);
-                frame3_btn.setVisibility(View.GONE);
-                frame4_btn.setVisibility(View.GONE);
-                frame5_btn.setVisibility(View.GONE);
-                btQRcode.setVisibility(View.GONE);
-                spinner.bringToFront();//用了還是會被蓋住
+                btQRcode.setVisibility(View.INVISIBLE);
+                frame1_btn.setVisibility(View.INVISIBLE);
+                frame2_btn.setVisibility(View.INVISIBLE);
+                frame3_btn.setVisibility(View.INVISIBLE);
+                frame4_btn.setVisibility(View.INVISIBLE);
+                frame5_btn.setVisibility(View.INVISIBLE);
                 spinner.setVisibility(View.VISIBLE);
                 String imageBase64 = encodeImage(photo);
                 sendImage(imageBase64);
@@ -309,6 +307,8 @@ public class AfterPhotoActivity extends ActivityController {
                 } catch (WriterException e) {
                     e.printStackTrace();
                 }
+
+                speak("請掃QR code 取回您的照片");
 
 
 
