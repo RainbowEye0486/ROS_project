@@ -42,13 +42,14 @@ public class HomeActivity extends ActivityController {
 
     // Database
     private Button btUpdateDB;
+    private Robot robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Robot.getInstance().hideTopBar();
+        keepTemiSafe(robot);
         findView();
         openDB();
         addListener();
@@ -93,7 +94,8 @@ public class HomeActivity extends ActivityController {
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
-                    Robot.getInstance().showTopBar();
+                    turnDevelopMode(robot);
+
                 }
             }
         });
