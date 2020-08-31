@@ -10,7 +10,7 @@ import java.util.TimerTask;
 public class InformationActivity extends ActivityController {
 
 
-    java.util.Timer timer = new java.util.Timer(true);
+    java.util.Timer timer;
     char next_job = ' ';
 
     TimerTask count = new TimerTask() {
@@ -26,7 +26,21 @@ public class InformationActivity extends ActivityController {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        cancelTimer();
+        timer = new java.util.Timer(true);
         timer.schedule(count, 3000);
+    }
+
+    private void cancelTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
 }

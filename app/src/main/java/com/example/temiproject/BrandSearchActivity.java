@@ -750,7 +750,7 @@ public class BrandSearchActivity extends ActivityController {
      * 判定当前是否需要隐藏
      */
     protected boolean isShouldHideKeyBord(View v, MotionEvent ev) {
-        if (v != null && (v instanceof EditText)) {
+        if (v != null && (v instanceof AutoCompleteTextView)) {
             int[] l = {0, 0};
             v.getLocationInWindow(l);
             int left = l[0], top = l[1], bottom = top + v.getHeight(), right = left + v.getWidth();

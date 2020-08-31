@@ -222,9 +222,7 @@ public class AfterPhotoActivity extends ActivityController {
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
                 Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
-
                 //make other button disappear
-
                 Button frame1_btn = (Button)findViewById(R.id.frame1_btn);
                 Button frame2_btn = (Button)findViewById(R.id.frame2_btn);
                 Button frame3_btn = (Button)findViewById(R.id.frame3_btn);
@@ -236,27 +234,9 @@ public class AfterPhotoActivity extends ActivityController {
                 frame4_btn.setVisibility(View.GONE);
                 frame5_btn.setVisibility(View.GONE);
                 btQRcode.setVisibility(View.GONE);
-
                 spinner.bringToFront();//用了還是會被蓋住
                 spinner.setVisibility(View.VISIBLE);
-
-
                 String imageBase64 = encodeImage(photo);
-
-
-//                //loading-------------------------
-//                ImageView mask = (ImageView)findViewById(R.id.mask);
-//                mask.setVisibility(View.VISIBLE);
-//                GifImageView ImageView = findViewById(R.id.loading);
-//                try{
-//                    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-//                    ImageView.setImageDrawable(gifDrawable);
-//                    ImageView.setVisibility(View.VISIBLE);
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//                ////-----------------------------
-
                 sendImage(imageBase64);
             }
         });
