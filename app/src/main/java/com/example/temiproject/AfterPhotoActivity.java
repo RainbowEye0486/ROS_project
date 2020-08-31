@@ -50,6 +50,11 @@ public class AfterPhotoActivity extends ActivityController {
     ImageView ivQRcode;
     final String TAG = "AfterPhotoActivity";
     Button btQRcode;
+    Button frame1_btn;
+    Button frame2_btn;
+    Button frame3_btn;
+    Button frame4_btn;
+    Button frame5_btn;
     private ProgressBar spinner;
 
 
@@ -75,9 +80,8 @@ public class AfterPhotoActivity extends ActivityController {
                 toNextActivity();
             }
         });
-
-        String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         final ImageView imageview = findViewById(R.id.preview_img);
+        String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         try{
             FileInputStream fis=new FileInputStream(path);//通過path把照片讀到文件輸入流中
             Bitmap bitmap= BitmapFactory.decodeStream(fis);//將輸入流解碼為bitmap
@@ -95,7 +99,7 @@ public class AfterPhotoActivity extends ActivityController {
         //photo folded
 
         //rotate
-
+        //Drawable frame1 = getDrawable(R.drawable.bachground_arrival);
         Drawable frame1 = new BitmapDrawable(bitmap);
         imageview.setImageDrawable(frame1);
         final Button frame1_btn = (Button)findViewById(R.id.frame1_btn);

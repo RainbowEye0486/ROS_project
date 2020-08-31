@@ -425,34 +425,12 @@ public class BrandSearchActivity extends ActivityController {
     @SuppressLint("ClickableViewAccessibility")
     private void addRightCancelDrawable(final EditText editText) {
 
-        Drawable cancel = ContextCompat.getDrawable(this,R.drawable.x);
-        Bitmap bitmap = ((BitmapDrawable) cancel).getBitmap();
 
-        editText.setCompoundDrawablesWithIntrinsicBounds(null, null, cancel, null);
-//        //final  DRAWABLE_RIGHT dr;
-//        btn = (Button) findViewById(R.id.btn);
-//
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Set the first EditText empty
-//                et.setText("");
-//
-//                // Clear the second EditText
-//                et_city.getText().clear();
-//            }
-//        });
-
-        editText.setOnTouchListener(new View.OnTouchListener() {
+        Button cancel_search = (Button)findViewById(R.id.cancel_search_btn);
+        cancel_search.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_RIGHT = 0;
-                if(event.getAction() == MotionEvent.ACTION_UP) {
-                        // your action here
-                        actvSearch.setText("");
-                        return true;
-                }
-                return false;
+            public void onClick(View view) {
+                actvSearch.setText("");
             }
         });
     }

@@ -27,7 +27,7 @@ import static android.service.controls.ControlsProviderService.TAG;
 
 public class CameraActivity extends ActivityController implements SurfaceHolder.Callback{
     private static final String TAG = "CameraActivity";
-    java.util.Timer timer = new java.util.Timer(true);
+
     int count_num = 5;
     boolean countOver = false;
 //    private Robot robot; //

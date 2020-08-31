@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,7 +63,7 @@ public class HomeActivity extends ActivityController {
                 MediaPlayer click = MediaPlayer.create(HomeActivity.this, R.raw.click);
                 click.start();
                 photo_button.startAnimation(bounce);
-                Intent intent = new Intent(HomeActivity.this, InformationActivity.class);
+                Intent intent = new Intent(HomeActivity.this, AfterPhotoActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                 Log.d(TAG, "onClick: photo button");
@@ -97,8 +96,6 @@ public class HomeActivity extends ActivityController {
                 }
             }
         });
-
-
 
     }
 
