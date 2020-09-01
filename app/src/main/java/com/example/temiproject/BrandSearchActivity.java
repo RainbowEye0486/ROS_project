@@ -119,15 +119,6 @@ public class BrandSearchActivity extends ActivityController {
             stringBrand.add(strelement[i]);
         }
         flushicon(stringBrand, lstBrand);
-        //flush first time when onCreat
-
-
-//        brandSearch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //search button , onClick flush brand
-//            }
-//        });
 
 
         //處理詳細的顯示
@@ -391,10 +382,10 @@ public class BrandSearchActivity extends ActivityController {
         Log.d(TAG, "initAutoComplete: ");
         ArrayList<String> storeList = getStores();
 
-//        String[] stores = new String[storeList.size()];
-//        storeList.toArray(stores);
+        String[] stores = new String[storeList.size()];
+        storeList.toArray(stores);
         addRightCancelDrawable(actvSearch);
-        String[] stores = {"a", "b", "c"};
+       // String[] stores = {"a", "b", "c"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, stores);
 
