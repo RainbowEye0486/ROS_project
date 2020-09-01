@@ -53,13 +53,13 @@
         android:id="@+id/frame1_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textColor="#F8E7CD"
         android:background="@drawable/btn"
         android:layout_margin="4dp"
         app:layout_constraintWidth_percent="0.06"
         app:layout_constraintHeight_percent="0.06"
-        android:text="NO.1"
+        android:text="無邊框"
         app:layout_constraintEnd_toStartOf="@+id/frame2_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
 
@@ -76,7 +76,7 @@
         android:layout_margin="4dp"
         app:layout_constraintWidth_percent="0.06"
         app:layout_constraintHeight_percent="0.06"
-        android:text="NO.2"
+        android:text="秋日"
         app:layout_constraintEnd_toStartOf="@+id/frame3_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
 
@@ -90,7 +90,7 @@
         android:layout_margin="4dp"
         app:layout_constraintWidth_percent="0.06"
         app:layout_constraintHeight_percent="0.06"
-        android:text="NO.3"
+        android:text="舞台"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
@@ -99,13 +99,13 @@
         android:id="@+id/frame4_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:textSize="20sp"
+        android:textSize="15sp"
         android:textColor="#F8E7CD"
         android:background="@drawable/btn"
         android:layout_margin="4dp"
         app:layout_constraintWidth_percent="0.06"
         app:layout_constraintHeight_percent="0.06"
-        android:text="NO.4"
+        android:text="希臘風"
 
         app:layout_constraintStart_toEndOf="@+id/frame3_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
@@ -120,7 +120,7 @@
         android:layout_margin="4dp"
         app:layout_constraintWidth_percent="0.06"
         app:layout_constraintHeight_percent="0.06"
-        android:text="NO.5"
+        android:text="金邊"
         app:layout_constraintStart_toEndOf="@+id/frame4_btn"
         app:layout_constraintTop_toTopOf="@+id/bottom_guideline" />
 
@@ -130,7 +130,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="取得照片"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textColor="#F8E7CD"
         android:background="@drawable/btn"
         app:layout_constraintBottom_toBottomOf="parent"

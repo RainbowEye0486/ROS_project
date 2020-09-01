@@ -97,6 +97,151 @@ public class MapActivity extends ActivityController implements
         flush();
 
 
+
+    }
+
+    public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
+        Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
+        Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
+        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 1000 , 714 , true);
+        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 1000 , 714 , true);
+        Bitmap combineImages = overlay(scaledBitmapBack, scaledBitmapFore);
+        return new BitmapDrawable(this.getResources(), combineImages);
+    }
+
+    public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2)//疊圖用
+    {
+        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
+        Canvas canvas = new Canvas(bmOverlay);
+        canvas.drawBitmap(bmp1, new Matrix(), null);
+        canvas.drawBitmap(bmp2, 0, 0, null);
+        return bmOverlay;
+
+    }
+
+
+    public void flush() {
+        int length = order.length;
+        ImageView beacon1 = (ImageView) findViewById(R.id.beacon1);
+        ImageView beacon2 = (ImageView) findViewById(R.id.beacon2);
+        ImageView beacon3 = (ImageView) findViewById(R.id.beacon3);
+        ImageView beacon4 = (ImageView) findViewById(R.id.beacon4);
+        ImageView beacon5 = (ImageView) findViewById(R.id.beacon5);
+        TextView beacon1_txt = (TextView) findViewById(R.id.beacon1_txt);
+        TextView beacon2_txt = (TextView) findViewById(R.id.beacon2_txt);
+        TextView beacon3_txt = (TextView) findViewById(R.id.beacon3_txt);
+        TextView beacon4_txt = (TextView) findViewById(R.id.beacon4_txt);
+        TextView beacon5_txt = (TextView) findViewById(R.id.beacon5_txt);
+        beacon1.setVisibility(View.INVISIBLE);
+        beacon2.setVisibility(View.INVISIBLE);
+        beacon3.setVisibility(View.INVISIBLE);
+        beacon4.setVisibility(View.INVISIBLE);
+        beacon5.setVisibility(View.INVISIBLE);
+        beacon1_txt.setVisibility(View.INVISIBLE);
+        beacon2_txt.setVisibility(View.INVISIBLE);
+        beacon3_txt.setVisibility(View.INVISIBLE);
+        beacon4_txt.setVisibility(View.INVISIBLE);
+        beacon5_txt.setVisibility(View.INVISIBLE);
+
+        if (task.equals("elevator")) {
+            length = 1;
+            beacon1.setVisibility(View.VISIBLE);
+            beacon1_txt.setVisibility(View.VISIBLE);
+            beacon1_txt.setText("電梯");
+            return;
+        }
+        else if ( task.equals("toilet")){
+            length = 1;
+            beacon1.setVisibility(View.VISIBLE);
+            beacon1_txt.setVisibility(View.VISIBLE);
+            beacon1_txt.setText("廁所");
+            return;
+        }
+
+
+        Log.d(TAG, "flush: " + length);
+
+        if (length == 0) return;
+        beacon1.setVisibility(View.VISIBLE);
+        beacon1_txt.setVisibility(View.VISIBLE);
+        beacon1_txt.setText(order[0]);
+        if (length == 1) return;
+        beacon2.setVisibility(View.VISIBLE);
+        beacon2_txt.setVisibility(View.VISIBLE);
+        beacon2_txt.setText(order[1]);
+        if (length == 2) return;
+        beacon3.setVisibility(View.VISIBLE);
+        beacon3_txt.setVisibility(View.VISIBLE);
+        beacon3_txt.setText(order[2]);
+        if (length == 3) return;
+        beacon4.setVisibility(View.VISIBLE);
+        beacon4_txt.setVisibility(View.VISIBLE);
+        beacon4_txt.setText(order[3]);
+        if (length == 4) return;
+        beacon5.setVisibility(View.VISIBLE);
+        beacon5_txt.setVisibility(View.VISIBLE);
+        beacon5_txt.setText(order[4]);
+
+    }
+
+    private void receiveIntent(){
+        Intent intent = getIntent();
+        task = intent.getStringExtra("task");
+        Log.d(TAG, "receiveIntent: task:"+task);
+        if(task.equals("brand")){
+            Log.d(TAG, "receiveIntent: in brand");
+            ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
+            order = posToStoreName(route);
+        }else if(task.equals("elevator")){
+            Log.d(TAG, "receiveIntent: elevator");
+            String[] location = {"B1電梯"};
+            order = location;
+            target = "bb12l";
+        }else if(task.equals("toilet")){
+            Log.d(TAG, "receiveIntent: toilet");
+            String[] location = {"廁所"};
+            order = location;
+            target = "toilet";
+        }
+
+    }
+
+    private String[] posToStoreName(ArrayList<Position> route){
+        ArrayList<String> sequence = new ArrayList();
+        ArrayList<String> names = new ArrayList<>();
+        for(Position pos: route){
+            List<String> stores = pos.stores;
+            for(String store: stores){
+                sequence.add(store);
+                names.add(storeIDToName(store));
+                Log.d(TAG, "posToStoreName: "+storeIDToName(store));
+            }
+        }
+        if(sequence.size()>0){
+            target = sequence.get(0);
+            Log.d(TAG, "posToStoreName: target:"+target);
+        }
+        return names.toArray(new String[0]);
+    }
+
+    private String storeIDToName(String ID){
+        String result = null;
+        String[] IDs = new String[]{ID};
+        SQLiteDatabase db = DH.getWritableDatabase();
+        String query = "SELECT cn_name FROM Store"
+                + " WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, IDs);
+        while (cursor.moveToNext()){
+            result = cursor.getString(0);
+            Log.d(TAG, "storeIDToName: "+cursor.getString(0));
+        }
+        return result;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
         final Button goLead = (Button)findViewById(R.id.map_go);
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
         String current_map = "";
@@ -421,150 +566,6 @@ public class MapActivity extends ActivityController implements
 
             });
         }
-    }
-
-    public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
-        Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
-        Bitmap bitmapBack = ((BitmapDrawable) drawableBack).getBitmap();
-        Bitmap scaledBitmapFore = Bitmap.createScaledBitmap(bitmapFore, 1000 , 714 , true);
-        Bitmap scaledBitmapBack = Bitmap.createScaledBitmap(bitmapBack, 1000 , 714 , true);
-        Bitmap combineImages = overlay(scaledBitmapBack, scaledBitmapFore);
-        return new BitmapDrawable(this.getResources(), combineImages);
-    }
-
-    public static Bitmap overlay(Bitmap bmp1, Bitmap bmp2)//疊圖用
-    {
-        Bitmap bmOverlay = Bitmap.createBitmap(bmp1.getWidth(), bmp1.getHeight(), bmp1.getConfig());
-        Canvas canvas = new Canvas(bmOverlay);
-        canvas.drawBitmap(bmp1, new Matrix(), null);
-        canvas.drawBitmap(bmp2, 0, 0, null);
-        return bmOverlay;
-
-    }
-
-
-    public void flush() {
-        int length = order.length;
-        ImageView beacon1 = (ImageView) findViewById(R.id.beacon1);
-        ImageView beacon2 = (ImageView) findViewById(R.id.beacon2);
-        ImageView beacon3 = (ImageView) findViewById(R.id.beacon3);
-        ImageView beacon4 = (ImageView) findViewById(R.id.beacon4);
-        ImageView beacon5 = (ImageView) findViewById(R.id.beacon5);
-        TextView beacon1_txt = (TextView) findViewById(R.id.beacon1_txt);
-        TextView beacon2_txt = (TextView) findViewById(R.id.beacon2_txt);
-        TextView beacon3_txt = (TextView) findViewById(R.id.beacon3_txt);
-        TextView beacon4_txt = (TextView) findViewById(R.id.beacon4_txt);
-        TextView beacon5_txt = (TextView) findViewById(R.id.beacon5_txt);
-        beacon1.setVisibility(View.INVISIBLE);
-        beacon2.setVisibility(View.INVISIBLE);
-        beacon3.setVisibility(View.INVISIBLE);
-        beacon4.setVisibility(View.INVISIBLE);
-        beacon5.setVisibility(View.INVISIBLE);
-        beacon1_txt.setVisibility(View.INVISIBLE);
-        beacon2_txt.setVisibility(View.INVISIBLE);
-        beacon3_txt.setVisibility(View.INVISIBLE);
-        beacon4_txt.setVisibility(View.INVISIBLE);
-        beacon5_txt.setVisibility(View.INVISIBLE);
-
-        if (task.equals("elevator")) {
-            length = 1;
-            beacon1.setVisibility(View.VISIBLE);
-            beacon1_txt.setVisibility(View.VISIBLE);
-            beacon1_txt.setText("電梯");
-            return;
-        }
-        else if ( task.equals("toilet")){
-            length = 1;
-            beacon1.setVisibility(View.VISIBLE);
-            beacon1_txt.setVisibility(View.VISIBLE);
-            beacon1_txt.setText("廁所");
-            return;
-        }
-
-
-        Log.d(TAG, "flush: " + length);
-
-        if (length == 0) return;
-        beacon1.setVisibility(View.VISIBLE);
-        beacon1_txt.setVisibility(View.VISIBLE);
-        beacon1_txt.setText(order[0]);
-        if (length == 1) return;
-        beacon2.setVisibility(View.VISIBLE);
-        beacon2_txt.setVisibility(View.VISIBLE);
-        beacon2_txt.setText(order[1]);
-        if (length == 2) return;
-        beacon3.setVisibility(View.VISIBLE);
-        beacon3_txt.setVisibility(View.VISIBLE);
-        beacon3_txt.setText(order[2]);
-        if (length == 3) return;
-        beacon4.setVisibility(View.VISIBLE);
-        beacon4_txt.setVisibility(View.VISIBLE);
-        beacon4_txt.setText(order[3]);
-        if (length == 4) return;
-        beacon5.setVisibility(View.VISIBLE);
-        beacon5_txt.setVisibility(View.VISIBLE);
-        beacon5_txt.setText(order[4]);
-
-    }
-
-    private void receiveIntent(){
-        Intent intent = getIntent();
-        task = intent.getStringExtra("task");
-        Log.d(TAG, "receiveIntent: task:"+task);
-        if(task.equals("brand")){
-            Log.d(TAG, "receiveIntent: in brand");
-            ArrayList<Position> route = intent.getParcelableArrayListExtra("route");
-            order = posToStoreName(route);
-        }else if(task.equals("elevator")){
-            Log.d(TAG, "receiveIntent: elevator");
-            String[] location = {"B1電梯"};
-            order = location;
-            target = "bb12l";
-        }else if(task.equals("toilet")){
-            Log.d(TAG, "receiveIntent: toilet");
-            String[] location = {"廁所"};
-            order = location;
-            target = "toilet";
-        }
-
-    }
-
-    private String[] posToStoreName(ArrayList<Position> route){
-        ArrayList<String> sequence = new ArrayList();
-        ArrayList<String> names = new ArrayList<>();
-        for(Position pos: route){
-            List<String> stores = pos.stores;
-            for(String store: stores){
-                sequence.add(store);
-                names.add(storeIDToName(store));
-                Log.d(TAG, "posToStoreName: "+storeIDToName(store));
-            }
-        }
-        if(sequence.size()>0){
-            target = sequence.get(0);
-            Log.d(TAG, "posToStoreName: target:"+target);
-        }
-        return names.toArray(new String[0]);
-    }
-
-    private String storeIDToName(String ID){
-        String result = null;
-        String[] IDs = new String[]{ID};
-        SQLiteDatabase db = DH.getWritableDatabase();
-        String query = "SELECT cn_name FROM Store"
-                + " WHERE id = ?";
-        Cursor cursor = db.rawQuery(query, IDs);
-        while (cursor.moveToNext()){
-            result = cursor.getString(0);
-            Log.d(TAG, "storeIDToName: "+cursor.getString(0));
-        }
-        return result;
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
     }
 
     /*
