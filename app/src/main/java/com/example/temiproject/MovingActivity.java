@@ -11,9 +11,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-//import com.robotemi.sdk.Robot;
-//import com.robotemi.sdk.TtsRequest;
-//import com.robotemi.sdk.listeners.OnGoToLocationStatusChangedListener;
+import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.listeners.OnGoToLocationStatusChangedListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,15 +23,15 @@ import java.util.List;
 import java.util.TimerTask;
 
 public class MovingActivity extends ActivityController
-        //implements OnGoToLocationStatusChangedListener {
-{
+        implements OnGoToLocationStatusChangedListener {
+
 
 
     private static final String TAG = "MovingActivity";
     String destination;
     String voice;
     char next_job = ' ';
-    //private Robot robot;
+    private Robot robot;
 
 
     @Override
@@ -39,8 +39,8 @@ public class MovingActivity extends ActivityController
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moving);
         openDB();
-        //robot = Robot.getInstance();
-        //setupTemi(robot);
+        robot = Robot.getInstance();
+        keepTemiSafe(robot);
 
     }
 
@@ -72,7 +72,7 @@ public class MovingActivity extends ActivityController
         }
         Log.d(TAG, "onStart: des:"+destination);
         if(checkInLocations(destination)){
-            //robot.goTo(destination);
+            robot.goTo(destination);
         }else{
             Toast.makeText(MovingActivity.this, "地點不存在", Toast.LENGTH_SHORT).show();
         }
@@ -93,11 +93,11 @@ public class MovingActivity extends ActivityController
     }
 
     protected void setTemiListener(){
-        //Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
+        Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
     }
 
     protected void removeTemiListener(){
-        //Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
+        Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
     }
 
     //@Override
@@ -106,7 +106,7 @@ public class MovingActivity extends ActivityController
         switch (status) {
             case "start":
                 Log.d(TAG, "onGoToLocationStatusChanged: voice"+voice);
-               // robot.speak(TtsRequest.create("現在前往"+ voice, false));
+                robot.speak(TtsRequest.create("現在前往"+ voice, false));
                 break;
 
             case "calculating":
@@ -114,7 +114,7 @@ public class MovingActivity extends ActivityController
             case "going":
                 try {
                     if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
-                        //robot.speak(TtsRequest.create("請跟著我", false));
+                        robot.speak(TtsRequest.create("請跟著我", false));
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -122,13 +122,13 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "complete":
-               // robot.speak(TtsRequest.create("到達目的地", false));
+                robot.speak(TtsRequest.create("到達目的地", false));
                 toNextActivity();
                 break;
 
             case "abort":
                 String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
-                //robot.speak(TtsRequest.create("前進失敗", false));
+                robot.speak(TtsRequest.create("前進失敗", false));
                 // what is next?
                 Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
                 break;
@@ -180,11 +180,11 @@ public class MovingActivity extends ActivityController
     }
 
     private boolean checkInLocations(String des){
-        //for (String location : Robot.getInstance().getLocations()) {
-        //    if (location.equals(des)) {
-        //        return true;
-        //    }
-        //}
+        for (String location : Robot.getInstance().getLocations()) {
+            if (location.equals(des)) {
+                return true;
+            }
+        }
         return false;
     }
 }
