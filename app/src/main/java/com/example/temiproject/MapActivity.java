@@ -27,15 +27,20 @@ import android.widget.TextView;
 
 //import com.robotemi.sdk.Robot;
 
+import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MapActivity extends ActivityController {
+public class MapActivity extends ActivityController implements
+        OnDetectionStateChangedListener {
 
+    int idle_count = 0;
+    Robot robot;
     private static final String TAG = "MapActivity";
     private String[] order;
-    String des; // the ID to move
     private String task;//from last activity
     private String target;//past destination to moving activity
     List<mapView> brandIdem = new ArrayList<>();
@@ -626,7 +631,7 @@ public class MapActivity extends ActivityController {
             case IDLE:
                 idle_count++;
                 if(idle_count>2){
-                    Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(MapActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
                 break;
