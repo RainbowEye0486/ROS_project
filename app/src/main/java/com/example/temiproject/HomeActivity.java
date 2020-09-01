@@ -27,7 +27,7 @@ import android.widget.ImageView;
 
 //import com.robotemi.sdk.Robot;
 
-import com.robotemi.sdk.Robot;
+//import com.robotemi.sdk.Robot;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
@@ -40,14 +40,14 @@ public class HomeActivity extends ActivityController {
 
     // Database
     private Button btUpdateDB;
-    private Robot robot;
+ //   private Robot robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        keepTemiSafe(robot);
+      //  keepTemiSafe(robot);
         findView();
         openDB();
         addListener();
@@ -92,7 +92,7 @@ public class HomeActivity extends ActivityController {
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
-                    turnDevelopMode(robot);
+         //           turnDevelopMode(robot);
 
                 }
             }

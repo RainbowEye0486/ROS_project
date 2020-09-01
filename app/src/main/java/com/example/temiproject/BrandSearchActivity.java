@@ -241,49 +241,58 @@ public class BrandSearchActivity extends ActivityController {
         beacon1.setVisibility(View.VISIBLE);
         beacon1_txt.setVisibility(View.VISIBLE);
         beacon1_txt.setText(lstbeacon.get(0).title);
+        beacon1_txt.setTextSize(lstbeacon.get(0).textSize);
+        Log.d(TAG, "flushBeacon: textSize1" + lstbeacon.get(0).textSize);
         beacon1_btn.setVisibility(View.VISIBLE);
         if (length == 1) return;
         beacon2.setVisibility(View.VISIBLE);
         beacon2_txt.setVisibility(View.VISIBLE);
         beacon2_txt.setText(lstbeacon.get(1).title);
+        beacon2_txt.setTextSize(lstbeacon.get(1).textSize);
         beacon2_btn.setVisibility(View.VISIBLE);
         if (length == 2) return;
         beacon3.setVisibility(View.VISIBLE);
         beacon3_txt.setVisibility(View.VISIBLE);
         beacon3_txt.setText(lstbeacon.get(2).title);
+        beacon3_txt.setTextSize(lstbeacon.get(2).textSize);
         beacon3_btn.setVisibility(View.VISIBLE);
         if (length == 3) return;
         beacon4.setVisibility(View.VISIBLE);
         beacon4_txt.setVisibility(View.VISIBLE);
         beacon4_txt.setText(lstbeacon.get(3).title);
+        beacon4_txt.setTextSize(lstbeacon.get(3).textSize);
         beacon4_btn.setVisibility(View.VISIBLE);
         if (length == 4) return;
         beacon5.setVisibility(View.VISIBLE);
         beacon5_txt.setVisibility(View.VISIBLE);
         beacon5_txt.setText(lstbeacon.get(4).title);
+        beacon5_txt.setTextSize(lstbeacon.get(4).textSize);
         beacon5_btn.setVisibility(View.VISIBLE);
     }
 
     public void flushicon(List<String> stringBrand, List<Branditem> lstBrand){
-        Branditem perngyuh = new Branditem("Perng Yuh芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
-        Branditem cosmed = new Branditem("康是美",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
-        Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
-        Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
-        Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
-        Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
-        Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
-        Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
-        Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
-        Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+        Branditem lacoste = new Branditem(20, "  LACOSTE  ",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem perngyuh = new Branditem(20, "Perng Yuh\n芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cos_med = new Branditem(20, " 康是美 ",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem(30, "Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem mia_mia = new Branditem(20, " mia mia ", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem(20, "COACH\nFACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem(20, "POLO RALPH\nLAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem(20, " Roots ", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lanew = new Branditem(30, " La new ", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem(20, " Blue way ", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem(20, "  EDWIN  ", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem(20,"  寶雅生活館  ", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+
+
+
         lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){
                 lstBrand.add(blueway);
             }
             if (stringBrand.contains("康是美")){
-              lstBrand.add(cosmed);
+              lstBrand.add(cos_med);
             }
             if (stringBrand.contains("COACH FACTORY")){
                 lstBrand.add(coach);
@@ -292,7 +301,7 @@ public class BrandSearchActivity extends ActivityController {
                 lstBrand.add(edwin);
             }
             if (stringBrand.contains("mia mia")){
-                lstBrand.add(miamia);
+                lstBrand.add(mia_mia);
             }
             if (stringBrand.contains("LACOSTE")){
                 lstBrand.add(lacoste);
@@ -382,10 +391,10 @@ public class BrandSearchActivity extends ActivityController {
         Log.d(TAG, "initAutoComplete: ");
         ArrayList<String> storeList = getStores();
 
-        String[] stores = new String[storeList.size()];
-        storeList.toArray(stores);
-        addRightCancelDrawable(actvSearch);
-       // String[] stores = {"a", "b", "c"};
+        //String[] stores = new String[storeList.size()];
+        //storeList.toArray(stores);
+        //addRightCancelDrawable(actvSearch);
+        String[] stores = {"a", "b", "c"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line, stores);
 

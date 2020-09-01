@@ -6,13 +6,14 @@ public class Branditem {
     private int description;
     int insideGraph;
     int thumbnail;
-
+    float textSize;
 
     public Branditem() {
     }
 
-    public Branditem(String title, int description, int thumbnail, int insideGraph) {
+    public Branditem(float textSize, String title, int description, int thumbnail, int insideGraph) {
         Title = title;
+        this.textSize = textSize;
         this.description = description;
         this.thumbnail = thumbnail;
         this.insideGraph = insideGraph;

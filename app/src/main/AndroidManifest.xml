@@ -20,17 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--         Adding this meta-data is required in order to display this app in temi's launcher app -->
-       <meta-data
-           android:name="com.robotemi.sdk.metadata.SKILL"
-           android:value="TemiProject"
-           />
-       <meta-data
-           android:name = "com.robotemi.sdk.metadata.KIOSK"
-           android:value = "true" />
-
-       <meta-data
-           android:name="@string/metadata_open_without_internet"
-           android:value="true" />
+<!--       <meta-data-->
+<!--           android:name="com.robotemi.sdk.metadata.SKILL"-->
+<!--           android:value="TemiProject"-->
+<!--           />-->
+<!--       <meta-data-->
+<!--           android:name = "com.robotemi.sdk.metadata.KIOSK"-->
+<!--           android:value = "true" />-->
+<!---->
+<!--       <meta-data-->
+<!--           android:name="@string/metadata_open_without_internet"-->
+<!--           android:value="true" />-->
        <activity android:name=".SearchActivity">
            <intent-filter>
                <action android:name="android.intent.action.SEARCH" />
@@ -55,9 +55,6 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".GuildPointActivity"
-            android:launchMode="singleInstance" />
-        <activity
-            android:name=".SelectPointActivity"
             android:launchMode="singleInstance" />
         <activity
             android:name=".CameraActivity"
