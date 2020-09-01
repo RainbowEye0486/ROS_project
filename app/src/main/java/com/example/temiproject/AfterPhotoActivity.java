@@ -123,51 +123,43 @@ public class AfterPhotoActivity extends ActivityController {
         frame1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 frame1 = combineGraph(frame1, frame1);
                 imageview.setImageDrawable(frame1);
-                Drawable photoplus = combineGraph(frame1, frame1);
-                photo = ((BitmapDrawable)photoplus).getBitmap();
+                photo = ((BitmapDrawable)frame1).getBitmap();
             }
         });
 
         frame2_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame2 = getDrawable(R.drawable.frame_1);
                 frame2 = combineGraph(frame2, frame1);
                 imageview.setImageDrawable(frame2);
-                Drawable photoplus = combineGraph(frame2, frame1);
-                photo = ((BitmapDrawable)photoplus).getBitmap();
+                photo = ((BitmapDrawable)frame2).getBitmap();
             }
         });
 
         frame3_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame3 = getDrawable(R.drawable.frame_2);
                 frame3 = combineGraph(frame3, frame1);
                 imageview.setImageDrawable(frame3);
-                Drawable photoplus = combineGraph(frame3, frame1);
-                photo = ((BitmapDrawable)photoplus).getBitmap();
+                photo = ((BitmapDrawable)frame3).getBitmap();
             }
         });
 
         frame4_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Drawable frame1 = new BitmapDrawable(bitmap);
                 Drawable frame4 = getDrawable(R.drawable.frame_3);
                 frame4 = combineGraph(frame4, frame1);
                 imageview.setImageDrawable(frame4);
-                Drawable photoplus = combineGraph(frame4, frame1);
-                photo = ((BitmapDrawable)photoplus).getBitmap();
+                photo = ((BitmapDrawable)frame4).getBitmap();
             }
         });
 
