@@ -18,6 +18,12 @@ public class Branditem {
         this.thumbnail = thumbnail;
         this.insideGraph = insideGraph;
     }
+    public Branditem(float textSize, String title, int thumbnail) {
+        Title = title;
+        this.textSize = textSize;
+        this.thumbnail = thumbnail;
+    }
+
 
     public String getTitle() {
         return Title;

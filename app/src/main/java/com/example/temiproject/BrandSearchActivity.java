@@ -284,8 +284,26 @@ public class BrandSearchActivity extends ActivityController {
         Branditem edwin = new Branditem(20, "  EDWIN  ", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
         Branditem poya = new Branditem(20,"  寶雅生活館  ", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
 
-
-
+        //new brand
+        Branditem brappers = new Branditem(20, "  BRAPPERS  ", R.drawable.thumbnail_brappers);
+        Branditem candance= new Branditem(20, "  candance  ", R.drawable.thumbnail_candace);
+        Branditem jack= new Branditem(20, "  Jack \nNicklaus   ", R.drawable.thumbnail_jack);
+        Branditem jetezo= new Branditem(20, "  JETEZO  ",R.drawable.thumbnail_jetezo );
+        Branditem lecoq= new Branditem(20, " le coq \nsportif GOLF ", R.drawable.thumbnail_lecoq);
+        Branditem lnyx= new Branditem(20, "Lynx", R.drawable.thumbnail_lynx);
+        Branditem movenpick= new Branditem(20, "  Movenpick  ", R.drawable.thumbnail_movenpick);
+        Branditem munsingwear= new Branditem(20, "  Munsingwear  ",R.drawable.thumbnail_munsingwear );
+        Branditem pbjeans= new Branditem(20, "  P.B.JEANS  ", R.drawable.thumbnail_pbjeans);
+        Branditem pgatour= new Branditem(20, "  PGA TOUR  ", R.drawable.thumbnail_pgatour);
+        Branditem playboy= new Branditem(20, "  PLAYBOY GOLF  ", R.drawable.thumbnail_playboy);
+        Branditem ping= new Branditem(20, " PING ", R.drawable.thumbnail_ping);
+        Branditem stiletop= new Branditem(20, "  STILE TOP  ", R.drawable.thumbnail_stiletop);
+        Branditem tiarateara= new Branditem(20, " Tiara Tiara ", R.drawable.thumbnail_tiarateara);
+        Branditem tsai= new Branditem(20, " 蔡佳瑾 ", R.drawable.thumbnail_tsai);
+        Branditem victorinox= new Branditem(20, "  VICTORINOX  ", R.drawable.thumbnail_victorinox);
+        Branditem waltz= new Branditem(20, "  Waltz  ", R.drawable.thumbnail_waltz);
+        Branditem hazzys= new Branditem(20, "  HAZZYS  ", R.drawable.thumbnail_hazzys);
+        //new brand
         lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){
