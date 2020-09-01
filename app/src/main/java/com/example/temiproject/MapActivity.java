@@ -52,8 +52,8 @@ public class MapActivity extends ActivityController implements
         setContentView(R.layout.activity_map);
         openDB();
         receiveIntent();
-//        findView();
-//        addListener();
+        findView();
+        addListener();
 
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
