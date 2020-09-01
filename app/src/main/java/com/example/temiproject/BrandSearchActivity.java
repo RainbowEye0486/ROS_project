@@ -78,7 +78,7 @@ public class BrandSearchActivity extends ActivityController {
         addListener();
 
 
-//        Button brandSearch = (Button)findViewById(R.id.brand_search_btn);
+
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
@@ -265,18 +265,18 @@ public class BrandSearchActivity extends ActivityController {
     }
 
     public void flushicon(List<String> stringBrand, List<Branditem> lstBrand){
-        Branditem perngyuh = new Branditem("Perng Yuh芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
-        Branditem cosmed = new Branditem("康是美",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
-        Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
-        Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
-        Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
-        Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
-        Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
-        Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
-        Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
-        Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+        Branditem perngyuh = new Branditem("  Perng Yuh\n芃諭名品  ", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cosmed = new Branditem(" 康是美 ",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem("  Wolsey  ", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem miamia = new Branditem(" mia mia" , R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem("  COACH \nFACTORY  ", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem("  POLO RALPH\n LAUREN  ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem(" Roots ", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lacoste = new Branditem("  LACOSTE  ",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem lanew = new Branditem("  La new  ", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem("  BLUE WAY  ", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem(" EDWIN ", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem("  寶雅生活館  ", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
         lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){

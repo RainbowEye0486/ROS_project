@@ -243,6 +243,11 @@ public class MapActivity extends ActivityController implements
         super.onStart();
         Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
         final Button goLead = (Button)findViewById(R.id.map_go);
+
+        if (!checkInLocations(target)){
+            goLead.setVisibility(View.INVISIBLE);
+        }
+
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
         String current_map = "";
         goLead.setOnClickListener(new View.OnClickListener() {
@@ -574,11 +579,11 @@ public class MapActivity extends ActivityController implements
     @return: true(in the list)/false
     * */
     private boolean checkInLocations(String des){
-     //   for (String location : Robot.getInstance().getLocations()) {
-     //       if (location.equals(des)) {
-     //           return true;
-     //       }
-     //   }
+        for (String location : Robot.getInstance().getLocations()) {
+            if (location.equals(des)) {
+                return true;
+            }
+        }
         return false;
     }
 
