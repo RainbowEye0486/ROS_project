@@ -245,13 +245,13 @@
         android:background="@drawable/btn"
         android:text="帶位服務"
         android:textColor="#F8E7CD"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_guideline"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintHeight_percent="0.14"
         app:layout_constraintStart_toStartOf="@+id/right_line"
+
         app:layout_constraintTop_toBottomOf="@+id/ticket"
-        app:layout_constraintVertical_bias="35"
         app:layout_constraintWidth_percent="0.14" />
 
 
