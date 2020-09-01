@@ -82,6 +82,7 @@ public class AfterPhotoActivity extends ActivityController {
         });
     }
     protected void onStart(){
+        speak("拍照已完成 請向前選擇相片邊框");
         super.onStart();
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         final ImageView imageview = findViewById(R.id.preview_img);

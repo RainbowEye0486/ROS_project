@@ -30,6 +30,7 @@ public class ArrivalActivity extends ActivityController {
                 Animation bounce = AnimationUtils.loadAnimation(ArrivalActivity.this, R.anim.bounce_animation);
                 arrival_btn.startAnimation(bounce);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                speak("即將為您拍照 請站在我前方 如果站好請點擊螢幕上的按鈕");
                 Log.d(TAG, "onClick: arrival button");
             }
         });

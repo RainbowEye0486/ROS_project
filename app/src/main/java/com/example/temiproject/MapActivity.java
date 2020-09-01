@@ -615,4 +615,22 @@ public class MapActivity extends ActivityController {
             }
         });
     }
+
+    @Override
+    public void onDetectionStateChanged(int state) {
+        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        switch (state){
+            case DETECTED:
+                idle_count = 0;
+                break;
+            case IDLE:
+                idle_count++;
+                if(idle_count>2){
+                    Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
+
+    }
 }

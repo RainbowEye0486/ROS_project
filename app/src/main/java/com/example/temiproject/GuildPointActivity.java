@@ -17,18 +17,29 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuildPointActivity extends ActivityController {
+public class GuildPointActivity extends ActivityController implements
+        OnDetectionStateChangedListener,
+        Robot.TtsListener{
 
     private static final String TAG = "GuildPointActivity";
+    int idle_count = 0;
+    Robot robot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce_animation);
         setContentView(R.layout.activity_guild_point);
+        robot = Robot.getInstance();
         final Button guildBrand = (Button) findViewById(R.id.select_brand_btn);
         final Button guildToilet = (Button)findViewById(R.id.select_toilet_btn);
         final Button guildElevator = (Button)findViewById(R.id.select_elevator_btn);
@@ -104,7 +115,46 @@ public class GuildPointActivity extends ActivityController {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        idle_count = 0;
+
+        // temi listener
+        robot.addOnDetectionStateChangedListener(this);
+        robot.addTtsListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // temi listener
+        robot.addOnDetectionStateChangedListener(this);
+        robot.addTtsListener(this);
+    }
+
+    @Override
+    public void onDetectionStateChanged(int state) {
+        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        switch (state){
+            case DETECTED:
+                idle_count = 0;
+                break;
+            case IDLE:
+                idle_count++;
+                if(idle_count>2){
+                    Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
 
     }
 
+    @Override
+    public void onTtsStatusChanged(@NotNull TtsRequest ttsRequest) {
+
+    }
 }

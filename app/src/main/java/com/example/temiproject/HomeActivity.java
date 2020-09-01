@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,16 +24,28 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
+
 import android.widget.ImageView;
 
 //import com.robotemi.sdk.Robot;
 
+import androidx.annotation.CheckResult;
+
 import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
+import com.robotemi.sdk.permission.Permission;
 
 import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
-public class HomeActivity extends ActivityController {
+public class HomeActivity extends ActivityController implements
+        OnDetectionStateChangedListener,
+        Robot.TtsListener{
+
+    // fot temi sdk
+    private boolean canSpeak = true;
 
     private static final String TAG = "Home_page";
     private int click_num = 0;
@@ -47,7 +60,9 @@ public class HomeActivity extends ActivityController {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        robot = Robot.getInstance();
         keepTemiSafe(robot);
+        turnDetectionModeOn();
         findView();
         openDB();
         addListener();
@@ -97,9 +112,20 @@ public class HomeActivity extends ActivityController {
                 }
             }
         });
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        robot.addOnDetectionStateChangedListener(this);
+        robot.addTtsListener(this);
+    }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        robot.removeOnDetectionStateChangedListener(this);
+        robot.removeTtsListener(this);
     }
 
     @Override
@@ -215,6 +241,10 @@ public class HomeActivity extends ActivityController {
             addToDB("bb12e", "B1手扶梯" , "escalator", "0", "0");
             addToDB("blb2l", "LB電梯" , "lift", "0", "0");
             addToDB("blb2e", "LB手扶梯" , "escalator", "0", "0");
+            Log.d(TAG, "initDB: start update");
+            String sqlstr = "update Store set id='00166' where id='**166'";
+            db.execSQL(sqlstr);
+            Toast.makeText(HomeActivity.this, "資料庫更新完成", Toast.LENGTH_LONG).show();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -232,4 +262,32 @@ public class HomeActivity extends ActivityController {
     }
 
 
+    @Override
+    public void onDetectionStateChanged(int state) {
+        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        if (state == OnDetectionStateChangedListener.DETECTED && canSpeak) {
+            speak("hello,我是Temi,需要幫忙拍照請按合照紀念，需要櫃位引導請按查詢及帶位");
+        }
+    }
+
+
+    @Override
+    public void onTtsStatusChanged(@NotNull TtsRequest ttsRequest) {
+        // Do whatever you like upon the status changing. after the robot finishes speaking
+        Log.d(TAG, "onTtsStatusChanged: ");
+        switch (ttsRequest.getStatus()) {
+            case STARTED:
+                canSpeak = false;
+                break;
+
+            case COMPLETED:
+                canSpeak = true;
+                break;
+
+            case ERROR:
+                canSpeak = true;
+                break;
+
+        }
+    }
 }

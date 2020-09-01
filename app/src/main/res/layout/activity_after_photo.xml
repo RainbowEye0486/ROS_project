@@ -129,7 +129,7 @@
         android:id="@+id/qrcode_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="產生 QRcode"
+        android:text="取得照片"
         android:textSize="20sp"
         android:textColor="#F8E7CD"
         android:background="@drawable/btn"

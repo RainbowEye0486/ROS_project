@@ -6,16 +6,21 @@ import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.CheckResult;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.permission.Permission;
+
+import java.util.Collections;
 
 public class ActivityController extends AppCompatActivity {
     final String TAG = "ActivityController";
     final String GUEST = "guest";
     final String CAMERA = "camera1";
     final String HOME = "home";
+    private static final int REQUEST_CODE_NORMAL = 0;
     Handler handler = new Handler();
 
     protected DBHelper DH = null;
@@ -59,6 +64,24 @@ public class ActivityController extends AppCompatActivity {
 
     public void speak(String sentence){
         Robot.getInstance().speak(TtsRequest.create(sentence, false));
+    }
+
+    public void turnDetectionModeOn() {
+        if(!Robot.getInstance().isDetectionModeOn()) {
+            if (requestPermissionIfNeeded(Permission.SETTINGS, REQUEST_CODE_NORMAL)) {
+                return;
+            }
+            Robot.getInstance().setDetectionModeOn(true);
+        }
+    }
+
+    @CheckResult
+    private boolean requestPermissionIfNeeded(Permission permission, int requestCode) {
+        if (Robot.getInstance().checkSelfPermission(permission) == Permission.GRANTED) {
+            return false;
+        }
+        Robot.getInstance().requestPermissions(Collections.singletonList(permission), requestCode);
+        return true;
     }
 
 
