@@ -11,11 +11,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.TtsRequest;
+import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
 import com.robotemi.sdk.permission.Permission;
 
 import java.util.Collections;
 
-public class ActivityController extends AppCompatActivity {
+public class ActivityController extends AppCompatActivity implements
+        OnDetectionStateChangedListener {
     final String TAG = "ActivityController";
     final String GUEST = "guest";
     final String CAMERA = "camera1";
@@ -89,5 +91,8 @@ public class ActivityController extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onDetectionStateChanged(int i) {
 
+    }
 }

@@ -41,7 +41,6 @@ import pl.droidsonroids.gif.GifDrawable;
 import pl.droidsonroids.gif.GifImageView;
 
 public class HomeActivity extends ActivityController implements
-        OnDetectionStateChangedListener,
         Robot.TtsListener{
 
     // fot temi sdk
@@ -61,8 +60,6 @@ public class HomeActivity extends ActivityController implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         robot = Robot.getInstance();
-        keepTemiSafe(robot);
-        turnDetectionModeOn();
         findView();
         openDB();
         addListener();
@@ -117,6 +114,8 @@ public class HomeActivity extends ActivityController implements
     @Override
     protected void onStart() {
         super.onStart();
+        keepTemiSafe(robot);
+        turnDetectionModeOn();
         robot.addOnDetectionStateChangedListener(this);
         robot.addTtsListener(this);
         robot.tiltAngle(45);//相機傾角-25~55

@@ -32,7 +32,7 @@ public class MovingActivity extends ActivityController
     String voice;
     char next_job = ' ';
     private Robot robot;
-
+    private int abort_count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class MovingActivity extends ActivityController
     protected void onStart() {
         super.onStart();
         setTemiListener();
-
+        abort_count = 0;
         Intent intent = getIntent();
         String task	= intent.getStringExtra("task");
         Log.d(TAG, "onStart: task"+task);
@@ -56,7 +56,7 @@ public class MovingActivity extends ActivityController
         if (task.equals("picture")){
             next_job = 'p';
             destination = GUEST;
-            voice = "拍照站立處";
+            voice = "拍照站立觸";
         }else if (task.equals("takePhoto")){
             next_job = 's';
             destination = CAMERA;
@@ -68,8 +68,7 @@ public class MovingActivity extends ActivityController
         }else if (task.equals("back")){
             next_job = 'b';
             destination = HOME;
-            voice = "家,請借我過移下喔 謝謝";
-            //speak("我正在回家 ");
+            voice = "家";
         }
         Log.d(TAG, "onStart: des:"+destination);
         if(checkInLocations(destination)){
@@ -101,7 +100,7 @@ public class MovingActivity extends ActivityController
         Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
     }
 
-    //@Override
+    @Override
     public void onGoToLocationStatusChanged(@NotNull String location, @NotNull String status, int descriptionId, @NotNull String description) {
         Log.d("GoToStatusChanged", "status=" + status + ", descriptionId=" + descriptionId + ", description=" + description);
         switch (status) {
@@ -111,11 +110,15 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "calculating":
+                robot.speak(TtsRequest.create("等等喔，我思考一下", false));
                 break;
             case "going":
+                abort_count = 0;
                 try {
                     if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
                         robot.speak(TtsRequest.create("請跟著我", false));
+                    }else{
+                        robot.speak(TtsRequest.create("行進中，請借過", false));
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -128,10 +131,17 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "abort":
-                String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
-                robot.speak(TtsRequest.create("前進失敗", false));
-                // what is next?
-                Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                if(abort_count>2){
+                    abort_count++;
+                    String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
+                    robot.speak(TtsRequest.create("前進失敗", false));
+                    Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                    robot.goTo(destination);
+                }else{
+                    // ??
+                    Intent intent = new Intent(MovingActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
                 break;
         }
     }

@@ -34,11 +34,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MapActivity extends ActivityController implements
-        OnDetectionStateChangedListener {
+public class MapActivity extends ActivityController {
 
-    int idle_count = 0;
-    Robot robot;
+    private int idle_count = 0;
+    private Robot robot;
     private static final String TAG = "MapActivity";
     private String[] order;
     private String task;//from last activity
@@ -55,10 +54,9 @@ public class MapActivity extends ActivityController implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        robot = Robot.getInstance();
         openDB();
         receiveIntent();
-//        findView();
-//        addListener();
 
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
@@ -260,6 +258,10 @@ public class MapActivity extends ActivityController implements
     @Override
     protected void onStart() {
         super.onStart();
+        // temi listener
+        idle_count = 0;
+        robot.addOnDetectionStateChangedListener(this);
+
         Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
         Log.d(TAG, "onStart: order:");
         for(String ele :order){
@@ -666,6 +668,12 @@ public class MapActivity extends ActivityController implements
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        robot.removeOnDetectionStateChangedListener(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
@@ -675,7 +683,6 @@ public class MapActivity extends ActivityController implements
         super.onNewIntent(intent);
         setIntent(intent);//must store the new intent unless getIntent() will return the old one
         Log.d(TAG, "onNewIntent: ");
-        receiveIntent();
     }
 
     private void toNextActivity(){
@@ -707,7 +714,7 @@ public class MapActivity extends ActivityController implements
 
     @Override
     public void onDetectionStateChanged(int state) {
-        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        Log.d(TAG, "onDetectionStateChanged: state =" + state);
         switch (state){
             case DETECTED:
                 idle_count = 0;
@@ -720,6 +727,5 @@ public class MapActivity extends ActivityController implements
                 }
                 break;
         }
-
     }
 }
