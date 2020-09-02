@@ -30,7 +30,6 @@ public class GuildPointActivity extends ActivityController implements
         Robot.TtsListener{
 
     private static final String TAG = "GuildPointActivity";
-    private int idle_count = 0;
     Robot robot;
 
     @Override
@@ -119,7 +118,6 @@ public class GuildPointActivity extends ActivityController implements
     @Override
     protected void onStart() {
         super.onStart();
-        idle_count = 0;
 
         // temi listener
         robot.addOnDetectionStateChangedListener(this);
@@ -139,14 +137,10 @@ public class GuildPointActivity extends ActivityController implements
         Log.d(TAG, "onDetectionStateChanged: state ="+ state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(GuildPointActivity.this, HomeActivity.class);
+                startActivity(intent);
                 break;
         }
 

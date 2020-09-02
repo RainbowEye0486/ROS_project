@@ -62,7 +62,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         setContentView(R.layout.activity_camera);
         robot = Robot.getInstance();//temi
         getPermission();
-        robot.tiltAngle(15);//相機傾角-25~55//temi
+//        robot.tiltAngle(15);//相機傾角-25~55//temi
 
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 
