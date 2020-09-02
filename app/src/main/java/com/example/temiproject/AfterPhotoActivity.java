@@ -314,21 +314,6 @@ public class AfterPhotoActivity extends ActivityController {
                 speak("請掃QR code 取回您的照片, 取好照片請按 HOME鍵");
 
 
-
-                //loading-------------------------
-                //ImageView mask = (ImageView)findViewById(R.id.mask);
-                //mask.setVisibility(View.GONE);
-                //GifImageView ImageView = findViewById(R.id.loading);
-                //try{
-                //    GifDrawable gifDrawable = new GifDrawable(getResources(), R.drawable.loading);
-                //    ImageView.setImageDrawable(gifDrawable);
-                //    ImageView.setVisibility(View.GONE);
-                //}catch (Exception e){
-                //    e.printStackTrace();
-                //}
-                //-----------------------------
-
-
             }
         });
     }
