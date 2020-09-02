@@ -55,7 +55,6 @@ public class BrandSearchActivity extends ActivityController {
 
     private static final String TAG = "BrandSearchActivity";
     private Robot robot;
-    private int idle_count = 0;
 
     List<Branditem> lstBrand;
     List<Beacon> lstbeacon;
@@ -197,8 +196,6 @@ public class BrandSearchActivity extends ActivityController {
     @Override
     protected void onStart(){
         super.onStart();
-
-        idle_count = 0;
         robot.addOnDetectionStateChangedListener(this);
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
@@ -785,14 +782,10 @@ public class BrandSearchActivity extends ActivityController {
         Log.d(TAG, "onDetectionStateChanged: state ="+ state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    Intent intent = new Intent(BrandSearchActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(BrandSearchActivity.this, HomeActivity.class);
+                startActivity(intent);
                 break;
         }
 

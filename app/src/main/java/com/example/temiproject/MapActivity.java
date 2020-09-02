@@ -36,7 +36,6 @@ import java.util.List;
 
 public class MapActivity extends ActivityController {
 
-    private int idle_count = 0;
     private Robot robot;
     private static final String TAG = "MapActivity";
     private String[] order;
@@ -259,7 +258,6 @@ public class MapActivity extends ActivityController {
     protected void onStart() {
         super.onStart();
         // temi listener
-        idle_count = 0;
         robot.addOnDetectionStateChangedListener(this);
 
         Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
@@ -717,14 +715,10 @@ public class MapActivity extends ActivityController {
         Log.d(TAG, "onDetectionStateChanged: state =" + state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    Intent intent = new Intent(MapActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }
+                Intent intent = new Intent(MapActivity.this, HomeActivity.class);
+                startActivity(intent);
                 break;
         }
     }

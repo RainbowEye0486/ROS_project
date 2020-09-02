@@ -60,6 +60,8 @@ public class HomeActivity extends ActivityController implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         robot = Robot.getInstance();
+        // volume
+        robot.setVolume(6);
         findView();
         openDB();
         addListener();
@@ -104,7 +106,9 @@ public class HomeActivity extends ActivityController implements
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
-                    turnDevelopMode(robot);
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(HomeActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }
@@ -133,6 +137,7 @@ public class HomeActivity extends ActivityController implements
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
+        turnDevelopMode(robot);
     }
 
     private void findView(){

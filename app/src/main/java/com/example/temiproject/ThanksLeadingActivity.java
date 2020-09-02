@@ -18,7 +18,6 @@ import java.util.TimerTask;
 public class ThanksLeadingActivity extends ActivityController {
     private static final String TAG = "ThankLeadingActivity";
     private Robot robot;
-    private int idle_count;
 
 
     @Override
@@ -61,7 +60,6 @@ public class ThanksLeadingActivity extends ActivityController {
     @Override
     protected void onStart() {
         super.onStart();
-        idle_count = 0;
         robot.addOnDetectionStateChangedListener(this);
     }
 
@@ -83,13 +81,9 @@ public class ThanksLeadingActivity extends ActivityController {
         Log.d(TAG, "onDetectionStateChanged: state ="+ state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    toNextActivity();
-                }
+                toNextActivity();
                 break;
         }
 

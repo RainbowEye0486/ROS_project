@@ -22,12 +22,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimerTask;
 
-public class MovingActivity extends ActivityController
-        implements OnGoToLocationStatusChangedListener {
+public class MovingActivity extends ActivityController implements
+        OnGoToLocationStatusChangedListener,
+        Robot.TtsListener{
 
 
 
     private static final String TAG = "MovingActivity";
+    // fot temi sdk
+    private boolean canSpeak = true;
     String destination;
     String voice;
     char next_job = ' ';
@@ -93,11 +96,13 @@ public class MovingActivity extends ActivityController
     }
 
     protected void setTemiListener(){
-        Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
+        robot.addOnGoToLocationStatusChangedListener(this);
+        robot.addTtsListener(this);
     }
 
     protected void removeTemiListener(){
-        Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
+        robot.removeOnGoToLocationStatusChangedListener(this);
+        robot.removeTtsListener(this);
     }
 
     @Override
@@ -110,7 +115,9 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "calculating":
-                robot.speak(TtsRequest.create("等等喔，我思考一下", false));
+                if(canSpeak){
+                    robot.speak(TtsRequest.create("等等喔，我思考一下", false));
+                }
                 break;
             case "going":
                 abort_count = 0;
@@ -118,7 +125,7 @@ public class MovingActivity extends ActivityController
                     if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
                         robot.speak(TtsRequest.create("請跟著我", false));
                     }else{
-                        robot.speak(TtsRequest.create("行進中，請借過", false));
+                        robot.speak(TtsRequest.create("行進中，請借過一下喔", false));
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -131,11 +138,14 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "abort":
+                Log.d(TAG, "onGoToLocationStatusChanged: abort:" + abort_count);
+                String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
+                Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                Toast.makeText(MovingActivity.this, "前進失敗", Toast.LENGTH_SHORT).show();
+                robot.speak(TtsRequest.create("前進失敗", false));
                 if(abort_count>2){
                     abort_count++;
-                    String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
-                    robot.speak(TtsRequest.create("前進失敗", false));
-                    Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                    robot.speak(TtsRequest.create("重新嘗試", false));
                     robot.goTo(destination);
                 }else{
                     // ??
@@ -197,5 +207,25 @@ public class MovingActivity extends ActivityController
             }
         }
         return false;
+    }
+
+    @Override
+    public void onTtsStatusChanged(@NotNull TtsRequest ttsRequest) {
+        // Do whatever you like upon the status changing. after the robot finishes speaking
+        Log.d(TAG, "onTtsStatusChanged: ");
+        switch (ttsRequest.getStatus()) {
+            case STARTED:
+                canSpeak = false;
+                break;
+
+            case COMPLETED:
+                canSpeak = true;
+                break;
+
+            case ERROR:
+                canSpeak = true;
+                break;
+
+        }
     }
 }
