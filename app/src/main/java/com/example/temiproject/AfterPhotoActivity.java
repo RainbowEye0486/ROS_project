@@ -27,6 +27,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.robotemi.sdk.Robot;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
@@ -56,12 +58,15 @@ public class AfterPhotoActivity extends ActivityController {
     Button frame4_btn;
     Button frame5_btn;
     private ProgressBar spinner;
+    private Robot robot;
+    private int idle_count;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_after_photo);
+        robot = Robot.getInstance();
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
 
@@ -82,8 +87,9 @@ public class AfterPhotoActivity extends ActivityController {
         });
     }
     protected void onStart(){
-        speak("拍照已完成 請向前選擇相片邊框");
         super.onStart();
+        idle_count = 0;
+        speak("拍照已完成 請向前選擇相片邊框");
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         final ImageView imageview = findViewById(R.id.preview_img);
         try{
@@ -179,7 +185,11 @@ public class AfterPhotoActivity extends ActivityController {
 
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        robot.removeOnDetectionStateChangedListener(this);
+    }
 
     public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
         Bitmap bitmapFore = ((BitmapDrawable) drawableFore).getBitmap();
@@ -289,7 +299,7 @@ public class AfterPhotoActivity extends ActivityController {
             public void run() {
                 spinner.setVisibility(View.GONE);
                 Log.d(TAG, "run: showQRcode:"+rt_url);
-
+                robot.addOnDetectionStateChangedListener(AfterPhotoActivity.this);
                 // generate QRcode
                 BarcodeEncoder encoder = new BarcodeEncoder();
                 try {
@@ -338,6 +348,23 @@ public class AfterPhotoActivity extends ActivityController {
         Intent intent = new Intent(AfterPhotoActivity.this, MovingActivity.class);
         intent.putExtra("task", "back");
         startActivity(intent);
+    }
+
+    @Override
+    public void onDetectionStateChanged(int state) {
+        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        switch (state){
+            case DETECTED:
+                idle_count = 0;
+                break;
+            case IDLE:
+                idle_count++;
+                if(idle_count>2){
+                    toNextActivity();
+                }
+                break;
+        }
+
     }
 
 

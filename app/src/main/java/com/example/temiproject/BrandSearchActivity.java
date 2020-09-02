@@ -41,6 +41,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.opencsv.CSVReader;
+import com.robotemi.sdk.Robot;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -52,6 +54,8 @@ import java.util.Map;
 public class BrandSearchActivity extends ActivityController {
 
     private static final String TAG = "BrandSearchActivity";
+    private Robot robot;
+    private int idle_count = 0;
 
     List<Branditem> lstBrand;
     List<Beacon> lstbeacon;
@@ -63,15 +67,14 @@ public class BrandSearchActivity extends ActivityController {
     private Button btSearch;
     private Button goMap;
     private List<Position> map;
-//    private SearchView svBrand;
-//    CursorAdapter suggAdapter;
-//    Cursor mCursor;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand_search);
+        robot = Robot.getInstance();
         openDB();
         loadMap();
         findView();
@@ -190,6 +193,19 @@ public class BrandSearchActivity extends ActivityController {
                 Log.d(TAG, "onClick: "+lstbeacon);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        idle_count = 0;
+        robot.addOnDetectionStateChangedListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        robot.removeOnDetectionStateChangedListener(this);
     }
 
     @Override
@@ -737,6 +753,24 @@ public class BrandSearchActivity extends ActivityController {
             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             manager.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
         }
+    }
+
+    @Override
+    public void onDetectionStateChanged(int state) {
+        Log.d(TAG, "onDetectionStateChanged: state ="+ state);
+        switch (state){
+            case DETECTED:
+                idle_count = 0;
+                break;
+            case IDLE:
+                idle_count++;
+                if(idle_count>2){
+                    Intent intent = new Intent(BrandSearchActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                }
+                break;
+        }
+
     }
 
 }

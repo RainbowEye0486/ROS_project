@@ -27,11 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuildPointActivity extends ActivityController implements
-        OnDetectionStateChangedListener,
         Robot.TtsListener{
 
     private static final String TAG = "GuildPointActivity";
-    int idle_count = 0;
+    private int idle_count = 0;
     Robot robot;
 
     @Override
@@ -131,8 +130,8 @@ public class GuildPointActivity extends ActivityController implements
     protected void onStop() {
         super.onStop();
         // temi listener
-        robot.addOnDetectionStateChangedListener(this);
-        robot.addTtsListener(this);
+        robot.removeOnDetectionStateChangedListener(this);
+        robot.removeTtsListener(this);
     }
 
     @Override
