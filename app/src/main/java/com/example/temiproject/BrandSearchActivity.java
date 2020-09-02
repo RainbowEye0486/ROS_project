@@ -198,6 +198,8 @@ public class BrandSearchActivity extends ActivityController {
     protected void onStart(){
         super.onStart();
 
+        idle_count = 0;
+        robot.addOnDetectionStateChangedListener(this);
         lstBrand = new ArrayList<>();
         lstbeacon = new ArrayList<>();
         List<String> stringBrand = new ArrayList<>();
@@ -210,12 +212,7 @@ public class BrandSearchActivity extends ActivityController {
         flushBeacon();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        idle_count = 0;
-        robot.addOnDetectionStateChangedListener(this);
-    }
+
 
     @Override
     protected void onStop() {
@@ -310,7 +307,7 @@ public class BrandSearchActivity extends ActivityController {
         Branditem roots = new Branditem(30, " Roots ", "Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
         Branditem lacoste = new Branditem(30, "  LACOSTE  ", "LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
         Branditem lanew = new Branditem(30, " La new ", "La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem(30, "  BLUE WAY  ","BLUE WAY" , R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem blueway = new Branditem(20, "  BLUE WAY  ","BLUE WAY" , R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
         Branditem edwin = new Branditem(40, "EDWIN", "EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
         Branditem poya = new Branditem(20, "  寶雅生活館  ", "寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
         lstBrand.clear();

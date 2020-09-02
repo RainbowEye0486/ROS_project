@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bachground_home">
+    android:background="@drawable/background_home">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"

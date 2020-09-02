@@ -501,7 +501,7 @@ public class MapActivity extends ActivityController {
             ImageView minimap = (ImageView) findViewById(R.id.minimap);
 
 
-            if (floorText.getText().equals("B棟B1-2")) {
+            if (floorText.getText().equals("B棟B1-1")) {
                 up.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 left.setVisibility(View.VISIBLE);
@@ -513,7 +513,7 @@ public class MapActivity extends ActivityController {
                 left.setVisibility(View.GONE);
                 right.setVisibility(View.VISIBLE);
                 minimap.setImageResource(R.drawable.minimap_ab1);
-            } else if (floorText.getText().equals("B棟B1-1")) {
+            } else if (floorText.getText().equals("B棟B1-2")) {
                 right.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 up.setVisibility(View.VISIBLE);
