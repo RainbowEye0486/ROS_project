@@ -272,9 +272,7 @@ public class MapActivity extends ActivityController implements
         //new element
         brandIdem = new ArrayList<>();
         goLead = (Button)findViewById(R.id.map_go);
-        if (!checkInLocations(target)){
-            goLead.setVisibility(View.INVISIBLE);
-        }
+        goLead.setVisibility(View.VISIBLE);
 
 
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
@@ -383,6 +381,10 @@ public class MapActivity extends ActivityController implements
                         Log.d(TAG, "onCreate: into edwin");
                         Drawable drawableFore = getDrawable(R.drawable.map_edwin);
                         brandIdem.add(new mapView("b1b1", "edwin", drawableFore, i));
+                        if (i == 0){
+                            goLead.setVisibility(View.INVISIBLE);
+                            Log.d(TAG, "onStart: can't reach");
+                        }
                         break;
                     }
                     case "La new": {
@@ -393,6 +395,10 @@ public class MapActivity extends ActivityController implements
                     case "BLUE WAY": {
                         Drawable drawableFore = getDrawable(R.drawable.map_blueway);
                         brandIdem.add(new mapView("b1b1", "blueway", drawableFore, i));
+                        if (i == 0){
+                            goLead.setVisibility(View.INVISIBLE);
+                            Log.d(TAG, "onStart: can't reach");
+                        }
                         break;
                     }
                     case "寶雅生活館": {
@@ -493,20 +499,26 @@ public class MapActivity extends ActivityController implements
             if (floorText.getText().equals("B棟B1-2")) {
                 up.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
+                left.setVisibility(View.VISIBLE);
+                right.setVisibility(View.VISIBLE);
                 minimap.setImageResource(R.drawable.minimap_b11);
             } else if (floorText.getText().equals("A棟B1")) {
                 up.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 left.setVisibility(View.GONE);
+                right.setVisibility(View.VISIBLE);
                 minimap.setImageResource(R.drawable.minimap_ab1);
             } else if (floorText.getText().equals("B棟B1-1")) {
                 right.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
+                up.setVisibility(View.VISIBLE);
+                left.setVisibility(View.VISIBLE);
                 minimap.setImageResource(R.drawable.minimap_b12);
             } else if (floorText.getText().equals("B棟LB-2")) {
                 up.setVisibility(View.GONE);
                 right.setVisibility(View.GONE);
                 left.setVisibility(View.GONE);
+                down.setVisibility(View.VISIBLE);
                 minimap.setImageResource(R.drawable.minimap_lb2);
             }
 

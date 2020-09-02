@@ -23,8 +23,8 @@ public class ArrivalActivity extends ActivityController {
     protected void onStart() {
         super.onStart();
         final Button arrival_btn = (Button)findViewById(R.id.arrival_btn);
-        speak("temi即將未您拍照 請站在我的前方並面向 PLAYBOY 櫃位");
-        speak("站好後請點擊螢幕上的按鈕");
+        speak("temi即將未您拍照 請站在我的前方並面向 PLAYBOY 櫃位,站好後請點擊螢幕上的按鈕");
+
         arrival_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

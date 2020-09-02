@@ -68,8 +68,8 @@ public class MovingActivity extends ActivityController
         }else if (task.equals("back")){
             next_job = 'b';
             destination = HOME;
-            voice = "家";
-            speak("我正在回家 請借我過移下喔 謝謝");
+            voice = "家,請借我過移下喔 謝謝";
+            //speak("我正在回家 ");
         }
         Log.d(TAG, "onStart: des:"+destination);
         if(checkInLocations(destination)){

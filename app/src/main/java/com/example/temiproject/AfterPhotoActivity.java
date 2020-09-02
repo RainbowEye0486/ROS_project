@@ -301,8 +301,7 @@ public class AfterPhotoActivity extends ActivityController {
                     e.printStackTrace();
                 }
 
-                speak("請掃QR code 取回您的照片");
-                speak("取好照片請按 HOME鍵 ");
+                speak("請掃QR code 取回您的照片, 取好照片請按 HOME鍵");
 
 
 
