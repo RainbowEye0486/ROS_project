@@ -60,6 +60,8 @@ public class HomeActivity extends ActivityController implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         robot = Robot.getInstance();
+        // volume
+        robot.setVolume(6);
         findView();
         openDB();
         addListener();

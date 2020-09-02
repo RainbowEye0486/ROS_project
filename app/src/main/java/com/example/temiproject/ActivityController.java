@@ -48,6 +48,9 @@ public class ActivityController extends AppCompatActivity implements
     }
 
     protected void keepTemiSafe(Robot robot){
+        if(!robot.isSelectedKioskApp()){
+            robot.requestToBeKioskApp();
+        }
         // disable the popup screen when moving
         robot.toggleNavigationBillboard(true);
         // hardware button disable
@@ -58,6 +61,7 @@ public class ActivityController extends AppCompatActivity implements
         robot.hideTopBar();
         // top badge
         turnTopBadgeOff(robot);
+
 
     }
 
@@ -76,6 +80,7 @@ public class ActivityController extends AppCompatActivity implements
         if(robot.isHardButtonsDisabled()) {
             robot.setHardButtonsDisabled(false);
         }
+        Log.d(TAG, "turnDevelopMode: isHardButtonsDisabled"+robot.isHardButtonsDisabled());
         // nav billboard
         robot.toggleNavigationBillboard(false);
 
