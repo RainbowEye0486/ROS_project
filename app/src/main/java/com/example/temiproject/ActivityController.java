@@ -56,10 +56,14 @@ public class ActivityController extends AppCompatActivity {
     }
 
     protected void turnDevelopMode(Robot robot){
+        // topbar
         robot.showTopBar();
+        // hard btn
         if(robot.isHardButtonsDisabled()) {
             robot.setHardButtonsDisabled(false);
         }
+        // nav billboard
+        robot.toggleNavigationBillboard(false);
     }
 
     public void speak(String sentence){

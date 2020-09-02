@@ -45,6 +45,11 @@ public class MapActivity extends ActivityController implements
     private String target;//past destination to moving activity
     List<mapView> brandIdem = new ArrayList<>();
     private Button goLead;
+    private Drawable finalB2lb;
+    private Drawable finalB2b1;
+    private Drawable finalA_b1;
+    private Drawable finalB1b1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +57,8 @@ public class MapActivity extends ActivityController implements
         setContentView(R.layout.activity_map);
         openDB();
         receiveIntent();
-        findView();
-        addListener();
+//        findView();
+//        addListener();
 
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
@@ -97,7 +102,7 @@ public class MapActivity extends ActivityController implements
         flush();
 
 
-
+        
     }
 
     public Drawable combineGraph(Drawable drawableFore, Drawable drawableBack){
@@ -142,16 +147,27 @@ public class MapActivity extends ActivityController implements
         beacon3_txt.setVisibility(View.INVISIBLE);
         beacon4_txt.setVisibility(View.INVISIBLE);
         beacon5_txt.setVisibility(View.INVISIBLE);
+        String[] reorder = {"", "", "", "", ""};
+        int j = 0;
+        for (String s : order) {
+            if (j>5)break;
+            if (s.equals("B1電梯") || s.equals("B1手扶梯") ||
+                    s.equals("LB電梯") || s.equals("LB手扶梯")) {
+                continue;
+            }
+            else{
+                reorder[j] = s;
+                j++;
+            }
+        }
 
         if (task.equals("elevator")) {
-            length = 1;
             beacon1.setVisibility(View.VISIBLE);
             beacon1_txt.setVisibility(View.VISIBLE);
             beacon1_txt.setText("電梯");
             return;
         }
         else if ( task.equals("toilet")){
-            length = 1;
             beacon1.setVisibility(View.VISIBLE);
             beacon1_txt.setVisibility(View.VISIBLE);
             beacon1_txt.setText("廁所");
@@ -164,23 +180,23 @@ public class MapActivity extends ActivityController implements
         if (length == 0) return;
         beacon1.setVisibility(View.VISIBLE);
         beacon1_txt.setVisibility(View.VISIBLE);
-        beacon1_txt.setText(order[0]);
+        beacon1_txt.setText(reorder[0]);
         if (length == 1) return;
         beacon2.setVisibility(View.VISIBLE);
         beacon2_txt.setVisibility(View.VISIBLE);
-        beacon2_txt.setText(order[1]);
+        beacon2_txt.setText(reorder[1]);
         if (length == 2) return;
         beacon3.setVisibility(View.VISIBLE);
         beacon3_txt.setVisibility(View.VISIBLE);
-        beacon3_txt.setText(order[2]);
+        beacon3_txt.setText(reorder[2]);
         if (length == 3) return;
         beacon4.setVisibility(View.VISIBLE);
         beacon4_txt.setVisibility(View.VISIBLE);
-        beacon4_txt.setText(order[3]);
+        beacon4_txt.setText(reorder[3]);
         if (length == 4) return;
         beacon5.setVisibility(View.VISIBLE);
         beacon5_txt.setVisibility(View.VISIBLE);
-        beacon5_txt.setText(order[4]);
+        beacon5_txt.setText(reorder[4]);
 
     }
 
@@ -242,14 +258,23 @@ public class MapActivity extends ActivityController implements
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "toNextActivity: task-"+task+"taget-"+target);
-        final Button goLead = (Button)findViewById(R.id.map_go);
-
-        if (!checkInLocations(target)){
-            goLead.setVisibility(View.INVISIBLE);
+        Log.d(TAG, "onStart: order:");
+        for(String ele :order){
+            Log.d(TAG, "onStart: "+ele);
         }
+        Intent intent = getIntent();
+        task = intent.getStringExtra("task");
+        receiveIntent();
 
+
+
+        //new element
+        brandIdem = new ArrayList<>();
+
+
+
+        goLead = (Button)findViewById(R.id.map_go);
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
-        String current_map = "";
         goLead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,7 +289,7 @@ public class MapActivity extends ActivityController implements
             }
         });
 
-
+        flush();
         assert task != null;
         if (task.equals("toilet")){
             Drawable pic = getDrawable(R.drawable.map_toilet);
@@ -299,81 +324,114 @@ public class MapActivity extends ActivityController implements
         else if (task.equals("brand")) {
             //建立排序物件
 
+
+            Drawable b2b1 = getDrawable(R.drawable.map_b2b1);
+            Drawable b1b1 = getDrawable(R.drawable.map_b1b1);
+            Drawable b2lb = getDrawable(R.drawable.map_b2lb);
+            Drawable a_b1 = getDrawable(R.drawable.map_a_b1);
+
+
             for (int i = 0; i < order.length; i++) {
                 String brandName = order[i];
                 Log.d(TAG, "onCreate: brandName " + brandName);
 
                 switch (brandName) {
-                    case "cosmed": {
+                    case "康是美": {
                         Drawable drawableFore = getDrawable(R.drawable.map_cosmed);
                         brandIdem.add(new mapView("b2b1", "cosmed", drawableFore, i));
                         break;
                     }
-                    case "miamia": {
+                    case "mia mia": {
                         Drawable drawableFore = getDrawable(R.drawable.map_miamia);
                         brandIdem.add(new mapView("b2b1", "miamia", drawableFore, i));
                         break;
                     }
-                    case "wolsey": {
+                    case "Wolsey": {
                         Drawable drawableFore = getDrawable(R.drawable.map_wolsey);
                         brandIdem.add(new mapView("b2b1", "wolsey", drawableFore, i));
                         break;
                     }
-                    case "perngyuh": {
+                    case "Perng Yuh芃諭名品": {
                         Drawable drawableFore = getDrawable(R.drawable.map_perngyuh);
                         brandIdem.add(new mapView("b2b1", "perngyuh", drawableFore, i));
                         break;
                     }
-                    case "coach": {
+                    case "COACH FACTORY": {
                         Drawable drawableFore = getDrawable(R.drawable.map_coach);
                         brandIdem.add(new mapView("b2lb", "coach", drawableFore, i));
                         break;
                     }
-                    case "roots": {
+                    case "Roots": {
                         Drawable drawableFore = getDrawable(R.drawable.map_roots);
                         brandIdem.add(new mapView("b2lb", "roots", drawableFore, i));
                         break;
                     }
-                    case "poloRalphLauren": {
+                    case "POLO RALPH LAUREN ": {
                         Drawable drawableFore = getDrawable(R.drawable.map_polo);
                         brandIdem.add(new mapView("b2lb", "poloRalphLauren", drawableFore, i));
                         break;
                     }
-                    case "lacoste": {
+                    case "LACOSTE": {
                         Drawable drawableFore = getDrawable(R.drawable.map_lacoste);
                         brandIdem.add(new mapView("b2lb", "lacoste", drawableFore, i));
                         break;
                     }
-                    case "edwin": {
+                    case "EDWIN": {
                         Log.d(TAG, "onCreate: into edwin");
                         Drawable drawableFore = getDrawable(R.drawable.map_edwin);
                         brandIdem.add(new mapView("b1b1", "edwin", drawableFore, i));
                         break;
                     }
-                    case "lanew": {
+                    case "La new": {
                         Drawable drawableFore = getDrawable(R.drawable.map_lanew);
                         brandIdem.add(new mapView("b1b1", "lanew", drawableFore, i));
                         break;
                     }
-                    case "blueway": {
+                    case "BLUE WAY": {
                         Drawable drawableFore = getDrawable(R.drawable.map_blueway);
                         brandIdem.add(new mapView("b1b1", "blueway", drawableFore, i));
                         break;
                     }
-                    case "poya": {
+                    case "寶雅生活館": {
                         Drawable drawableFore = getDrawable(R.drawable.map_poya);
                         brandIdem.add(new mapView("ab1", "poya", drawableFore, i));
                         break;
                     }
+                    case "B1電梯":{
+                        Log.d(TAG, "onStart: brand ignore B1電梯");
+                        Drawable b1_ele = getDrawable(R.drawable.map_b2b1_elevator);
+                        b2b1 = combineGraph(b1_ele, b2b1);
+                    }
+                    case "B1手扶梯": {
+                        Log.d(TAG, "onStart: brand ignore B1手扶梯");
+                        Drawable b1_hand = getDrawable(R.drawable.map_b2b1_hand);
+                        b2b1 = combineGraph(b1_hand, b2b1);
+                    }
+                    case "LB電梯": {
+                        Log.d(TAG, "onStart: brand ignore LB電梯");
+                        Drawable b2_ele = getDrawable(R.drawable.map_b2lb_elevator);
+                        b2lb = combineGraph(b2_ele, b2lb);
+                    }
+                    case "LB手扶梯":{
+                        Log.d(TAG, "onStart: brand ignore LB手扶梯");
+                        Drawable b2_hand = getDrawable(R.drawable.map_b2lb_hand);
+                        b2lb = combineGraph(b2_hand, b2lb);
+                    }
+                    default: {
+                        Log.d(TAG, "onStart: brand can't found");
+                    }
                 }
             }//construct brand item
-            Log.d(TAG, "onCreate: branditem" + brandIdem.size());
+
+
+            Log.d(TAG, "onCreate: brandItem" + brandIdem.size());
+            for (int i =0; i<brandIdem.size();i++){
+                Log.d(TAG, "brandItem contain: " + brandIdem.get(i).brandName);
+            }
+
 
             //開始疊圖
-            Drawable b2b1 = getDrawable(R.drawable.map_b2b1);
-            Drawable b1b1 = getDrawable(R.drawable.map_b1b1);
-            Drawable b2lb = getDrawable(R.drawable.map_b2lb);
-            Drawable a_b1 = getDrawable(R.drawable.map_a_b1);
+
             TextView floorText = (TextView) findViewById(R.id.floor_text);
             for (int i = 0; i < brandIdem.size(); i++) {
                 String floor = brandIdem.get(i).getFloor();
@@ -381,32 +439,28 @@ public class MapActivity extends ActivityController implements
                 switch (floor) {
                     case "b2b1":
                         b2b1 = combineGraph(brandIdem.get(i).drawableFore, b2b1);
-                        if (i == 1) {
-                            current_map = floor;
+                        if (i == 0) {
                             mapImage.setImageDrawable(b2b1);
                             floorText.setText("B2-B1");
                         }
                         break;
                     case "b2lb":
                         b2lb = combineGraph(brandIdem.get(i).drawableFore, b2lb);
-                        if (i == 1) {
-                            current_map = floor;
+                        if (i == 0) {
                             mapImage.setImageDrawable(b2lb);
                             floorText.setText("B2-LB");
                         }
                         break;
                     case "b1b1":
                         b1b1 = combineGraph(brandIdem.get(i).drawableFore, b1b1);
-                        if (i == 1) {
-                            current_map = floor;
+                        if (i == 0) {
                             mapImage.setImageDrawable(b1b1);
                             floorText.setText("B1-B1");
                         }
                         break;
                     case "ab1":
                         a_b1 = combineGraph(brandIdem.get(i).drawableFore, a_b1);
-                        if (i == 1) {
-                            current_map = floor;
+                        if (i == 0) {
                             mapImage.setImageDrawable(a_b1);
                             floorText.setText("A-B1");
                         }
@@ -421,10 +475,10 @@ public class MapActivity extends ActivityController implements
             Button left = (Button) findViewById(R.id.left);
             Button right = (Button) findViewById(R.id.right);
 
-            final Drawable finalB2lb = b2lb;
-            final Drawable finalB2b1 = b2b1;
-            final Drawable finalA_b1 = a_b1;
-            final Drawable finalB1b1 = b1b1;
+            finalB2lb = b2lb;
+            finalB2b1 = b2b1;
+            finalA_b1 = a_b1;
+            finalB1b1 = b1b1;
             ImageView minimap = (ImageView) findViewById(R.id.minimap);
 
 
@@ -571,6 +625,7 @@ public class MapActivity extends ActivityController implements
 
             });
         }
+        
     }
 
     /*
@@ -579,11 +634,11 @@ public class MapActivity extends ActivityController implements
     @return: true(in the list)/false
     * */
     private boolean checkInLocations(String des){
-        for (String location : Robot.getInstance().getLocations()) {
-            if (location.equals(des)) {
-                return true;
-            }
-        }
+     //   for (String location : Robot.getInstance().getLocations()) {
+     //       if (location.equals(des)) {
+     //           return true;
+     //       }
+     //   }
         return false;
     }
 
@@ -596,7 +651,7 @@ public class MapActivity extends ActivityController implements
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);//must store the new intent unless getIntent() will return the old one
-
+        Log.d(TAG, "onNewIntent: ");
         receiveIntent();
     }
 

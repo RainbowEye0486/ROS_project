@@ -31,7 +31,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     java.util.Timer timer = new java.util.Timer(true);
     int count_num = 5;
     boolean countOver = false;
-    private Robot robot; //
+    private Robot robot; //temi
     private Camera mCamera;
     private SurfaceView mPreview;
     private SurfaceHolder mHolder;
@@ -60,9 +60,9 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        robot = Robot.getInstance();
+        robot = Robot.getInstance();//temi
         getPermission();
-        robot.tiltAngle(15);//相機傾角-25~55
+        robot.tiltAngle(15);//相機傾角-25~55//temi
 
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 
