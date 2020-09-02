@@ -126,7 +126,7 @@ public class MapActivity extends ActivityController implements
 
 
     public void flush() {
-        int length = order.length;
+
         ImageView beacon1 = (ImageView) findViewById(R.id.beacon1);
         ImageView beacon2 = (ImageView) findViewById(R.id.beacon2);
         ImageView beacon3 = (ImageView) findViewById(R.id.beacon3);
@@ -148,6 +148,7 @@ public class MapActivity extends ActivityController implements
         beacon4_txt.setVisibility(View.INVISIBLE);
         beacon5_txt.setVisibility(View.INVISIBLE);
         String[] reorder = {"", "", "", "", ""};
+
         int j = 0;
         for (String s : order) {
             if (j>5)break;
@@ -160,7 +161,7 @@ public class MapActivity extends ActivityController implements
                 j++;
             }
         }
-
+        int length = j;
         if (task.equals("elevator")) {
             beacon1.setVisibility(View.VISIBLE);
             beacon1_txt.setVisibility(View.VISIBLE);
@@ -270,10 +271,12 @@ public class MapActivity extends ActivityController implements
 
         //new element
         brandIdem = new ArrayList<>();
-
-
-
         goLead = (Button)findViewById(R.id.map_go);
+        if (!checkInLocations(target)){
+            goLead.setVisibility(View.INVISIBLE);
+        }
+
+
         ImageView mapImage = (ImageView)findViewById(R.id.bigMap);
         goLead.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -401,24 +404,29 @@ public class MapActivity extends ActivityController implements
                         Log.d(TAG, "onStart: brand ignore B1電梯");
                         Drawable b1_ele = getDrawable(R.drawable.map_b2b1_elevator);
                         b2b1 = combineGraph(b1_ele, b2b1);
+                        break;
                     }
                     case "B1手扶梯": {
                         Log.d(TAG, "onStart: brand ignore B1手扶梯");
                         Drawable b1_hand = getDrawable(R.drawable.map_b2b1_hand);
                         b2b1 = combineGraph(b1_hand, b2b1);
+                        break;
                     }
                     case "LB電梯": {
                         Log.d(TAG, "onStart: brand ignore LB電梯");
                         Drawable b2_ele = getDrawable(R.drawable.map_b2lb_elevator);
                         b2lb = combineGraph(b2_ele, b2lb);
+                        break;
                     }
                     case "LB手扶梯":{
                         Log.d(TAG, "onStart: brand ignore LB手扶梯");
                         Drawable b2_hand = getDrawable(R.drawable.map_b2lb_hand);
                         b2lb = combineGraph(b2_hand, b2lb);
+                        break;
                     }
                     default: {
                         Log.d(TAG, "onStart: brand can't found");
+                        break;
                     }
                 }
             }//construct brand item
@@ -441,28 +449,28 @@ public class MapActivity extends ActivityController implements
                         b2b1 = combineGraph(brandIdem.get(i).drawableFore, b2b1);
                         if (i == 0) {
                             mapImage.setImageDrawable(b2b1);
-                            floorText.setText("B2-B1");
+                            floorText.setText("B棟B1-2");
                         }
                         break;
                     case "b2lb":
                         b2lb = combineGraph(brandIdem.get(i).drawableFore, b2lb);
                         if (i == 0) {
                             mapImage.setImageDrawable(b2lb);
-                            floorText.setText("B2-LB");
+                            floorText.setText("B棟LB-2");
                         }
                         break;
                     case "b1b1":
                         b1b1 = combineGraph(brandIdem.get(i).drawableFore, b1b1);
                         if (i == 0) {
                             mapImage.setImageDrawable(b1b1);
-                            floorText.setText("B1-B1");
+                            floorText.setText("B棟B1-1");
                         }
                         break;
                     case "ab1":
                         a_b1 = combineGraph(brandIdem.get(i).drawableFore, a_b1);
                         if (i == 0) {
                             mapImage.setImageDrawable(a_b1);
-                            floorText.setText("A-B1");
+                            floorText.setText("A棟B1");
                         }
                         break;
                 }
@@ -482,20 +490,20 @@ public class MapActivity extends ActivityController implements
             ImageView minimap = (ImageView) findViewById(R.id.minimap);
 
 
-            if (floorText.getText().equals("B1-B1")) {
+            if (floorText.getText().equals("B棟B1-2")) {
                 up.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 minimap.setImageResource(R.drawable.minimap_b11);
-            } else if (floorText.getText().equals("A-B1")) {
+            } else if (floorText.getText().equals("A棟B1")) {
                 up.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 left.setVisibility(View.GONE);
                 minimap.setImageResource(R.drawable.minimap_ab1);
-            } else if (floorText.getText().equals("B2-B1")) {
+            } else if (floorText.getText().equals("B棟B1-1")) {
                 right.setVisibility(View.GONE);
                 down.setVisibility(View.GONE);
                 minimap.setImageResource(R.drawable.minimap_b12);
-            } else if (floorText.getText().equals("B1-LB")) {
+            } else if (floorText.getText().equals("B棟LB-2")) {
                 up.setVisibility(View.GONE);
                 right.setVisibility(View.GONE);
                 left.setVisibility(View.GONE);
@@ -517,8 +525,8 @@ public class MapActivity extends ActivityController implements
                     MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
                     click.start();
                     overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                    if (floorText.getText().equals("B2-B1")) {
-                        floorText.setText("B2-LB");
+                    if (floorText.getText().equals("B棟B1-2")) {
+                        floorText.setText("B棟LB-2");
                         mapImage.setImageDrawable(finalB2lb);
                         up.setVisibility(View.GONE);
                         left.setVisibility(View.GONE);
@@ -544,8 +552,8 @@ public class MapActivity extends ActivityController implements
                     click.start();
                     Log.d(TAG, "onClick: down button");
 
-                    if (floorText.getText().equals("B2-LB")) {
-                        floorText.setText("B2-B1");
+                    if (floorText.getText().equals("B棟LB-2")) {
+                        floorText.setText("B棟B1-2");
                         mapImage.setImageDrawable(finalB2b1);
                         up.setVisibility(View.VISIBLE);
                         left.setVisibility(View.VISIBLE);
@@ -570,16 +578,16 @@ public class MapActivity extends ActivityController implements
                     Log.d(TAG, "onClick: left button");
                     MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
                     click.start();
-                    if (floorText.getText().equals("B1-B1")) {
-                        floorText.setText("A-B1");
+                    if (floorText.getText().equals("B棟B1-1")) {
+                        floorText.setText("A棟B1");
                         mapImage.setImageDrawable(finalA_b1);
                         up.setVisibility(View.GONE);
                         left.setVisibility(View.GONE);
                         down.setVisibility(View.GONE);
                         right.setVisibility(View.VISIBLE);
                         minimap.setImageResource(R.drawable.minimap_ab1);
-                    } else if (floorText.getText().equals("B2-B1")) {
-                        floorText.setText("B1-B1");
+                    } else if (floorText.getText().equals("B棟B1-2")) {
+                        floorText.setText("B棟B1-1");
                         mapImage.setImageDrawable(finalB1b1);
                         up.setVisibility(View.GONE);
                         left.setVisibility(View.VISIBLE);
@@ -603,16 +611,16 @@ public class MapActivity extends ActivityController implements
                     Log.d(TAG, "onClick: right button");
                     MediaPlayer click = MediaPlayer.create(MapActivity.this, R.raw.click);
                     click.start();
-                    if (floorText.getText().equals("A-B1")) {
-                        floorText.setText("B1-B1");
+                    if (floorText.getText().equals("A棟B1")) {
+                        floorText.setText("B棟B1-1");
                         mapImage.setImageDrawable(finalB1b1);
                         up.setVisibility(View.GONE);
                         left.setVisibility(View.VISIBLE);
                         right.setVisibility(View.VISIBLE);
                         down.setVisibility(View.GONE);
                         minimap.setImageResource(R.drawable.minimap_b11);
-                    } else if (floorText.getText().equals("B1-B1")) {
-                        floorText.setText("B2-B1");
+                    } else if (floorText.getText().equals("B棟B1-1")) {
+                        floorText.setText("B棟B1-2");
                         mapImage.setImageDrawable(finalB2b1);
                         up.setVisibility(View.VISIBLE);
                         left.setVisibility(View.VISIBLE);
@@ -634,11 +642,11 @@ public class MapActivity extends ActivityController implements
     @return: true(in the list)/false
     * */
     private boolean checkInLocations(String des){
-     //   for (String location : Robot.getInstance().getLocations()) {
-     //       if (location.equals(des)) {
-     //           return true;
-     //       }
-     //   }
+        for (String location : Robot.getInstance().getLocations()) {
+            if (location.equals(des)) {
+                return true;
+            }
+        }
         return false;
     }
 
