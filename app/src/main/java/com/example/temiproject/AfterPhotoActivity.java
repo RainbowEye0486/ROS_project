@@ -221,8 +221,8 @@ public class AfterPhotoActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
-                Toast.makeText(AfterPhotoActivity.this, "sent", Toast.LENGTH_SHORT).show();
-                speak("資料傳輸中 請稍候");
+                Toast.makeText(AfterPhotoActivity.this, "照片產生中", Toast.LENGTH_SHORT).show();
+                speak("您的照片產生中 請稍候移下");
                 //make other button disappear
                 btQRcode.setVisibility(View.INVISIBLE);
                 frame1_btn.setVisibility(View.INVISIBLE);
@@ -302,6 +302,7 @@ public class AfterPhotoActivity extends ActivityController {
                 }
 
                 speak("請掃QR code 取回您的照片");
+                speak("取好照片請按 HOME鍵 ");
 
 
 
