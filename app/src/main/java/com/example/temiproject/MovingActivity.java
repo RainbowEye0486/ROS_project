@@ -118,7 +118,7 @@ public class MovingActivity extends ActivityController
                     if((!destination.equals(CAMERA))&&(!destination.equals(HOME))){
                         robot.speak(TtsRequest.create("請跟著我", false));
                     }else{
-                        robot.speak(TtsRequest.create("行進中，請借過", false));
+                        robot.speak(TtsRequest.create("行進中，請借過一下喔", false));
                     }
                 }catch (Exception e){
                     e.printStackTrace();
@@ -131,11 +131,14 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "abort":
+                Log.d(TAG, "onGoToLocationStatusChanged: abort:" + abort_count);
+                String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
+                Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                Toast.makeText(MovingActivity.this, "前進失敗", Toast.LENGTH_SHORT).show();
+                robot.speak(TtsRequest.create("前進失敗", false));
                 if(abort_count>2){
                     abort_count++;
-                    String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
-                    robot.speak(TtsRequest.create("前進失敗", false));
-                    Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
+                    robot.speak(TtsRequest.create("重新嘗試", false));
                     robot.goTo(destination);
                 }else{
                     // ??

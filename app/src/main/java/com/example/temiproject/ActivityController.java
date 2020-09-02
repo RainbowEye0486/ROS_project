@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.annotation.CheckResult;
 import androidx.appcompat.app.ActionBar;
@@ -55,9 +56,20 @@ public class ActivityController extends AppCompatActivity implements
         }
         // hide topbar
         robot.hideTopBar();
+        // top badge
+        turnTopBadgeOff(robot);
+
     }
 
-    protected void turnDevelopMode(Robot robot){
+    protected void turnTopBadgeOff(Robot robot) {
+        if (requestPermissionIfNeeded(Permission.SETTINGS, REQUEST_CODE_NORMAL)) {
+            return;
+        }
+        robot.setTopBadgeEnabled(false);
+        Log.d(TAG, "turnTopBadgeOff: enable:" + robot.isTopBadgeEnabled());
+    }
+
+    protected boolean turnDevelopMode(Robot robot){
         // topbar
         robot.showTopBar();
         // hard btn
@@ -66,6 +78,10 @@ public class ActivityController extends AppCompatActivity implements
         }
         // nav billboard
         robot.toggleNavigationBillboard(false);
+
+        // top badge
+        robot.setTopBadgeEnabled(true);
+        return true;
     }
 
     public void speak(String sentence){
@@ -93,6 +109,6 @@ public class ActivityController extends AppCompatActivity implements
 
     @Override
     public void onDetectionStateChanged(int i) {
-
+        Log.d(TAG, "onDetectionStateChanged: state" + i);
     }
 }

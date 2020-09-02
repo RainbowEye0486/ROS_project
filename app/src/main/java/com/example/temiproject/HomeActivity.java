@@ -104,7 +104,9 @@ public class HomeActivity extends ActivityController implements
                     Log.d(TAG, "develop mode on ! ");
                     click_num = 0;
                     //top bar open
-                    turnDevelopMode(robot);
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(HomeActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
 
                 }
             }
