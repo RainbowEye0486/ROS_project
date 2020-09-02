@@ -22,12 +22,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TimerTask;
 
-public class MovingActivity extends ActivityController
-        implements OnGoToLocationStatusChangedListener {
+public class MovingActivity extends ActivityController implements
+        OnGoToLocationStatusChangedListener,
+        Robot.TtsListener{
 
 
 
     private static final String TAG = "MovingActivity";
+    // fot temi sdk
+    private boolean canSpeak = true;
     String destination;
     String voice;
     char next_job = ' ';
@@ -93,11 +96,13 @@ public class MovingActivity extends ActivityController
     }
 
     protected void setTemiListener(){
-        Robot.getInstance().addOnGoToLocationStatusChangedListener(this);
+        robot.addOnGoToLocationStatusChangedListener(this);
+        robot.addTtsListener(this);
     }
 
     protected void removeTemiListener(){
-        Robot.getInstance().removeOnGoToLocationStatusChangedListener(this);
+        robot.removeOnGoToLocationStatusChangedListener(this);
+        robot.removeTtsListener(this);
     }
 
     @Override
@@ -110,7 +115,9 @@ public class MovingActivity extends ActivityController
                 break;
 
             case "calculating":
-                robot.speak(TtsRequest.create("等等喔，我思考一下", false));
+                if(canSpeak){
+                    robot.speak(TtsRequest.create("等等喔，我思考一下", false));
+                }
                 break;
             case "going":
                 abort_count = 0;
@@ -200,5 +207,25 @@ public class MovingActivity extends ActivityController
             }
         }
         return false;
+    }
+
+    @Override
+    public void onTtsStatusChanged(@NotNull TtsRequest ttsRequest) {
+        // Do whatever you like upon the status changing. after the robot finishes speaking
+        Log.d(TAG, "onTtsStatusChanged: ");
+        switch (ttsRequest.getStatus()) {
+            case STARTED:
+                canSpeak = false;
+                break;
+
+            case COMPLETED:
+                canSpeak = true;
+                break;
+
+            case ERROR:
+                canSpeak = true;
+                break;
+
+        }
     }
 }

@@ -135,6 +135,7 @@ public class HomeActivity extends ActivityController implements
     protected void onDestroy() {
         super.onDestroy();
         closeDB();
+        turnDevelopMode(robot);
     }
 
     private void findView(){

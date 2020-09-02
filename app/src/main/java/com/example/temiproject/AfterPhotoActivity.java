@@ -59,7 +59,6 @@ public class AfterPhotoActivity extends ActivityController {
     Button frame5_btn;
     private ProgressBar spinner;
     private Robot robot;
-    private int idle_count;
 
 
     @Override
@@ -88,7 +87,6 @@ public class AfterPhotoActivity extends ActivityController {
     }
     protected void onStart(){
         super.onStart();
-        idle_count = 0;
         speak("拍照已完成 請向前選擇相片邊框");
         String path = getIntent().getStringExtra("picpath");//通過值"picpath"得到照片路徑
         final ImageView imageview = findViewById(R.id.preview_img);
@@ -355,13 +353,9 @@ public class AfterPhotoActivity extends ActivityController {
         Log.d(TAG, "onDetectionStateChanged: state ="+ state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    toNextActivity();
-                }
+                toNextActivity();
                 break;
         }
 

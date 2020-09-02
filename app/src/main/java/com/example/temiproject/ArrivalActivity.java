@@ -1,6 +1,5 @@
 package com.example.temiproject;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -16,7 +15,6 @@ import com.robotemi.sdk.Robot;
 public class ArrivalActivity extends ActivityController {
     private static final String TAG = "ArrivalActivity";
     private Robot robot;
-    private int idle_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +42,6 @@ public class ArrivalActivity extends ActivityController {
     @Override
     protected void onStart() {
         super.onStart();
-        idle_count = 0;
         robot.addOnDetectionStateChangedListener(this);
     }
 
@@ -59,16 +56,11 @@ public class ArrivalActivity extends ActivityController {
         Log.d(TAG, "onDetectionStateChanged: state ="+ state);
         switch (state){
             case DETECTED:
-                idle_count = 0;
                 break;
             case IDLE:
-                idle_count++;
-                if(idle_count>2){
-                    toNextActivity();
-                }
+                toNextActivity();
                 break;
         }
-
     }
 
     private void toNextActivity(){
