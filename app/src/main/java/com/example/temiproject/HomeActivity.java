@@ -118,6 +118,8 @@ public class HomeActivity extends ActivityController implements
         turnDetectionModeOn();
         robot.addOnDetectionStateChangedListener(this);
         robot.addTtsListener(this);
+        robot.tiltAngle(45);//相機傾角-25~55
+
     }
 
     @Override

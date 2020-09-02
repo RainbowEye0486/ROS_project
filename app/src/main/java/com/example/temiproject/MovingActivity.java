@@ -136,9 +136,9 @@ public class MovingActivity extends ActivityController
                     String display = "前進失敗 descriptionId=" + descriptionId + "description=" + description;
                     robot.speak(TtsRequest.create("前進失敗", false));
                     Log.d(TAG, "onGoToLocationStatusChanged: abort:"+display);
-                    // what is next?
                     robot.goTo(destination);
                 }else{
+                    // ??
                     Intent intent = new Intent(MovingActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }

@@ -23,7 +23,8 @@ public class ArrivalActivity extends ActivityController {
         setContentView(R.layout.activity_arrival);
         robot = Robot.getInstance();
         final Button arrival_btn = (Button)findViewById(R.id.arrival_btn);
-        speak("請站在我的前方稍等  temi即將未您拍照  站好後請點擊螢幕上的按鈕");
+        speak("temi即將未您拍照，站好後請點擊螢幕上的按鈕");
+
         arrival_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,6 +38,7 @@ public class ArrivalActivity extends ActivityController {
                 Log.d(TAG, "onClick: arrival button");
             }
         });
+
     }
 
     @Override
