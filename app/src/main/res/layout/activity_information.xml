@@ -7,7 +7,7 @@
     tools:context=".InformationActivity">
     <ImageView
         android:id="@+id/information_img"
-        android:background="@drawable/background_imformation"
+        android:background="@drawable/background_information"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

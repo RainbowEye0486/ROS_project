@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GuildPointActivity"
-    android:background="@drawable/bachground_selectguild"
+    android:background="@drawable/background_selectguildpng"
     >
 
     <Button
@@ -71,17 +71,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.88 " />
 
-    <ImageView
-        android:id="@+id/guild_toilet"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/select_toilet"
-        app:layout_constraintRight_toRightOf="@id/right_guideline"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
-        app:layout_constraintWidth_percent="0.17"
-        app:layout_constraintHeight_percent="0.45"
-        tools:ignore="MissingConstraints"
-        />
+
 
     <Button
         android:id="@+id/select_brand_btn"
@@ -128,28 +118,7 @@
         app:layout_constraintStart_toStartOf="@+id/right"
         app:layout_constraintTop_toTopOf="@id/bottom_guideline"
         tools:ignore="MissingConstraints" />
-    <ImageView
-        android:id="@+id/guild_brand"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/select_brand"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
-        app:layout_constraintWidth_percent="0.17"
-        app:layout_constraintHeight_percent="0.45"
-        tools:ignore="MissingConstraints"
-         />
 
-    <ImageView
-        android:id="@+id/guild_elevator"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@drawable/select_serve"
-        app:layout_constraintLeft_toLeftOf="@id/left_guideline"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_guideline"
-        app:layout_constraintWidth_percent="0.17"
-        app:layout_constraintHeight_percent="0.45"
-        tools:ignore="MissingConstraints"
-         />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

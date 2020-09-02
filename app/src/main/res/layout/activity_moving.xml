@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MovingActivity"
-    android:background="@drawable/bachground_moving"
+    android:background="@drawable/background_moving"
     >
 
     <androidx.constraintlayout.widget.Guideline

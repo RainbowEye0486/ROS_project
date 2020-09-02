@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bachground_thank"
+    android:background="@drawable/background_thank"
     tools:context=".ArrivalActivity">
 
     <androidx.constraintlayout.widget.Guideline
