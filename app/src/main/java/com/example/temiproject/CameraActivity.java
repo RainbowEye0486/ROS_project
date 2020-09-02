@@ -35,7 +35,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     private Camera mCamera;
     private SurfaceView mPreview;
     private SurfaceHolder mHolder;
-    private int cameraId=1;//聲明cameraId屬性，ID为1調用前置鏡頭，0調用後置鏡頭
+    private int cameraId=0;//聲明cameraId屬性，ID为1調用廣角鏡頭，0調用正常鏡頭
 
     //定義照片保存&顯示的方法
     private Camera.PictureCallback mpictureCallback=new Camera.PictureCallback(){
