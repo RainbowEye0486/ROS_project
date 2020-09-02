@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ArrivalActivity"
-    android:background="@drawable/bachground_arrival">
+    android:background="@drawable/background_arrival">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/left_guideline"
