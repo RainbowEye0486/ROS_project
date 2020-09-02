@@ -57,6 +57,7 @@ public class AfterPhotoActivity extends ActivityController {
     Button frame3_btn;
     Button frame4_btn;
     Button frame5_btn;
+    Bitmap bitmap;
     private ProgressBar spinner;
     private Robot robot;
 
@@ -100,7 +101,7 @@ public class AfterPhotoActivity extends ActivityController {
             //將位圖展示在imageview上
             imageview.setImageBitmap(bitmap);}
         catch (FileNotFoundException e){e.printStackTrace();}
-        final Bitmap bitmap = spin(BitmapFactory.decodeFile(path));
+        bitmap = spin(BitmapFactory.decodeFile(path));
 
 
 
@@ -109,7 +110,10 @@ public class AfterPhotoActivity extends ActivityController {
         //rotate
 
         Drawable frame1 = new BitmapDrawable(bitmap);
-        imageview.setImageDrawable(frame1);
+
+        Drawable photoplus = combineGraph(frame1, frame1);
+        imageview.setImageDrawable(photoplus);
+
         frame1_btn = (Button)findViewById(R.id.frame1_btn);
         frame2_btn = (Button)findViewById(R.id.frame2_btn);
         frame3_btn = (Button)findViewById(R.id.frame3_btn);
@@ -122,7 +126,6 @@ public class AfterPhotoActivity extends ActivityController {
         frame4_btn.setVisibility(View.VISIBLE);
         frame5_btn.setVisibility(View.VISIBLE);
 
-        Drawable photoplus = combineGraph(frame1, frame1);
         photo = ((BitmapDrawable)photoplus).getBitmap();
 
         frame1_btn.setOnClickListener(new View.OnClickListener() {

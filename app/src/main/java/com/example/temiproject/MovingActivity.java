@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.robotemi.sdk.Robot;
@@ -36,14 +38,30 @@ public class MovingActivity extends ActivityController implements
     char next_job = ' ';
     private Robot robot;
     private int abort_count;
-
+    private int click_num = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moving);
         openDB();
         robot = Robot.getInstance();
-        keepTemiSafe(robot);
+//        keepTemiSafe(robot);
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(MovingActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+        });
 
     }
 
@@ -134,6 +152,7 @@ public class MovingActivity extends ActivityController implements
 
             case "complete":
                 robot.speak(TtsRequest.create("到達目的地", false));
+                robot.tiltAngle(45);
                 toNextActivity();
                 break;
 
