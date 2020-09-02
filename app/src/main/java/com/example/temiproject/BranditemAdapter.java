@@ -48,6 +48,7 @@ public class BranditemAdapter extends RecyclerView.Adapter<BranditemAdapter.MyVi
         holder.brandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String temptxt = mData.get(position).getbeacontxt();
                 String tempTitle = mData.get(position).getTitle();
                 int textSize = 40;
                 if (tempTitle.length() > 8){
@@ -61,7 +62,7 @@ public class BranditemAdapter extends RecyclerView.Adapter<BranditemAdapter.MyVi
                 }
                 if (!repeat && mbeacon.size()<=5){
                     Log.d(TAG, "onClick: add new beacon " + tempTitle);
-                    mbeacon.add(new Beacon(tempTitle, textSize));
+                    mbeacon.add(new Beacon(temptxt, tempTitle, textSize));
                     brandSearchActivity.flushBeacon();
                 }
             }

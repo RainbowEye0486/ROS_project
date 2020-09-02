@@ -3,16 +3,23 @@ package com.example.temiproject;
 public class Branditem {
 
     private String Title;
+    private String beacontxt;
     private int description;
     int insideGraph;
     int thumbnail;
-
+    float txtSize;
 
     public Branditem() {
     }
 
-    public Branditem(String title, int description, int thumbnail, int insideGraph) {
-        Title = title;
+    public String getbeacontxt() {
+        return beacontxt;
+    }
+
+    public Branditem(float txtSize, String beacontxt, String title, int description, int thumbnail, int insideGraph) {
+        this.txtSize = txtSize;
+        this.beacontxt = beacontxt;
+        this.Title = title;
         this.description = description;
         this.thumbnail = thumbnail;
         this.insideGraph = insideGraph;

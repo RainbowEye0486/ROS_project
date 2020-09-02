@@ -191,6 +191,21 @@ public class BrandSearchActivity extends ActivityController {
             }
         });
     }
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        lstBrand = new ArrayList<>();
+        lstbeacon = new ArrayList<>();
+        List<String> stringBrand = new ArrayList<>();
+        String[] strelement={"Perng Yuh芃諭名品", "康是美", "Wolsey", "mia mia", "COACH FACTORY", "POLO RALPH LAUREN "
+                , "Roots", "LACOSTE", "La new", "BLUE WAY", "EDWIN", "寶雅生活館"};
+        for (int i=0;i<strelement.length;i++){
+            stringBrand.add(strelement[i]);
+        }
+        flushicon(stringBrand, lstBrand);
+        flushBeacon();
+    }
 
     @Override
     protected void onDestroy() {
@@ -240,43 +255,48 @@ public class BrandSearchActivity extends ActivityController {
         if (length == 0) return;
         beacon1.setVisibility(View.VISIBLE);
         beacon1_txt.setVisibility(View.VISIBLE);
-        beacon1_txt.setText(lstbeacon.get(0).title);
+        beacon1_txt.setText(lstbeacon.get(0).beacontxt);
+        beacon1_txt.setTextSize(lstbeacon.get(0).textSize);
         beacon1_btn.setVisibility(View.VISIBLE);
         if (length == 1) return;
         beacon2.setVisibility(View.VISIBLE);
         beacon2_txt.setVisibility(View.VISIBLE);
-        beacon2_txt.setText(lstbeacon.get(1).title);
+        beacon2_txt.setText(lstbeacon.get(1).beacontxt);
+        beacon2_txt.setTextSize(lstbeacon.get(1).textSize);
         beacon2_btn.setVisibility(View.VISIBLE);
         if (length == 2) return;
         beacon3.setVisibility(View.VISIBLE);
         beacon3_txt.setVisibility(View.VISIBLE);
-        beacon3_txt.setText(lstbeacon.get(2).title);
+        beacon3_txt.setText(lstbeacon.get(2).beacontxt);
+        beacon3_txt.setTextSize(lstbeacon.get(2).textSize);
         beacon3_btn.setVisibility(View.VISIBLE);
         if (length == 3) return;
         beacon4.setVisibility(View.VISIBLE);
         beacon4_txt.setVisibility(View.VISIBLE);
-        beacon4_txt.setText(lstbeacon.get(3).title);
+        beacon4_txt.setText(lstbeacon.get(3).beacontxt);
+        beacon4_txt.setTextSize(lstbeacon.get(3).textSize);
         beacon4_btn.setVisibility(View.VISIBLE);
         if (length == 4) return;
         beacon5.setVisibility(View.VISIBLE);
         beacon5_txt.setVisibility(View.VISIBLE);
-        beacon5_txt.setText(lstbeacon.get(4).title);
+        beacon5_txt.setText(lstbeacon.get(4).beacontxt);
+        beacon5_txt.setTextSize(lstbeacon.get(4).textSize);
         beacon5_btn.setVisibility(View.VISIBLE);
     }
 
     public void flushicon(List<String> stringBrand, List<Branditem> lstBrand){
-        Branditem perngyuh = new Branditem("Perng Yuh芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
-        Branditem cosmed = new Branditem("康是美",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
-        Branditem wolsey = new Branditem("Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
-        Branditem miamia = new Branditem("mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
-        Branditem coach = new Branditem("COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
-        Branditem polo = new Branditem("POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
-        Branditem roots = new Branditem("Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
-        Branditem lacoste = new Branditem("LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
-        Branditem lanew = new Branditem("La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
-        Branditem blueway = new Branditem("BLUE WAY", R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
-        Branditem edwin = new Branditem("EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
-        Branditem poya = new Branditem("寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
+        Branditem perngyuh = new Branditem(20, " 芃諭名品 ", "Perng Yuh芃諭名品", R.string.perngyuh,R.drawable.thumbnail_perngyuh, R.drawable.card_perngyuh);
+        Branditem cosmed = new Branditem(30, "  康是美  ", "康是美",R.string.cosmed ,R.drawable.thumbnail_cosmed, R.drawable.card_cosmed);
+        Branditem wolsey = new Branditem(30, " Wolsey ", "Wolsey", R.string.wolsey,R.drawable.thumbnail_wolsey, R.drawable.card_wolsey);
+        Branditem miamia = new Branditem(40, " mia mia ", "mia mia", R.string.miamia,R.drawable.thumbnail_miamia, R.drawable.card_miamia);
+        Branditem coach = new Branditem(20, " COACH \nFACTORY ", "COACH FACTORY", R.string.coach,R.drawable.thumbnail_coach, R.drawable.card_coach);
+        Branditem polo = new Branditem(20, " POLO RALPH\n LAUREN ", "POLO RALPH LAUREN ", R.string.poloraphlaren,R.drawable.thumbnail_poloralphlauren, R.drawable.card_poloralphlauren);
+        Branditem roots = new Branditem(30, " Roots ", "Roots", R.string.roots,R.drawable.thumbnail_roots, R.drawable.card_roots);
+        Branditem lacoste = new Branditem(30, "  LACOSTE  ", "LACOSTE",R.string.lacoste ,R.drawable.thumbnail_lacoste, R.drawable.card_lacoste);
+        Branditem lanew = new Branditem(30, " La new ", "La new", R.string.lanew,R.drawable.thumbnail_lanew, R.drawable.card_lanew);
+        Branditem blueway = new Branditem(30, "  BLUE WAY  ","BLUE WAY" , R.string.blueway, R.drawable.thumbnail_blueway, R.drawable.card_blueway);
+        Branditem edwin = new Branditem(40, "EDWIN", "EDWIN", R.string.edwin,R.drawable.thumbnail_edwin, R.drawable.card_edwin);
+        Branditem poya = new Branditem(20, "  寶雅生活館  ", "寶雅生活館", R.string.poya,R.drawable.thumbnail_poya, R.drawable.card_poya);
         lstBrand.clear();
 
             if (stringBrand.contains("BLUE WAY")){
@@ -422,6 +442,14 @@ public class BrandSearchActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 actvSearch.setText("");
+                String[] strelement={"Perng Yuh芃諭名品", "康是美", "Wolsey", "mia mia", "COACH FACTORY", "POLO RALPH LAUREN "
+                        , "Roots", "LACOSTE", "La new", "BLUE WAY", "EDWIN", "寶雅生活館"};
+                lstBrand = new ArrayList<>();
+                List<String> stringBrand = new ArrayList<>();
+                for (int i=0;i<strelement.length;i++){
+                    stringBrand.add(strelement[i]);
+                }
+                flushicon(stringBrand, lstBrand);
             }
         });
     }
@@ -742,9 +770,12 @@ public class BrandSearchActivity extends ActivityController {
 }
 
 class Beacon{
+    String beacontxt;
     String title;
     int textSize;
-    public Beacon (String title, int textSize){
+
+    public Beacon (String beacontxt, String title, int textSize){
+        this.beacontxt = beacontxt;
         this.title = title;
         this.textSize = textSize;
     }

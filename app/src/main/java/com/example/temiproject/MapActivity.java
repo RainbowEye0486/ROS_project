@@ -166,12 +166,14 @@ public class MapActivity extends ActivityController implements
             beacon1.setVisibility(View.VISIBLE);
             beacon1_txt.setVisibility(View.VISIBLE);
             beacon1_txt.setText("電梯");
+            Log.d(TAG, "flush: elevator this time");
             return;
         }
         else if ( task.equals("toilet")){
             beacon1.setVisibility(View.VISIBLE);
             beacon1_txt.setVisibility(View.VISIBLE);
             beacon1_txt.setText("廁所");
+            Log.d(TAG, "flush: toilet this time");
             return;
         }
 
@@ -267,8 +269,6 @@ public class MapActivity extends ActivityController implements
         task = intent.getStringExtra("task");
         receiveIntent();
 
-
-
         //new element
         brandIdem = new ArrayList<>();
         goLead = (Button)findViewById(R.id.map_go);
@@ -293,6 +293,8 @@ public class MapActivity extends ActivityController implements
         flush();
         assert task != null;
         if (task.equals("toilet")){
+            Log.d(TAG, "onStart: toilet flush");
+            flush();
             Drawable pic = getDrawable(R.drawable.map_toilet);
             mapImage.setImageDrawable(pic);
             brandIdem.add(new mapView("b2b1", "廁所", pic, 0));
@@ -308,6 +310,7 @@ public class MapActivity extends ActivityController implements
             flush();
         }
         else if (task.equals("elevator")){
+            Log.d(TAG, "onStart: elevator flush");
             Drawable pic = getDrawable(R.drawable.map_elevator);
             mapImage.setImageDrawable(pic);
             brandIdem.add(new mapView("b2b1", "電梯", pic, 0));
