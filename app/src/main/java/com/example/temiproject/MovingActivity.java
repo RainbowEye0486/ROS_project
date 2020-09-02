@@ -69,6 +69,7 @@ public class MovingActivity extends ActivityController
             next_job = 'b';
             destination = HOME;
             voice = "家";
+            speak("我正在回家 請借我過移下喔 謝謝");
         }
         Log.d(TAG, "onStart: des:"+destination);
         if(checkInLocations(destination)){
