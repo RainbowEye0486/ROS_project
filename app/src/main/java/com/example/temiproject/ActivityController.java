@@ -1,5 +1,7 @@
 package com.example.temiproject;
 
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,12 +15,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.TtsRequest;
 import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
+import com.robotemi.sdk.listeners.OnRobotReadyListener;
 import com.robotemi.sdk.permission.Permission;
 
 import java.util.Collections;
 
 public class ActivityController extends AppCompatActivity implements
-        OnDetectionStateChangedListener {
+        OnDetectionStateChangedListener,
+        OnRobotReadyListener {
     final String TAG = "ActivityController";
     final String GUEST = "guest";
     final String CAMERA = "camera1";
@@ -58,7 +62,8 @@ public class ActivityController extends AppCompatActivity implements
             robot.setHardButtonsDisabled(true);
         }
         // hide topbar
-        robot.hideTopBar();
+        // use refreshTemiUi instead
+//        robot.hideTopBar();
         // top badge
         turnTopBadgeOff(robot);
 
@@ -111,9 +116,38 @@ public class ActivityController extends AppCompatActivity implements
         return true;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Robot.getInstance().addOnRobotReadyListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Robot.getInstance().removeOnRobotReadyListener(this);
+    }
 
     @Override
     public void onDetectionStateChanged(int i) {
         Log.d(TAG, "onDetectionStateChanged: state" + i);
+    }
+
+    @Override
+    public void onRobotReady(boolean isReady ) {
+        if(isReady){
+            Log.d(TAG, "onRobotReady: ");
+            refreshTemiUi();
+        }
+    }
+
+    private void refreshTemiUi() {
+        try {
+            ActivityInfo activityInfo = getPackageManager()
+                    .getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
+            Robot.getInstance().onStart(activityInfo);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

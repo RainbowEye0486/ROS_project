@@ -11,10 +11,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import com.robotemi.sdk.Robot;
+import com.robotemi.sdk.TtsRequest;
 
-public class ArrivalActivity extends ActivityController {
+import org.jetbrains.annotations.NotNull;
+
+public class ArrivalActivity extends ActivityController implements
+        Robot.TtsListener{
     private static final String TAG = "ArrivalActivity";
     private Robot robot;
+    private boolean canSpeak = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +47,7 @@ public class ArrivalActivity extends ActivityController {
     @Override
     protected void onStart() {
         super.onStart();
+        canSpeak = false;
         robot.addOnDetectionStateChangedListener(this);
     }
 
@@ -58,7 +64,9 @@ public class ArrivalActivity extends ActivityController {
             case DETECTED:
                 break;
             case IDLE:
-                toNextActivity();
+                if(canSpeak){
+                    toNextActivity();
+                }
                 break;
         }
     }
@@ -67,5 +75,25 @@ public class ArrivalActivity extends ActivityController {
         Intent intent = new Intent(ArrivalActivity.this, MovingActivity.class);
         intent.putExtra("task", "takePhoto");//takePhoto
         startActivity(intent);
+    }
+
+    @Override
+    public void onTtsStatusChanged(@NotNull TtsRequest ttsRequest) {
+        // Do whatever you like upon the status changing. after the robot finishes speaking
+        Log.d(TAG, "onTtsStatusChanged: ");
+        switch (ttsRequest.getStatus()) {
+            case STARTED:
+                canSpeak = false;
+                break;
+
+            case COMPLETED:
+                canSpeak = true;
+                break;
+
+            case ERROR:
+                canSpeak = true;
+                break;
+
+        }
     }
 }

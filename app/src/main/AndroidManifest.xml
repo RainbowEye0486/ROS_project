@@ -45,32 +45,68 @@
                android:resource="@xml/searchable"/>
        </activity>
         <activity android:name=".AfterPhotoActivity"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity android:name=".InformationActivity"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
 
         <activity
             android:name=".ThanksLeadingActivity"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".MapActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".BrandSearchActivity"
             android:launchMode="singleInstance"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".GuildPointActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".CameraActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".ArrivalActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".MovingActivity"
-            android:launchMode="singleInstance" />
+            android:launchMode="singleInstance">
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
+        </activity>
         <activity
             android:name=".HomeActivity"
             android:launchMode="singleInstance">
@@ -78,6 +114,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="com.robotemi.sdk.metadata.UI_MODE"
+                android:value="4" />
         </activity>
     </application>
 

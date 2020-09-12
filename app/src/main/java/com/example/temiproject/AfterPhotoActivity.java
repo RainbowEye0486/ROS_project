@@ -35,6 +35,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,6 +54,7 @@ public class AfterPhotoActivity extends ActivityController {
     Bitmap photo;
     ImageView ivQRcode;
     final String TAG = "AfterPhotoActivity";
+    Button home_btn;
     Button btQRcode;
     Button frame1_btn;
     Button frame2_btn;
@@ -60,6 +64,8 @@ public class AfterPhotoActivity extends ActivityController {
     Bitmap bitmap;
     private ProgressBar spinner;
     private Robot robot;
+    private Timer timer;
+    Count count;
 
 
     @Override
@@ -69,10 +75,12 @@ public class AfterPhotoActivity extends ActivityController {
         robot = Robot.getInstance();
         spinner = (ProgressBar) findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
+        timer = new Timer();
+        count = new Count();
 
         findView();
         addListener();
-        final Button home_btn = (Button) findViewById(R.id.home_btn);
+        home_btn = (Button) findViewById(R.id.home_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,6 +243,7 @@ public class AfterPhotoActivity extends ActivityController {
                 Toast.makeText(AfterPhotoActivity.this, "照片產生中", Toast.LENGTH_SHORT).show();
                 speak("您的照片產生中 請稍候移下");
                 //make other button disappear
+                home_btn.setVisibility(View.INVISIBLE);
                 btQRcode.setVisibility(View.INVISIBLE);
                 frame1_btn.setVisibility(View.INVISIBLE);
                 frame2_btn.setVisibility(View.INVISIBLE);
@@ -299,8 +308,15 @@ public class AfterPhotoActivity extends ActivityController {
             @Override
             public void run() {
                 spinner.setVisibility(View.GONE);
+                home_btn.setVisibility(View.VISIBLE);
                 Log.d(TAG, "run: showQRcode:"+rt_url);
-                robot.addOnDetectionStateChangedListener(AfterPhotoActivity.this);
+                // after 1 min add detection
+                Log.d(TAG, "run: cancel timer");
+                cancelTimer();
+                count.cancel();
+                timer = new Timer();
+                count = new Count();
+                timer.schedule(count, 60000);
                 // generate QRcode
                 BarcodeEncoder encoder = new BarcodeEncoder();
                 try {
@@ -348,6 +364,21 @@ public class AfterPhotoActivity extends ActivityController {
         }
 
     }
+
+    private void cancelTimer() {
+        Log.d(TAG, "cancelTimer: cancel");
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    class Count extends TimerTask {
+        public void run() {
+            Log.d(TAG, "run: timer ends");
+            robot.addOnDetectionStateChangedListener(AfterPhotoActivity.this);
+        }
+    };
 
 
 }

@@ -2,6 +2,8 @@ package com.example.temiproject;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -296,4 +298,5 @@ public class HomeActivity extends ActivityController implements
 
         }
     }
+
 }
