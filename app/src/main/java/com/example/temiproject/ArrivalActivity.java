@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.TtsRequest;
@@ -20,6 +21,8 @@ public class ArrivalActivity extends ActivityController implements
     private static final String TAG = "ArrivalActivity";
     private Robot robot;
     private boolean canSpeak = true;
+    int click_num = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,23 @@ public class ArrivalActivity extends ActivityController implements
         robot = Robot.getInstance();
         final Button arrival_btn = (Button)findViewById(R.id.arrival_btn);
         speak("temi即將未您拍照，站好後請點擊螢幕上的按鈕");
+
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(ArrivalActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+        });
 
         arrival_btn.setOnClickListener(new View.OnClickListener() {
             @Override

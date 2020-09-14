@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.robotemi.sdk.Robot;
 
@@ -18,7 +19,7 @@ import java.util.TimerTask;
 public class ThanksLeadingActivity extends ActivityController {
     private static final String TAG = "ThankLeadingActivity";
     private Robot robot;
-
+    int click_num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,22 @@ public class ThanksLeadingActivity extends ActivityController {
                 overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
                 Log.d(TAG, "onClick: Home button");
                 toNextActivity();
+            }
+        });
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(ThanksLeadingActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
             }
         });
 

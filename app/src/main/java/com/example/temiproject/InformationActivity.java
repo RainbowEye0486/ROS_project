@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +17,7 @@ public class InformationActivity extends ActivityController {
     count count;
     Timer timer;
     char next_job = ' ';
+    int click_num = 0;
 
     class count extends TimerTask {
         public void run() {
@@ -30,6 +35,20 @@ public class InformationActivity extends ActivityController {
         speak("將帶領您至拍照地點");
         timer = new Timer();
         count = new count();
+
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    Toast.makeText(InformationActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //import com.robotemi.sdk.Robot;
 
@@ -33,9 +34,11 @@ import com.robotemi.sdk.listeners.OnDetectionStateChangedListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class MapActivity extends ActivityController {
 
+    int click_num = 0;
     private Robot robot;
     private static final String TAG = "MapActivity";
     private String[] order;
@@ -56,7 +59,22 @@ public class MapActivity extends ActivityController {
         robot = Robot.getInstance();
         openDB();
         receiveIntent();
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(MapActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
 
+                }
+            }
+        });
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {

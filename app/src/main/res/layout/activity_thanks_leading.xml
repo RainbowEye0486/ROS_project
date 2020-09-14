@@ -94,6 +94,14 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <Button
+        android:id="@+id/topbar_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/update"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 

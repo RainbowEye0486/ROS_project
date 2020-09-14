@@ -11,7 +11,9 @@ import android.util.Log;//
 import android.view.SurfaceHolder;//
 import android.view.SurfaceView;//
 import android.view.View;//
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -36,6 +38,7 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
     private SurfaceView mPreview;
     private SurfaceHolder mHolder;
     private int cameraId=0;//聲明cameraId屬性，ID为1調用廣角鏡頭，0調用正常鏡頭
+    int click_num = 0;
 
     //定義照片保存&顯示的方法
     private Camera.PictureCallback mpictureCallback=new Camera.PictureCallback(){
@@ -62,6 +65,23 @@ public class CameraActivity extends ActivityController implements SurfaceHolder.
         setContentView(R.layout.activity_camera);
         robot = Robot.getInstance();//temi
         getPermission();
+
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(CameraActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+        });
 
         final TextView textView = (TextView)findViewById(R.id.count_down_txt);
 

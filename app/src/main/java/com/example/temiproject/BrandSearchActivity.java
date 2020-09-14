@@ -40,6 +40,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.opencsv.CSVReader;
 import com.robotemi.sdk.Robot;
 
@@ -66,7 +68,7 @@ public class BrandSearchActivity extends ActivityController {
     private Button btSearch;
     private Button goMap;
     private List<Position> map;
-
+    int click_num = 0;
 
 
     @Override
@@ -80,7 +82,22 @@ public class BrandSearchActivity extends ActivityController {
         addListener();
 
 
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(BrandSearchActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
 
+                }
+            }
+        });
         final Button home_btn = (Button)findViewById(R.id.home_btn);
         final Button return_btn = (Button)findViewById(R.id.return_btn);
         home_btn.setOnClickListener(new View.OnClickListener() {

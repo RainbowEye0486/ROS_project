@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.robotemi.sdk.Robot;
 import com.robotemi.sdk.TtsRequest;
@@ -31,13 +32,29 @@ public class GuildPointActivity extends ActivityController implements
 
     private static final String TAG = "GuildPointActivity";
     Robot robot;
-
+    int click_num = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce_animation);
         setContentView(R.layout.activity_guild_point);
         robot = Robot.getInstance();
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(GuildPointActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+        });
         final Button guildBrand = (Button) findViewById(R.id.select_brand_btn);
         final Button guildToilet = (Button)findViewById(R.id.select_toilet_btn);
         final Button guildElevator = (Button)findViewById(R.id.select_elevator_btn);

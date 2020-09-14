@@ -66,7 +66,7 @@ public class AfterPhotoActivity extends ActivityController {
     private Robot robot;
     private Timer timer;
     Count count;
-
+    int click_num = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,22 @@ public class AfterPhotoActivity extends ActivityController {
                 overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);
                 Log.d(TAG, "onClick: Home button");
                 toNextActivity();
+            }
+        });
+        Button develop_btn = (Button)findViewById(R.id.topbar_btn);
+        develop_btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                click_num ++;
+                if (click_num>=10){
+                    Log.d(TAG, "develop mode on ! ");
+                    click_num = 0;
+                    //top bar open
+                    if(turnDevelopMode(robot)){
+                        Toast.makeText(AfterPhotoActivity.this, "工作人員模式", Toast.LENGTH_LONG).show();
+                    }
+
+                }
             }
         });
     }
