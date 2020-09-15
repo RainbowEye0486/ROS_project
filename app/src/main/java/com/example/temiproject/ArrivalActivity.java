@@ -29,7 +29,6 @@ public class ArrivalActivity extends ActivityController implements
         setContentView(R.layout.activity_arrival);
         robot = Robot.getInstance();
         final Button arrival_btn = (Button)findViewById(R.id.arrival_btn);
-        speak("temi即將未您拍照，站好後請點擊螢幕上的按鈕");
 
         Button develop_btn = (Button)findViewById(R.id.topbar_btn);
         develop_btn.setOnClickListener(new View.OnClickListener(){
@@ -68,6 +67,7 @@ public class ArrivalActivity extends ActivityController implements
     protected void onStart() {
         super.onStart();
         canSpeak = false;
+        speak("temi即將未您拍照，站好後請點擊螢幕上的按鈕");
         robot.addOnDetectionStateChangedListener(this);
     }
 
