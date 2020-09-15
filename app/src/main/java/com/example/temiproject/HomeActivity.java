@@ -121,6 +121,7 @@ public class HomeActivity extends ActivityController implements
     protected void onStart() {
         super.onStart();
         keepTemiSafe(robot);
+        Toast.makeText(HomeActivity.this, "安全模式", Toast.LENGTH_SHORT).show();
         turnDetectionModeOn();
         robot.addOnDetectionStateChangedListener(this);
         robot.addTtsListener(this);

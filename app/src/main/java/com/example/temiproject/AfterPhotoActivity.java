@@ -213,6 +213,11 @@ public class AfterPhotoActivity extends ActivityController {
     @Override
     protected void onStop() {
         super.onStop();
+        // timer
+        cancelTimer();
+        count.cancel();
+        timer = new Timer();
+        count = new Count();
         robot.removeOnDetectionStateChangedListener(this);
     }
 
@@ -256,7 +261,7 @@ public class AfterPhotoActivity extends ActivityController {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: btQRcode");
-                Toast.makeText(AfterPhotoActivity.this, "照片產生中", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AfterPhotoActivity.this, "照片產生中", Toast.LENGTH_LONG).show();
                 speak("您的照片產生中 請稍候移下");
                 //make other button disappear
                 home_btn.setVisibility(View.INVISIBLE);
@@ -328,10 +333,6 @@ public class AfterPhotoActivity extends ActivityController {
                 Log.d(TAG, "run: showQRcode:"+rt_url);
                 // after 1 min add detection
                 Log.d(TAG, "run: cancel timer");
-                cancelTimer();
-                count.cancel();
-                timer = new Timer();
-                count = new Count();
                 timer.schedule(count, 60000);
                 // generate QRcode
                 BarcodeEncoder encoder = new BarcodeEncoder();
@@ -356,8 +357,16 @@ public class AfterPhotoActivity extends ActivityController {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(AfterPhotoActivity.this, "上傳失敗", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AfterPhotoActivity.this, "上傳失敗", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "run: showUploadFail");
+                spinner.setVisibility(View.GONE);
+                home_btn.setVisibility(View.VISIBLE);
+                btQRcode.setVisibility(View.VISIBLE);
+                frame1_btn.setVisibility(View.VISIBLE);
+                frame2_btn.setVisibility(View.VISIBLE);
+                frame3_btn.setVisibility(View.VISIBLE);
+                frame4_btn.setVisibility(View.VISIBLE);
+                frame5_btn.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -375,6 +384,7 @@ public class AfterPhotoActivity extends ActivityController {
             case DETECTED:
                 break;
             case IDLE:
+                Toast.makeText(AfterPhotoActivity.this, "idle", Toast.LENGTH_SHORT).show();
                 toNextActivity();
                 break;
         }
@@ -394,7 +404,7 @@ public class AfterPhotoActivity extends ActivityController {
             Log.d(TAG, "run: timer ends");
             robot.addOnDetectionStateChangedListener(AfterPhotoActivity.this);
         }
-    };
+    }
 
 
 }
